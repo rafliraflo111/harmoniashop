@@ -123,11 +123,6 @@
     .btn-detail:hover { background: var(--charcoal); }
     .empty-state { grid-column: 1 / -1; text-align: center; padding: 50px 20px; color: #999; font-size: 13px; border: 1px dashed #ddd6cc; letter-spacing: 0.03em; }
 
-    /* ── LOADING STATE ── */
-    .loading-state { grid-column: 1 / -1; text-align: center; padding: 50px 20px; color: var(--gold); font-size: 13px; letter-spacing: 0.1em; }
-    .loading-spinner { display: inline-block; width: 24px; height: 24px; border: 2px solid var(--gold-pale); border-top-color: var(--gold); border-radius: 50%; animation: spin 0.7s linear infinite; margin-bottom: 12px; }
-    @keyframes spin { to { transform: rotate(360deg); } }
-
     /* ── STORES ── */
     .stores-section { background: var(--white); padding: 64px 48px; border-top: 1px solid #e8e3dc; }
     .stores-header { text-align: center; max-width: 600px; margin: 0 auto 40px; }
@@ -144,7 +139,7 @@
     .store-item-addr { font-size: 12px; color: var(--mid); line-height: 1.6; margin-bottom: 8px; }
     .store-item-meta { font-size: 11px; color: #999; line-height: 1.8; }
 
-    /* ── STORE SOCIAL ── */
+    /* ── STORE SOCIAL (redesigned) ── */
     .store-social { display: flex; gap: 8px; margin-top: 12px; flex-wrap: wrap; }
     .store-social-btn { display: inline-flex; align-items: center; gap: 5px; padding: 5px 11px; border-radius: 3px; font-size: 10px; letter-spacing: 0.08em; text-decoration: none; font-family: 'Jost', sans-serif; font-weight: 500; transition: opacity 0.2s, transform 0.15s; cursor: pointer; border: none; }
     .store-social-btn:hover { opacity: 0.82; transform: translateY(-1px); }
@@ -181,7 +176,6 @@
     .photo-remove-btn { position: absolute; top: 2px; right: 2px; background: rgba(13,13,13,0.75); color: #fff; border: none; width: 16px; height: 16px; font-size: 9px; cursor: pointer; display: flex; align-items: center; justify-content: center; line-height: 1; }
     .btn-submit-comment { background: var(--black); color: var(--gold); border: none; padding: 9px 20px; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; cursor: pointer; font-family: 'Jost', sans-serif; margin-top: 8px; transition: background 0.2s; }
     .btn-submit-comment:hover { background: var(--charcoal); }
-    .btn-submit-comment:disabled { opacity: 0.5; cursor: not-allowed; }
 
     /* ── COMMENT LIST ── */
     .comment-list { margin-top: 16px; display: flex; flex-direction: column; gap: 10px; }
@@ -266,6 +260,8 @@
     .footer-link-list a:hover { color: var(--gold); }
     .footer-mini-title { font-size: 11px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--gold); margin-bottom: 14px; }
     .footer-bottom { border-top: 1px solid #1f1f1f; padding-top: 24px; text-align: center; font-size: 11px; color: #333; }
+
+    /* ── FOOTER SOCIAL ── */
     .footer-social-list { display: flex; flex-direction: column; gap: 10px; }
     .footer-social-item { display: flex; align-items: center; gap: 10px; text-decoration: none; color: #888; font-size: 12px; letter-spacing: 0.04em; transition: color 0.2s; }
     .footer-social-item:hover { color: var(--gold); }
@@ -325,79 +321,6 @@
     body.dark .comment-author { color: var(--off-white); }
     body.dark .comment-text { color: #aaa; }
 
-    /* ── AUTH MODAL ── */
-    .auth-overlay { position: fixed; inset: 0; background: rgba(13,13,13,0.78); display: none; align-items: center; justify-content: center; z-index: 700; padding: 24px; }
-    .auth-overlay.open { display: flex; }
-    .auth-box { background: var(--white); max-width: 380px; width: 100%; padding: 40px 36px; position: relative; }
-    .auth-close { position: absolute; top: 14px; right: 14px; background: none; border: none; font-size: 18px; cursor: pointer; color: var(--mid); }
-    .auth-eyebrow { font-size: 10px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--gold); margin-bottom: 6px; }
-    .auth-title { font-family: 'Cormorant Garamond', serif; font-size: 26px; font-weight: 300; color: var(--black); margin-bottom: 20px; }
-    .auth-tabs { display: flex; gap: 0; margin-bottom: 16px; border-bottom: 1px solid #e8e3dc; }
-    .auth-tab { background: none; border: none; border-bottom: 2px solid transparent; padding: 8px 18px; font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; cursor: pointer; font-family: 'Jost', sans-serif; color: var(--mid); transition: all 0.2s; margin-bottom: -1px; }
-    .auth-tab.active { color: var(--gold); border-bottom-color: var(--gold); }
-    .auth-error { font-size: 11.5px; color: #c62828; margin-bottom: 12px; min-height: 16px; letter-spacing: 0.02em; display: none; }
-    .auth-error.show { display: block; }
-    .auth-field { margin-bottom: 14px; }
-    .auth-label { font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--mid); display: block; margin-bottom: 6px; }
-    .auth-input { width: 100%; border: 1px solid #e0dbd4; background: var(--off-white); font-family: 'Jost', sans-serif; font-size: 13px; color: var(--dark); padding: 10px 12px; outline: none; transition: border-color 0.2s; letter-spacing: 0.02em; }
-    .auth-input:focus { border-color: var(--gold); }
-    .btn-auth-submit { width: 100%; background: var(--gold); color: var(--black); border: none; padding: 13px; font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; font-family: 'Jost', sans-serif; font-weight: 500; cursor: pointer; margin-top: 6px; transition: background 0.2s; }
-    .btn-auth-submit:hover { background: var(--gold-light); }
-    .auth-hint { font-size: 11px; color: #999; margin-top: 14px; line-height: 1.6; }
-    .user-pill { display: flex; align-items: center; gap: 10px; }
-    .user-pill-name { font-size: 12px; color: #ccc; }
-    .user-pill-name strong { color: var(--gold); }
-    .btn-admin-panel { background: none; border: 1px solid var(--gold); color: var(--gold); padding: 5px 12px; font-size: 11px; letter-spacing: 0.08em; cursor: pointer; font-family: 'Jost', sans-serif; transition: all 0.2s; }
-    .btn-admin-panel:hover { background: var(--gold); color: var(--black); }
-    .btn-logout { background: none; border: 1px solid #555; color: #aaa; padding: 5px 12px; font-size: 11px; letter-spacing: 0.08em; cursor: pointer; font-family: 'Jost', sans-serif; transition: all 0.2s; }
-    .btn-logout:hover { border-color: #888; color: #ccc; }
-
-    /* ── ADMIN PANEL ── */
-    .admin-shell { display: none; position: fixed; inset: 0; z-index: 800; background: #f5f5f5; flex-direction: row; overflow: hidden; }
-    .admin-shell.open { display: flex; }
-    .admin-sidebar { width: 220px; background: var(--black); flex-shrink: 0; display: flex; flex-direction: column; overflow-y: auto; }
-    .admin-logo { font-family: 'Cormorant Garamond', serif; font-size: 18px; color: var(--gold); padding: 24px 20px 8px; letter-spacing: 0.1em; }
-    .admin-logo span { font-style: italic; color: #fff; }
-    .admin-logo small { display: block; font-family: 'Jost', sans-serif; font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; color: #555; margin-top: 3px; }
-    .admin-nav-item { background: none; border: none; border-left: 3px solid transparent; width: 100%; text-align: left; padding: 13px 18px; font-size: 12px; letter-spacing: 0.06em; color: #888; cursor: pointer; font-family: 'Jost', sans-serif; transition: all 0.18s; }
-    .admin-nav-item:hover { color: var(--gold); background: rgba(201,168,76,0.06); }
-    .admin-nav-item.active { color: var(--gold); border-left-color: var(--gold); background: rgba(201,168,76,0.1); }
-    .admin-nav-divider { border-top: 1px solid #222; margin: 8px 0; }
-    .admin-main { flex: 1; overflow-y: auto; padding: 36px 40px; }
-    .admin-header { margin-bottom: 28px; }
-    .admin-page-title { font-family: 'Cormorant Garamond', serif; font-size: 30px; font-weight: 300; color: var(--black); }
-    .admin-page-title em { font-style: italic; color: var(--gold); }
-    .admin-page-sub { font-size: 12px; color: var(--mid); margin-top: 4px; letter-spacing: 0.02em; }
-    .admin-stats-row { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 16px; margin-bottom: 32px; }
-    .admin-stat-card { background: var(--white); border: 1px solid #e8e3dc; padding: 20px 22px; }
-    .admin-stat-label { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--mid); margin-bottom: 6px; }
-    .admin-stat-value { font-family: 'Cormorant Garamond', serif; font-size: 28px; font-weight: 400; color: var(--black); }
-    .admin-panel { background: var(--white); border: 1px solid #e8e3dc; margin-bottom: 24px; }
-    .admin-panel-title { font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); padding: 14px 20px; border-bottom: 1px solid #e8e3dc; }
-    .admin-table-wrap { overflow-x: auto; }
-    .admin-table { width: 100%; border-collapse: collapse; font-size: 12.5px; }
-    .admin-table th { background: var(--off-white); padding: 10px 16px; text-align: left; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--mid); font-weight: 500; border-bottom: 1px solid #e8e3dc; }
-    .admin-table td { padding: 11px 16px; border-bottom: 1px solid #f0ece6; vertical-align: middle; color: var(--dark); }
-    .admin-table tr:last-child td { border-bottom: none; }
-    .admin-badge { background: var(--gold-pale); color: var(--gold); font-size: 10px; letter-spacing: 0.08em; padding: 3px 8px; text-transform: uppercase; }
-    .admin-form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; padding: 20px 20px 0; }
-    .admin-form-grid.full { grid-template-columns: 1fr; }
-    .admin-field { display: flex; flex-direction: column; gap: 5px; padding-bottom: 14px; }
-    .admin-field label { font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--mid); }
-    .admin-field input, .admin-field select, .admin-field textarea { border: 1px solid #e0dbd4; background: var(--off-white); font-family: 'Jost', sans-serif; font-size: 12.5px; color: var(--dark); padding: 8px 10px; outline: none; transition: border-color 0.2s; }
-    .admin-field input:focus, .admin-field select:focus, .admin-field textarea:focus { border-color: var(--gold); }
-    .btn-admin-action { background: var(--black); color: var(--gold); border: none; padding: 9px 18px; font-size: 10.5px; letter-spacing: 0.14em; text-transform: uppercase; cursor: pointer; font-family: 'Jost', sans-serif; transition: background 0.2s; }
-    .btn-admin-action:hover { background: var(--charcoal); }
-    .btn-admin-action.gold { background: var(--gold); color: var(--black); }
-    .btn-admin-action.gold:hover { background: var(--gold-light); }
-    .btn-admin-action.danger { background: none; border: 1px solid #c62828; color: #c62828; }
-    .btn-admin-action.danger:hover { background: #c62828; color: #fff; }
-    .btn-icon-sm { background: none; border: 1px solid #e0dbd4; color: var(--mid); padding: 5px 10px; font-size: 10.5px; cursor: pointer; font-family: 'Jost', sans-serif; margin-right: 5px; transition: all 0.15s; }
-    .btn-icon-sm:hover { border-color: var(--gold); color: var(--gold); }
-    .btn-icon-sm.danger:hover { border-color: #c62828; color: #c62828; }
-    .admin-empty { text-align: center; padding: 30px; color: #aaa; font-size: 12px; }
-    .admin-thumb { width: 38px; height: 50px; object-fit: cover; border: 1px solid #eae5de; }
-
     /* ── RESPONSIVE ── */
     @media (max-width: 900px) {
       nav { padding: 0 20px; }
@@ -415,20 +338,11 @@
       .modal-box { grid-template-columns: 1fr; }
       .modal-img-wrap { min-height: 220px; }
       .modal-img-wrap img { min-height: 220px; }
-      .admin-shell.open { flex-direction: column; }
-      .admin-sidebar { width: 100%; height: auto; position: relative; padding: 16px 0; display: flex; align-items: center; overflow-x: auto; }
-      .admin-logo { display: none; }
-      .admin-nav-divider { display: none; }
-      .admin-nav-item { width: auto; white-space: nowrap; border-left: none; border-bottom: 3px solid transparent; padding: 10px 16px; }
-      .admin-nav-item.active { border-left: none; border-bottom-color: var(--gold); }
-      .admin-main { height: auto; padding: 24px 18px; }
-      .admin-form-grid { grid-template-columns: 1fr; }
     }
     @media (max-width: 560px) {
       .grid { grid-template-columns: 1fr 1fr; gap: 12px; }
       .card-body { padding: 12px; }
       .theme-btns { display: none; }
-      .user-pill-name { display: none; }
     }
   </style>
 </head>
@@ -442,9 +356,7 @@
       <button class="theme-btn" onclick="setTheme('dark')">Gelap</button>
     </div>
     <button class="filter-toggle" onclick="toggleSidebar()">☰ Filter</button>
-    <div id="navAuthArea">
-      <a href="#" class="btn-login" onclick="return openAuthModal()">Login</a>
-    </div>
+    <a href="#" class="btn-login" onclick="return false">Login</a>
   </div>
 </nav>
 
@@ -528,7 +440,7 @@
 
   <main class="main" id="main">
     <div class="results-bar">
-      <span id="resultsCount">Memuat produk...</span>
+      <span id="resultsCount">Menampilkan semua produk</span>
     </div>
     <div id="sectionsContainer"></div>
   </main>
@@ -591,19 +503,19 @@
       <div class="footer-social-list">
         <a class="footer-social-item" href="https://www.instagram.com/harmonifashion" target="_blank" rel="noopener">
           <span class="footer-social-icon fsi-ig"><svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg></span>
-          Instagram
+          @harmonifashion
         </a>
         <a class="footer-social-item" href="https://www.facebook.com/harmonifashion" target="_blank" rel="noopener">
           <span class="footer-social-icon fsi-fb"><svg viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg></span>
-          Facebook
+          HarmoniFashion
         </a>
         <a class="footer-social-item" href="https://wa.me/6281234567890" target="_blank" rel="noopener">
           <span class="footer-social-icon fsi-wa"><svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg></span>
-          WhatsApp
+          +62 812-3456-7890
         </a>
         <a class="footer-social-item" href="https://www.tiktok.com/@harmonifashion" target="_blank" rel="noopener">
           <span class="footer-social-icon fsi-tt"><svg viewBox="0 0 24 24"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></svg></span>
-          TikTok
+          @harmonifashion
         </a>
       </div>
     </div>
@@ -625,75 +537,8 @@
   <img id="lightboxImg" src="" alt="Foto Bukti" />
 </div>
 
-<!-- AUTH MODAL -->
-<div class="auth-overlay" id="authOverlay" onclick="if(event.target===this) closeAuthModal()">
-  <div class="auth-box">
-    <button class="auth-close" onclick="closeAuthModal()">✕</button>
-    <p class="auth-eyebrow">HarmoniFashion</p>
-    <h2 class="auth-title">Masuk ke Akun</h2>
-    <div class="auth-tabs">
-      <button class="auth-tab active" id="tabCustomer" onclick="switchAuthTab('customer')">Customer</button>
-      <button class="auth-tab" id="tabAdmin" onclick="switchAuthTab('admin')">Admin</button>
-    </div>
-    <p class="auth-error" id="authError"></p>
-    <div id="authFormArea">
-      <div class="auth-field">
-        <label class="auth-label" id="authUserLabel">Email</label>
-        <input class="auth-input" id="authUsername" type="email" autocomplete="email" placeholder="Masukkan email Anda" required />
-      </div>
-      <div class="auth-field">
-        <label class="auth-label">Kata Sandi</label>
-        <input class="auth-input" id="authPassword" type="password" autocomplete="current-password" placeholder="Masukkan kata sandi" required />
-      </div>
-      <button class="btn-auth-submit" id="authSubmitBtn" onclick="handleLogin()">Masuk sebagai Customer</button>
-      <div style="margin-top:10px;text-align:center;">
-        <button style="background:none;border:none;color:var(--gold);font-size:11px;cursor:pointer;font-family:'Jost',sans-serif;letter-spacing:0.05em;text-decoration:underline;" onclick="handleRegister()">Belum punya akun? Daftar</button>
-      </div>
-    </div>
-    <p class="auth-hint" id="authHint">Masuk dengan email dan kata sandi Anda.</p>
-  </div>
-</div>
-
-<!-- ADMIN PANEL -->
-<div class="admin-shell" id="adminShell">
-  <aside class="admin-sidebar">
-    <div class="admin-logo">Harmoni<span>Fashion</span><small>Admin Panel</small></div>
-    <button class="admin-nav-item active" data-page="dashboard" onclick="setAdminPage('dashboard')">📊 Dashboard</button>
-    <button class="admin-nav-item" data-page="products" onclick="setAdminPage('products')">🛍️ Kelola Produk</button>
-    <button class="admin-nav-item" data-page="stores" onclick="setAdminPage('stores')">📍 Kelola Cabang</button>
-    <button class="admin-nav-item" data-page="reviews" onclick="setAdminPage('reviews')">💬 Ulasan Pelanggan</button>
-    <div class="admin-nav-divider"></div>
-    <button class="admin-nav-item" onclick="exitAdminPanel()">🌐 Lihat Situs Frontend</button>
-    <button class="admin-nav-item" onclick="handleLogout()">🚪 Keluar (Logout)</button>
-  </aside>
-  <main class="admin-main" id="adminMain"></main>
-</div>
-
 <script>
-/* ============ SUPABASE CONFIG ============ */
-const SUPABASE_URL = 'https://abehrtwxtfcoadlkoxrj.supabase.co';
-const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFiZWhydHd4dGZjb2FkbGtveHJqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODE5NDU3NTksImV4cCI6MjA5NzUyMTc1OX0.hItNr5Tvta5D9jHDur3YKSiVUcx5xpnyGtyX8HRd1OI';
-const BUCKET_NAME  = 'review-photos'; // nama bucket di Storage
-
-async function sbFetch(path, options = {}) {
-  const url = SUPABASE_URL + path;
-  const headers = {
-    'apikey': SUPABASE_KEY,
-    'Authorization': 'Bearer ' + (currentSupabaseToken || SUPABASE_KEY),
-    'Content-Type': 'application/json',
-    'Prefer': 'return=representation',
-    ...options.headers
-  };
-  const res = await fetch(url, { ...options, headers });
-  if (!res.ok) {
-    const err = await res.text().catch(() => res.statusText);
-    throw new Error(err);
-  }
-  const text = await res.text();
-  return text ? JSON.parse(text) : null;
-}
-
-/* ============ STATIC DATA ============ */
+/* ============ DATA ============ */
 const CATEGORIES = [
   { id: 'handbags', label: 'Handbags', header: 'Hand<span>bags</span>' },
   { id: 'ready-to-wear', label: 'Ready-to-Wear', header: 'Ready-to-<span>Wear</span>' },
@@ -713,6 +558,17 @@ const COLOR_HEX = {
   red: '#c62828', navy: '#1a237e', gold: '#C9A84C', silver: '#9e9e9e'
 };
 
+async function loadProducts() {
+
+ const { data, error } =
+ await supabase
+ .from('products')
+ .select('*');
+
+ console.log(data);
+
+}
+
 const STORES = [
   { id:'jakarta', name:'HarmoniFashion Jakarta', address:'Jl. Jenderal Sudirman Kav. 52–53, Senayan, Jakarta Pusat 10270', phone:'+62 21 5793 1888', hours:'Senin–Minggu, 10:00–21:00 WIB', query:'Jl Jenderal Sudirman Kav 52-53 Senayan Jakarta Pusat',
     social:{ ig:'https://www.instagram.com/harmonifashion', fb:'https://www.facebook.com/harmonifashion', wa:'https://wa.me/6281234567890', tt:'https://www.tiktok.com/@harmonifashion' }},
@@ -723,30 +579,26 @@ const STORES = [
 ];
 
 const CS_WHATSAPP = '6281234567890';
-const ADMIN_ACCOUNTS = [{ username: 'admin', password: 'admin123', name: 'Administrator' }];
 
 /* ============ STATE ============ */
-let PRODUCTS = []; // loaded from Supabase
-let currentUser = null;
-let currentSupabaseToken = null;
-let authMode = 'customer';
-let adminCurrentPage = 'dashboard';
-let adminEditState = { type: null, id: null };
 let activeCategory = 'all';
 let mapVisible = false;
 let activeStoreId = STORES[0].id;
 
+// storeRatings: { storeId: { total, count, userRating } }
 const storeRatings = {};
 STORES.forEach(s => { storeRatings[s.id] = { total: 0, count: 0, userRating: 0 }; });
 
+// storeComments: { storeId: [ { author, rating, text, photos: [dataUrl], date } ] }
 const storeComments = {};
 STORES.forEach(s => { storeComments[s.id] = []; });
 
+// pendingPhotos for each store: { storeId: [dataUrl] }
 const pendingPhotos = {};
 STORES.forEach(s => { pendingPhotos[s.id] = []; });
 
 /* ============ HELPERS ============ */
-function formatRupiah(n) { return 'Rp ' + Number(n).toLocaleString('id-ID'); }
+function formatRupiah(n) { return 'Rp ' + n.toLocaleString('id-ID'); }
 function priceBucket(price) {
   if (price < 5000000) return 'under5';
   if (price < 20000000) return 'r5_20';
@@ -754,384 +606,28 @@ function priceBucket(price) {
   if (price < 100000000) return 'r50_100';
   return 'over100';
 }
-function popularity(p) { return (p.badge ? 100 : 50) + ((p.id || 0) % 17); }
+function popularity(p) { return (p.badge ? 100 : 50) + (p.id % 17); }
 function getSelectedValues(selector) {
   return Array.from(document.querySelectorAll(selector + ':checked')).map(cb => cb.value);
 }
 function formatDate(d) {
-  return new Date(d).toLocaleDateString('id-ID', { day:'2-digit', month:'short', year:'numeric' });
+  return d.toLocaleDateString('id-ID', { day:'2-digit', month:'short', year:'numeric' });
 }
 
-/* ============ SUPABASE AUTH ============ */
-async function supabaseSignUp(email, password) {
-  const res = await fetch(SUPABASE_URL + '/auth/v1/signup', {
-    method: 'POST',
-    headers: { 'apikey': SUPABASE_KEY, 'Content-Type': 'application/json' },
-    body: JSON.stringify({ email, password })
-  });
-  const data = await res.json();
-  if (!res.ok) throw new Error(data.msg || data.error_description || 'Gagal daftar.');
-  return data;
-}
-
-async function supabaseSignIn(email, password) {
-  const res = await fetch(SUPABASE_URL + '/auth/v1/token?grant_type=password', {
-    method: 'POST',
-    headers: { 'apikey': SUPABASE_KEY, 'Content-Type': 'application/json' },
-    body: JSON.stringify({ email, password })
-  });
-  const data = await res.json();
-  if (!res.ok) throw new Error(data.msg || data.error_description || 'Email atau password salah.');
-  return data;
-}
-
-async function supabaseSignOut() {
-  if (!currentSupabaseToken) return;
-  await fetch(SUPABASE_URL + '/auth/v1/logout', {
-    method: 'POST',
-    headers: { 'apikey': SUPABASE_KEY, 'Authorization': 'Bearer ' + currentSupabaseToken }
-  }).catch(() => {});
-}
-
-/* ============ SESSION ============ */
-function saveSession(data) {
-  if (data) localStorage.setItem('hf_session', JSON.stringify(data));
-  else localStorage.removeItem('hf_session');
-}
-function loadSession() {
-  try { return JSON.parse(localStorage.getItem('hf_session')) || null; }
-  catch (e) { return null; }
-}
-
-/* ============ AUTH MODAL ============ */
-function openAuthModal() {
-  document.getElementById('authOverlay').classList.add('open');
-  document.body.style.overflow = 'hidden';
-  switchAuthTab('customer');
-  return false;
-}
-function closeAuthModal() {
-  document.getElementById('authOverlay').classList.remove('open');
-  document.body.style.overflow = '';
-  document.getElementById('authError').classList.remove('show');
-  document.getElementById('authUsername').value = '';
-  document.getElementById('authPassword').value = '';
-}
-function switchAuthTab(mode) {
-  authMode = mode;
-  document.getElementById('tabCustomer').classList.toggle('active', mode === 'customer');
-  document.getElementById('tabAdmin').classList.toggle('active', mode === 'admin');
-  document.getElementById('authError').classList.remove('show');
-  const submitBtn = document.getElementById('authSubmitBtn');
-  const hint = document.getElementById('authHint');
-  const userLabel = document.getElementById('authUserLabel');
-  if (mode === 'admin') {
-    submitBtn.textContent = 'Masuk sebagai Admin';
-    userLabel.textContent = 'Username Admin';
-    document.getElementById('authUsername').type = 'text';
-    hint.innerHTML = 'Akses ini khusus untuk pengelola toko HarmoniFashion.';
-  } else {
-    submitBtn.textContent = 'Masuk sebagai Customer';
-    userLabel.textContent = 'Email';
-    document.getElementById('authUsername').type = 'email';
-    hint.innerHTML = 'Masuk dengan email dan kata sandi Anda.';
-  }
-}
-function showAuthError(msg) {
-  const el = document.getElementById('authError');
-  el.textContent = msg;
-  el.classList.add('show');
-}
-
-async function handleLogin() {
-  const username = document.getElementById('authUsername').value.trim();
-  const password = document.getElementById('authPassword').value;
-  if (!username || !password) { showAuthError('Email/username dan kata sandi wajib diisi.'); return; }
-
-  if (authMode === 'admin') {
-    const admin = ADMIN_ACCOUNTS.find(a => a.username.toLowerCase() === username.toLowerCase() && a.password === password);
-    if (!admin) { showAuthError('Username atau kata sandi Admin salah.'); return; }
-    currentUser = { username: admin.username, name: admin.name, role: 'admin' };
-    saveSession({ ...currentUser, token: null });
-    closeAuthModal();
-    renderNavAuthArea();
-    enterAdminPanel();
-    return;
-  }
-
-  const btn = document.getElementById('authSubmitBtn');
-  btn.textContent = 'Memproses...'; btn.disabled = true;
-  try {
-    const data = await supabaseSignIn(username, password);
-    currentSupabaseToken = data.access_token;
-    const user = data.user;
-    currentUser = { username: user.email, name: user.email.split('@')[0], role: 'customer', uid: user.id };
-    saveSession({ ...currentUser, token: currentSupabaseToken });
-    closeAuthModal();
-    renderNavAuthArea();
-    await loadReviewsFromSupabase();
-  } catch (err) {
-    showAuthError(err.message || 'Login gagal. Coba lagi.');
-  } finally {
-    btn.textContent = 'Masuk sebagai Customer'; btn.disabled = false;
-  }
-}
-
-async function handleRegister() {
-  const email = document.getElementById('authUsername').value.trim();
-  const password = document.getElementById('authPassword').value;
-  if (!email || !password) { showAuthError('Email dan kata sandi wajib diisi.'); return; }
-  if (password.length < 6) { showAuthError('Kata sandi minimal 6 karakter.'); return; }
-
-  const btn = document.getElementById('authSubmitBtn');
-  btn.textContent = 'Mendaftar...'; btn.disabled = true;
-  try {
-    await supabaseSignUp(email, password);
-    // Auto sign-in after register
-    const data = await supabaseSignIn(email, password);
-    currentSupabaseToken = data.access_token;
-    const user = data.user;
-    currentUser = { username: user.email, name: user.email.split('@')[0], role: 'customer', uid: user.id };
-    saveSession({ ...currentUser, token: currentSupabaseToken });
-    closeAuthModal();
-    renderNavAuthArea();
-    alert('Pendaftaran berhasil! Selamat datang di HarmoniFashion.');
-  } catch (err) {
-    showAuthError(err.message || 'Gagal mendaftar. Coba lagi.');
-  } finally {
-    btn.textContent = 'Masuk sebagai Customer'; btn.disabled = false;
-  }
-}
-
-async function handleLogout() {
-  if (currentUser && currentUser.role === 'customer') await supabaseSignOut();
-  currentUser = null;
-  currentSupabaseToken = null;
-  saveSession(null);
-  exitAdminPanel();
-  renderNavAuthArea();
-}
-
-async function restoreSession() {
-  const session = loadSession();
-  if (!session) { renderNavAuthArea(); return; }
-
-  if (session.role === 'admin') {
-    currentUser = session;
-    renderNavAuthArea();
-    enterAdminPanel();
-    return;
-  }
-
-  if (session.token) {
-    // Verify token still valid
-    try {
-      const res = await fetch(SUPABASE_URL + '/auth/v1/user', {
-        headers: { 'apikey': SUPABASE_KEY, 'Authorization': 'Bearer ' + session.token }
-      });
-      if (res.ok) {
-        currentSupabaseToken = session.token;
-        currentUser = session;
-        renderNavAuthArea();
-        await loadReviewsFromSupabase();
-        return;
-      }
-    } catch (e) {}
-  }
-  saveSession(null);
-  renderNavAuthArea();
-}
-
-function renderNavAuthArea() {
-  const area = document.getElementById('navAuthArea');
-  if (!currentUser) {
-    area.innerHTML = '<a href="#" class="btn-login" onclick="return openAuthModal()">Login</a>';
-    return;
-  }
-  if (currentUser.role === 'admin') {
-    area.innerHTML = `
-      <div class="user-pill">
-        <span class="user-pill-name">Halo, <strong>${currentUser.name}</strong> (Admin)</span>
-        <button class="btn-admin-panel" onclick="enterAdminPanel()">Dashboard</button>
-        <button class="btn-logout" onclick="handleLogout()">Keluar</button>
-      </div>`;
-  } else {
-    area.innerHTML = `
-      <div class="user-pill">
-        <span class="user-pill-name">Halo, <strong>${currentUser.name}</strong></span>
-        <button class="btn-logout" onclick="handleLogout()">Keluar</button>
-      </div>`;
-  }
-}
-
-/* ============ SUPABASE: LOAD PRODUCTS ============ */
-async function loadProductsFromSupabase() {
-  try {
-    const data = await sbFetch('/rest/v1/products?select=*&order=created_at.desc');
-    if (data && data.length > 0) {
-      PRODUCTS = data.map(p => ({
-        id: p.id,
-        cat: p.category || 'accessories',
-        brand: p.brand || '',
-        name: p.name || '',
-        desc: p.description || '',
-        price: Number(p.price) || 0,
-        img: extractUnsplashId(p.image_url || ''),
-        image_url: p.image_url || '',
-        badge: null,
-        color: 'black',
-        cond: 'Brand New',
-        colorVariants: {}
-      }));
-    }
-  } catch (e) {
-    console.warn('Gagal load produk dari Supabase, menggunakan data lokal.', e.message);
-    // Fallback: use built-in data
-    PRODUCTS = getFallbackProducts();
-  }
+/* ============ INIT ============ */
+function init() {
+  buildCategoryNav();
+  buildSections();
   buildBrandFilter();
   buildColorFilter();
+  buildStores();
   applyFilters();
-  if (currentUser && currentUser.role === 'admin' && adminCurrentPage === 'dashboard') {
-    setAdminPage('dashboard');
-  }
+  updateOverallRating();
 }
 
-function extractUnsplashId(url) {
-  if (!url) return '1548036328-c9fa89d128fa';
-  const m = url.match(/unsplash\.com\/photo-([^?&/]+)/);
-  if (m) return m[1];
-  const m2 = url.match(/photo-([a-zA-Z0-9_-]+)/);
-  if (m2) return m2[1];
-  return null; // will use image_url directly
-}
-
-function getProductImgUrl(p) {
-  if (p.image_url && p.image_url.startsWith('http')) {
-    return p.image_url + (p.image_url.includes('?') ? '&' : '?') + 'w=440&q=80';
-  }
-  if (p.img && p.img.length > 5) {
-    return 'https://images.unsplash.com/photo-' + p.img + '?w=440&q=80';
-  }
-  return 'https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=440&q=80';
-}
-
-function getProductModalImgUrl(p) {
-  if (p.image_url && p.image_url.startsWith('http')) {
-    return p.image_url + (p.image_url.includes('?') ? '&' : '?') + 'w=700&q=85';
-  }
-  if (p.img && p.img.length > 5) {
-    return 'https://images.unsplash.com/photo-' + p.img + '?w=700&q=85';
-  }
-  return 'https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=700&q=85';
-}
-
-/* ============ SUPABASE: SAVE PRODUCT ============ */
-async function saveProductToSupabase(productData) {
-  const payload = {
-    name: productData.name,
-    brand: productData.brand,
-    category: productData.cat,
-    price: productData.price,
-    description: productData.desc,
-    image_url: productData.image_url || ''
-  };
-  if (productData.id && String(productData.id).length > 5) {
-    // update existing (supabase int id)
-    await sbFetch('/rest/v1/products?id=eq.' + productData.id, {
-      method: 'PATCH',
-      body: JSON.stringify(payload)
-    });
-  } else {
-    await sbFetch('/rest/v1/products', {
-      method: 'POST',
-      body: JSON.stringify(payload)
-    });
-  }
-  await loadProductsFromSupabase();
-}
-
-async function deleteProductFromSupabase(id) {
-  await sbFetch('/rest/v1/products?id=eq.' + id, { method: 'DELETE' });
-  await loadProductsFromSupabase();
-}
-
-/* ============ SUPABASE: REVIEWS ============ */
-async function loadReviewsFromSupabase() {
-  try {
-    const data = await sbFetch('/rest/v1/reviews?select=*&order=created_at.desc');
-    if (!data) return;
-    // Reset
-    STORES.forEach(s => { storeComments[s.id] = []; storeRatings[s.id] = { total: 0, count: 0, userRating: storeRatings[s.id]?.userRating || 0 }; });
-    data.forEach(r => {
-      const sid = r.product_id; // we repurpose product_id as store_id for reviews
-      if (!storeComments[sid]) return;
-      storeComments[sid].push({
-        id: r.id,
-        author: r.comment ? r.comment.split('||')[0] || 'Pelanggan' : 'Pelanggan',
-        rating: r.rating || 0,
-        text: r.comment ? r.comment.split('||')[1] || '' : '',
-        photos: r.comment ? (r.comment.split('||')[2] ? r.comment.split('||')[2].split('|') : []) : [],
-        date: r.created_at
-      });
-      if (r.rating) {
-        storeRatings[sid].total += r.rating;
-        storeRatings[sid].count += 1;
-      }
-    });
-    buildStores();
-    updateOverallRating();
-  } catch (e) {
-    console.warn('Gagal load reviews:', e.message);
-  }
-}
-
-async function saveReviewToSupabase(storeId, authorName, rating, text, photoUrls) {
-  // Encode: comment field: "authorName||text||photo1|photo2"
-  const commentEncoded = [authorName, text, photoUrls.join('|')].join('||');
-  await sbFetch('/rest/v1/reviews', {
-    method: 'POST',
-    body: JSON.stringify({
-      product_id: storeId,
-      user_id: currentUser ? currentUser.uid || null : null,
-      rating: rating || null,
-      comment: commentEncoded
-    })
-  });
-}
-
-async function deleteReviewFromSupabase(reviewId) {
-  await sbFetch('/rest/v1/reviews?id=eq.' + reviewId, { method: 'DELETE' });
-}
-
-/* ============ SUPABASE STORAGE: UPLOAD PHOTO ============ */
-async function uploadPhotoToStorage(file, storeId) {
-  const ext = file.name.split('.').pop().toLowerCase() || 'jpg';
-  const path = storeId + '/' + Date.now() + '_' + Math.random().toString(36).slice(2) + '.' + ext;
-  const res = await fetch(SUPABASE_URL + '/storage/v1/object/' + BUCKET_NAME + '/' + path, {
-    method: 'POST',
-    headers: {
-      'apikey': SUPABASE_KEY,
-      'Authorization': 'Bearer ' + (currentSupabaseToken || SUPABASE_KEY),
-      'Content-Type': file.type || 'image/jpeg'
-    },
-    body: file
-  });
-  if (!res.ok) {
-    const txt = await res.text().catch(() => '');
-    throw new Error('Upload gagal: ' + txt);
-  }
-  // Return public URL
-  return SUPABASE_URL + '/storage/v1/object/public/' + BUCKET_NAME + '/' + path;
-}
-
-/* ============ CATEGORY NAV ============ */
 function buildCategoryNav() {
   const catBar = document.getElementById('catBar');
   const sidebarCat = document.getElementById('sidebarCatContainer');
-  // Remove old dynamic ones
-  catBar.querySelectorAll('.cat-link:not([data-cat="all"])').forEach(n => n.remove());
-  sidebarCat.innerHTML = '';
   CATEGORIES.forEach(cat => {
     const btn = document.createElement('button');
     btn.className = 'cat-link'; btn.dataset.cat = cat.id; btn.innerHTML = cat.label;
@@ -1146,11 +642,10 @@ function buildCategoryNav() {
 
 function buildSections() {
   const container = document.getElementById('sectionsContainer');
-  container.innerHTML = '';
   CATEGORIES.forEach(cat => {
     const sec = document.createElement('div');
     sec.className = 'section'; sec.id = 'sec-' + cat.id;
-    sec.innerHTML = `<div class="sec-header"><h2 class="sec-title">${cat.header} <span class="sec-count"></span></h2><button class="sec-link" onclick="setCategory('${cat.id}')">Lihat Semua</button></div><div class="grid" id="grid-${cat.id}"><div class="loading-state"><div class="loading-spinner"></div><br>Memuat...</div></div>`;
+    sec.innerHTML = `<div class="sec-header"><h2 class="sec-title">${cat.header} <span class="sec-count"></span></h2><button class="sec-link" onclick="setCategory('${cat.id}')">Lihat Semua</button></div><div class="grid" id="grid-${cat.id}"></div>`;
     container.appendChild(sec);
   });
 }
@@ -1164,7 +659,7 @@ function buildBrandFilter() {
 }
 
 function buildColorFilter() {
-  const colors = Array.from(new Set(PRODUCTS.map(p => p.color).filter(Boolean)));
+  const colors = Array.from(new Set(PRODUCTS.map(p => p.color)));
   colors.sort((a,b) => (COLOR_LABELS[a]||a).localeCompare(COLOR_LABELS[b]||b));
   document.getElementById('colorFilterGroup').innerHTML = colors.map(c => {
     const slug = 'col-' + c;
@@ -1185,17 +680,19 @@ function socialIcon(type) {
 
 function buildStores() {
   const listEl = document.getElementById('storeList');
-  listEl.innerHTML = STORES.map((s, i) => `
+  listEl.innerHTML = STORES.map((s,i) => `
     <div class="store-item${i===0?' active':''}" data-store="${s.id}" onclick="selectStore('${s.id}')">
       <div class="store-item-name">${s.name}</div>
       <div class="store-item-addr"><strong>Alamat:</strong> ${s.address}</div>
       <div class="store-item-meta">📞 ${s.phone}<br>⏰ ${s.hours}</div>
+
       <div class="store-social">
         <a class="store-social-btn ssb-ig" href="${s.social.ig}" onclick="event.stopPropagation()" target="_blank" rel="noopener">${socialIcon('ig')} Instagram</a>
         <a class="store-social-btn ssb-fb" href="${s.social.fb}" onclick="event.stopPropagation()" target="_blank" rel="noopener">${socialIcon('fb')} Facebook</a>
         <a class="store-social-btn ssb-wa" href="${s.social.wa}" onclick="event.stopPropagation()" target="_blank" rel="noopener">${socialIcon('wa')} WhatsApp</a>
         <a class="store-social-btn ssb-tt" href="${s.social.tt}" onclick="event.stopPropagation()" target="_blank" rel="noopener">${socialIcon('tt')} TikTok</a>
       </div>
+
       <div class="store-rating-wrap">
         <div class="store-rating-label">★ Beri Rating Cabang Ini</div>
         <div class="store-stars" id="stars-${s.id}">
@@ -1203,6 +700,7 @@ function buildStores() {
         </div>
         <div class="store-rating-summary" id="rating-summary-${s.id}">Belum ada rating</div>
       </div>
+
       <div class="comment-form-wrap" onclick="event.stopPropagation()">
         <div class="comment-form-label">💬 Tinggalkan Komentar &amp; Foto Bukti</div>
         <input class="comment-name-input" id="cname-${s.id}" type="text" placeholder="Nama Anda (opsional)" maxlength="60" />
@@ -1213,103 +711,32 @@ function buildStores() {
         </div>
         <input class="photo-upload-input" type="file" id="photo-input-${s.id}" accept="image/jpeg,image/png,image/webp" multiple onchange="handlePhotoUpload(event,'${s.id}')" />
         <div class="photo-preview-list" id="photo-preview-${s.id}"></div>
-        <button class="btn-submit-comment" id="submit-btn-${s.id}" onclick="submitComment('${s.id}')">Kirim Komentar</button>
+        <button class="btn-submit-comment" onclick="submitComment('${s.id}')">Kirim Komentar</button>
       </div>
+
       <div class="comment-list" id="comment-list-${s.id}">
         <div class="no-comments">Belum ada komentar. Jadilah yang pertama!</div>
       </div>
     </div>
   `).join('');
-  STORES.forEach(s => {
-    updateStarDisplay(s.id);
-    renderComments(s.id);
-    updateRatingSummary(s.id);
-  });
   selectStore(STORES[0].id);
 }
 
-function selectStore(storeId) {
-  activeStoreId = storeId;
-  document.querySelectorAll('.store-item').forEach(el => {
-    el.classList.toggle('active', el.dataset.store === storeId);
-  });
-  const s = STORES.find(x => x.id === storeId);
-  if (s && mapVisible) {
-    document.getElementById('storeMapFrame').src = 'https://maps.google.com/maps?q=' + encodeURIComponent(s.query) + '&output=embed';
-  }
-}
-
-function toggleMap() {
-  mapVisible = !mapVisible;
-  const wrap = document.getElementById('storeMapWrap');
-  const icon = document.getElementById('mapToggleIcon');
-  const text = document.getElementById('mapToggleText');
-  wrap.classList.toggle('map-hidden', !mapVisible);
-  icon.textContent = mapVisible ? '🗺️' : '🗺️';
-  text.textContent = mapVisible ? 'Sembunyikan Peta' : 'Tampilkan Peta';
-  if (mapVisible) {
-    const s = STORES.find(x => x.id === activeStoreId);
-    if (s) document.getElementById('storeMapFrame').src = 'https://maps.google.com/maps?q=' + encodeURIComponent(s.query) + '&output=embed';
-  }
-}
-
-/* ============ RATINGS ============ */
-function rateStore(storeId, n) {
-  const r = storeRatings[storeId];
-  if (r.userRating === n) { r.userRating = 0; }
-  else { if (r.userRating > 0) { r.total -= r.userRating; r.count--; } r.total += n; r.count++; r.userRating = n; }
-  updateStarDisplay(storeId);
-  updateRatingSummary(storeId);
-  updateOverallRating();
-}
-
-function hoverStars(storeId, n) {
-  const stars = document.querySelectorAll('#stars-' + storeId + ' .star-btn');
-  stars.forEach((btn, i) => btn.classList.toggle('filled', i < n));
-}
-
-function resetStarHover(storeId) { updateStarDisplay(storeId); }
-
-function updateStarDisplay(storeId) {
-  const r = storeRatings[storeId];
-  const stars = document.querySelectorAll('#stars-' + storeId + ' .star-btn');
-  stars.forEach((btn, i) => btn.classList.toggle('filled', i < r.userRating));
-}
-
-function updateRatingSummary(storeId) {
-  const r = storeRatings[storeId];
-  const el = document.getElementById('rating-summary-' + storeId);
-  if (!el) return;
-  if (!r.count) { el.innerHTML = 'Belum ada rating'; return; }
-  const avg = (r.total / r.count).toFixed(1);
-  el.innerHTML = `Rating: <strong>${avg} / 5</strong> (${r.count} ulasan)`;
-}
-
-function updateOverallRating() {
-  let total = 0, count = 0;
-  STORES.forEach(s => { total += storeRatings[s.id].total; count += storeRatings[s.id].count; });
-  const scoreEl = document.getElementById('overallScore');
-  const starsEl = document.getElementById('overallStars');
-  const metaEl = document.getElementById('overallMeta');
-  if (!count) { scoreEl.textContent = '—'; starsEl.innerHTML = ''; metaEl.textContent = 'Belum ada rating'; return; }
-  const avg = total / count;
-  scoreEl.textContent = avg.toFixed(1);
-  metaEl.textContent = count + ' total ulasan';
-  starsEl.innerHTML = [1,2,3,4,5].map(i => `<span class="overall-star${avg>=i?'':(avg>=(i-0.5)?' half':' empty')}">★</span>`).join('');
-}
-
 /* ============ PHOTO UPLOAD ============ */
-function triggerPhotoUpload(storeId) { document.getElementById('photo-input-' + storeId).click(); }
+function triggerPhotoUpload(storeId) {
+  document.getElementById('photo-input-' + storeId).click();
+}
 
 function handlePhotoUpload(event, storeId) {
   const files = Array.from(event.target.files);
   const existing = pendingPhotos[storeId];
   const remaining = 4 - existing.length;
   const toAdd = files.slice(0, remaining);
+
   toAdd.forEach(file => {
     const reader = new FileReader();
     reader.onload = e => {
-      pendingPhotos[storeId].push({ file, preview: e.target.result });
+      pendingPhotos[storeId].push(e.target.result);
       renderPhotoPreview(storeId);
     };
     reader.readAsDataURL(file);
@@ -1320,9 +747,9 @@ function handlePhotoUpload(event, storeId) {
 function renderPhotoPreview(storeId) {
   const container = document.getElementById('photo-preview-' + storeId);
   const photos = pendingPhotos[storeId];
-  container.innerHTML = photos.map((ph, i) => `
+  container.innerHTML = photos.map((src, i) => `
     <div class="photo-preview-item">
-      <img src="${ph.preview}" alt="Preview ${i+1}" />
+      <img src="${src}" alt="Preview ${i+1}" />
       <button class="photo-remove-btn" onclick="removePhoto('${storeId}',${i})">✕</button>
     </div>
   `).join('');
@@ -1333,13 +760,13 @@ function removePhoto(storeId, idx) {
   renderPhotoPreview(storeId);
 }
 
-/* ============ SUBMIT COMMENT ============ */
-async function submitComment(storeId) {
+/* ============ COMMENTS ============ */
+function submitComment(storeId) {
   const r = storeRatings[storeId];
   const nameEl = document.getElementById('cname-' + storeId);
   const textEl = document.getElementById('ctext-' + storeId);
   const text = textEl.value.trim();
-  const photos = pendingPhotos[storeId];
+  const photos = [...pendingPhotos[storeId]];
 
   if (!text && photos.length === 0) {
     textEl.style.borderColor = 'var(--gold)';
@@ -1348,89 +775,145 @@ async function submitComment(storeId) {
     return;
   }
 
-  const btn = document.getElementById('submit-btn-' + storeId);
-  btn.textContent = 'Mengirim...'; btn.disabled = true;
+  const comment = {
+    author: nameEl.value.trim() || 'Pelanggan Anonim',
+    rating: r.userRating,
+    text,
+    photos,
+    date: new Date()
+  };
 
-  try {
-    let photoUrls = [];
-    // Upload photos if logged in customer
-    for (const ph of photos) {
-      try {
-        const url = await uploadPhotoToStorage(ph.file, storeId);
-        photoUrls.push(url);
-      } catch (e) {
-        // If bucket not configured, use base64 preview as fallback
-        photoUrls.push(ph.preview);
-      }
-    }
-
-    const authorName = nameEl.value.trim() || 'Pelanggan Anonim';
-
-    // Save to Supabase
-    await saveReviewToSupabase(storeId, authorName, r.userRating, text, photoUrls);
-
-    nameEl.value = '';
-    textEl.value = '';
-    pendingPhotos[storeId] = [];
-    renderPhotoPreview(storeId);
-    // Reload reviews
-    await loadReviewsFromSupabase();
-  } catch (e) {
-    // Fallback: save locally
-    storeComments[storeId].unshift({
-      author: nameEl.value.trim() || 'Pelanggan Anonim',
-      rating: r.userRating,
-      text,
-      photos: photos.map(p => p.preview),
-      date: new Date().toISOString()
-    });
-    nameEl.value = '';
-    textEl.value = '';
-    pendingPhotos[storeId] = [];
-    renderPhotoPreview(storeId);
-    renderComments(storeId);
-    console.warn('Review disimpan lokal (Supabase error):', e.message);
-  } finally {
-    btn.textContent = 'Kirim Komentar'; btn.disabled = false;
-  }
+  storeComments[storeId].unshift(comment);
+  nameEl.value = '';
+  textEl.value = '';
+  pendingPhotos[storeId] = [];
+  renderPhotoPreview(storeId);
+  renderComments(storeId);
 }
 
 function renderComments(storeId) {
   const listEl = document.getElementById('comment-list-' + storeId);
-  if (!listEl) return;
   const comments = storeComments[storeId];
   if (!comments.length) {
     listEl.innerHTML = '<div class="no-comments">Belum ada komentar. Jadilah yang pertama!</div>';
     return;
   }
-  listEl.innerHTML = comments.map(c => `
+  listEl.innerHTML = comments.map((c, idx) => `
     <div class="comment-item">
       <div class="comment-item-header">
-        <span class="comment-author">${c.author || 'Anonim'}</span>
-        ${c.rating ? '<span class="comment-stars-display">' + '★'.repeat(c.rating) + '</span>' : ''}
+        <span class="comment-author">${escHtml(c.author)}</span>
+        ${c.rating > 0 ? `<span class="comment-stars-display">${'★'.repeat(c.rating)}${'☆'.repeat(5-c.rating)}</span>` : ''}
         <span class="comment-date">${formatDate(c.date)}</span>
       </div>
-      ${c.text ? `<div class="comment-text">${c.text}</div>` : ''}
-      ${(c.photos && c.photos.length) ? `<div class="comment-photos">${c.photos.map(ph => `<img class="comment-photo-thumb" src="${ph}" alt="Foto" onclick="openLightbox('${ph}')" />`).join('')}</div>` : ''}
+      ${c.text ? `<div class="comment-text">${escHtml(c.text)}</div>` : ''}
+      ${c.photos.length ? `<div class="comment-photos">${c.photos.map((src,pi) => `<img class="comment-photo-thumb" src="${src}" alt="Foto bukti" onclick="openLightbox('${storeId}',${idx},${pi})" />`).join('')}</div>` : ''}
     </div>
   `).join('');
 }
 
+function escHtml(str) {
+  return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
 /* ============ LIGHTBOX ============ */
-function openLightbox(src) {
+function openLightbox(storeId, commentIdx, photoIdx) {
+  const src = storeComments[storeId][commentIdx].photos[photoIdx];
   document.getElementById('lightboxImg').src = src;
   document.getElementById('lightbox').classList.add('open');
 }
-function closeLightbox() { document.getElementById('lightbox').classList.remove('open'); }
+function closeLightbox() {
+  document.getElementById('lightbox').classList.remove('open');
+}
 
-/* ============ FILTER + SORT ============ */
-function setCategory(cat) {
-  activeCategory = cat;
-  document.querySelectorAll('.cat-link, .sidebar-cat-link').forEach(b => b.classList.toggle('active', b.dataset.cat === cat));
+/* ============ RATING ============ */
+function rateStore(storeId, val) {
+  const r = storeRatings[storeId];
+  if (r.userRating > 0) { r.total = r.total - r.userRating + val; }
+  else { r.total += val; r.count += 1; }
+  r.userRating = val;
+  renderStars(storeId);
+  updateRatingSummary(storeId);
+  updateOverallRating();
+}
+
+function hoverStars(storeId, val) {
+  const stars = document.querySelectorAll(`#stars-${storeId} .star-btn`);
+  stars.forEach((s, i) => { s.style.color = i < val ? 'var(--gold)' : ''; });
+}
+function resetStarHover(storeId) { renderStars(storeId); }
+function renderStars(storeId) {
+  const r = storeRatings[storeId];
+  const stars = document.querySelectorAll(`#stars-${storeId} .star-btn`);
+  stars.forEach((s, i) => { s.classList.toggle('filled', i < r.userRating); s.style.color = ''; });
+}
+function updateRatingSummary(storeId) {
+  const r = storeRatings[storeId];
+  const el = document.getElementById('rating-summary-' + storeId);
+  if (!el) return;
+  if (r.count === 0) { el.innerHTML = 'Belum ada rating'; return; }
+  const avg = (r.total / r.count).toFixed(1);
+  const stars = '★'.repeat(Math.round(r.total/r.count)) + '☆'.repeat(5-Math.round(r.total/r.count));
+  el.innerHTML = `<strong>${avg}</strong> / 5 &nbsp;${stars}&nbsp; (${r.count} ulasan)`;
+}
+function updateOverallRating() {
+  const rated = STORES.filter(s => storeRatings[s.id].count > 0);
+  const scoreEl = document.getElementById('overallScore');
+  const starsEl = document.getElementById('overallStars');
+  const metaEl = document.getElementById('overallMeta');
+  if (!rated.length) { scoreEl.textContent = '—'; starsEl.innerHTML = ''; metaEl.textContent = 'Belum ada rating dari cabang manapun'; return; }
+  const totalVotes = rated.reduce((a,s) => a + storeRatings[s.id].count, 0);
+  const totalScore = rated.reduce((a,s) => a + storeRatings[s.id].total, 0);
+  const avg = totalScore / totalVotes;
+  scoreEl.textContent = avg.toFixed(1);
+  let starsHtml = '';
+  for (let i=1; i<=5; i++) {
+    if (avg>=i) starsHtml += '<span class="overall-star">★</span>';
+    else if (avg>=i-0.5) starsHtml += '<span class="overall-star half">★</span>';
+    else starsHtml += '<span class="overall-star empty">☆</span>';
+  }
+  starsEl.innerHTML = starsHtml;
+  metaEl.textContent = `dari ${totalVotes} ulasan · ${rated.length} cabang dinilai`;
+}
+
+/* ============ SELECT STORE ============ */
+function selectStore(id) {
+  const s = STORES.find(x => x.id === id);
+  if (!s) return;
+  activeStoreId = id;
+  document.querySelectorAll('.store-item').forEach(el => el.classList.toggle('active', el.dataset.store === id));
+  if (mapVisible) document.getElementById('storeMapFrame').src = 'https://www.google.com/maps?q=' + encodeURIComponent(s.query) + '&output=embed';
+}
+
+/* ============ MAP TOGGLE ============ */
+function toggleMap() {
+  mapVisible = !mapVisible;
+  const wrap = document.getElementById('storeMapWrap');
+  const icon = document.getElementById('mapToggleIcon');
+  const text = document.getElementById('mapToggleText');
+  if (mapVisible) {
+    wrap.classList.remove('map-hidden');
+    icon.textContent = '✕'; text.textContent = 'Sembunyikan Peta';
+    const s = STORES.find(x => x.id === activeStoreId);
+    if (s) document.getElementById('storeMapFrame').src = 'https://www.google.com/maps?q=' + encodeURIComponent(s.query) + '&output=embed';
+  } else {
+    wrap.classList.add('map-hidden');
+    icon.textContent = '🗺️'; text.textContent = 'Tampilkan Peta';
+    document.getElementById('storeMapFrame').src = '';
+  }
+}
+
+/* ============ CATEGORY ============ */
+function setCategory(id) {
+  activeCategory = id;
+  document.querySelectorAll('.cat-link').forEach(l => l.classList.toggle('active', l.dataset.cat === id));
+  document.querySelectorAll('.sidebar-cat-link').forEach(l => l.classList.toggle('active', l.dataset.cat === id));
   applyFilters();
+  if (id !== 'all') { const sec = document.getElementById('sec-' + id); if (sec) sec.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+  document.getElementById('sidebar').classList.remove('open');
   return false;
 }
 
+/* ============ FILTER + SORT + RENDER ============ */
 function applyFilters() {
   const brands = getSelectedValues('.f-brand');
   const colors = getSelectedValues('.f-color');
@@ -1450,17 +933,13 @@ function applyFilters() {
     const items = filtered.filter(p => p.cat === cat.id);
     totalShown += items.length;
     const gridEl = document.getElementById('grid-' + cat.id);
-    if (!gridEl) return;
     gridEl.innerHTML = items.length ? items.map(renderCard).join('') : '<div class="empty-state">Tidak ada produk yang sesuai di kategori ini.</div>';
     const countEl = document.querySelector('#sec-' + cat.id + ' .sec-count');
     if (countEl) countEl.textContent = '(' + items.length + ' produk)';
     const secEl = document.getElementById('sec-' + cat.id);
-    if (secEl) secEl.style.display = (activeCategory === 'all' || activeCategory === cat.id) ? '' : 'none';
+    secEl.style.display = (activeCategory === 'all' || activeCategory === cat.id) ? '' : 'none';
   });
-  const total = PRODUCTS.length;
-  document.getElementById('resultsCount').innerHTML = total
-    ? 'Menampilkan <strong>' + totalShown + '</strong> dari <strong>' + total + '</strong> produk'
-    : 'Memuat produk...';
+  document.getElementById('resultsCount').innerHTML = 'Menampilkan <strong>' + totalShown + '</strong> dari <strong>' + PRODUCTS.length + '</strong> produk';
 }
 
 function sortProducts(list, mode) {
@@ -1468,16 +947,16 @@ function sortProducts(list, mode) {
   if (mode === 'price_low') arr.sort((a,b) => a.price - b.price);
   else if (mode === 'price_high') arr.sort((a,b) => b.price - a.price);
   else if (mode === 'popular') arr.sort((a,b) => popularity(b) - popularity(a));
-  else arr.sort((a,b) => (b.id||0) - (a.id||0));
+  else arr.sort((a,b) => b.id - a.id);
   return arr;
 }
 
 function renderCard(p) {
-  const imgUrl = getProductImgUrl(p);
+  const imgUrl = 'https://images.unsplash.com/photo-' + p.img + '?w=440&q=80';
   return `
-    <div class="card" onclick="openModal(${JSON.stringify(p.id)})">
+    <div class="card" onclick="openModal(${p.id})">
       <div class="card-img-wrap">
-        <img src="${imgUrl}" alt="${p.name}" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=440&q=80'" />
+        <img src="${imgUrl}" alt="${p.name}" loading="lazy" />
         ${p.badge ? `<span class="card-badge">${p.badge}</span>` : ''}
       </div>
       <div class="card-body">
@@ -1486,7 +965,7 @@ function renderCard(p) {
         <div class="card-desc">${p.desc}</div>
         <div class="card-price">Mulai <strong>${formatRupiah(p.price)}</strong></div>
       </div>
-      <a href="#" class="btn-detail" onclick="event.preventDefault();event.stopPropagation();openModal(${JSON.stringify(p.id)})">Lihat Detail</a>
+      <a href="#" class="btn-detail" onclick="event.preventDefault();event.stopPropagation();openModal(${p.id})">Lihat Detail</a>
     </div>
   `;
 }
@@ -1502,10 +981,10 @@ let currentModalProductId = null;
 let currentSelectedColor = null;
 
 function openModal(id) {
-  const p = PRODUCTS.find(x => String(x.id) === String(id));
+  const p = PRODUCTS.find(x => x.id === id);
   if (!p) return;
   currentModalProductId = id;
-  currentSelectedColor = p.color || 'black';
+  currentSelectedColor = p.color;
   renderModal(p, currentSelectedColor);
   document.getElementById('modalOverlay').classList.add('open');
   document.body.style.overflow = 'hidden';
@@ -1513,11 +992,27 @@ function openModal(id) {
 
 function renderModal(p, selectedColor) {
   const cat = CATEGORIES.find(c => c.id === p.cat);
-  const imgUrl = getProductModalImgUrl(p);
-  const waText = encodeURIComponent('Halo HarmoniFashion, saya ingin tanya tentang produk "' + p.name + '" (' + p.brand + ').');
+  const variants = p.colorVariants || {};
+  const availableColors = Object.keys(variants);
+  const imgKey = variants[selectedColor] || p.img;
+  const imgUrl = 'https://images.unsplash.com/photo-' + imgKey + '?w=700&q=85';
+  const waText = encodeURIComponent('Halo HarmoniFashion, saya ingin tanya tentang produk "' + p.name + '" (' + p.brand + ') warna ' + (COLOR_LABELS[selectedColor] || selectedColor) + '.');
+  const colorOptionsHtml = availableColors.length > 1 ? `
+    <div class="modal-color-section">
+      <div class="modal-color-label">Pilih Warna</div>
+      <div class="modal-color-options">
+        ${availableColors.map(c => `
+          <button class="color-option-btn${c===selectedColor?' active':''}" onclick="switchColor(${p.id},'${c}')">
+            <span class="color-swatch" style="background:${COLOR_HEX[c]||'#ccc'};${c==='white'?'border:1px solid #bbb;':''}"></span>
+            ${COLOR_LABELS[c]||c}
+          </button>
+        `).join('')}
+      </div>
+      <div class="color-selected-name">Warna dipilih: <strong>${COLOR_LABELS[selectedColor]||selectedColor}</strong></div>
+    </div>` : '';
   document.getElementById('modalContent').innerHTML = `
     <div class="modal-img-wrap">
-      <img id="modalMainImg" src="${imgUrl}" alt="${p.name}" onerror="this.src='https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=700&q=85'" />
+      <img id="modalMainImg" src="${imgUrl}" alt="${p.name}" />
       ${p.badge ? `<span class="modal-badge">${p.badge}</span>` : ''}
     </div>
     <div class="modal-info">
@@ -1525,9 +1020,11 @@ function renderModal(p, selectedColor) {
       <div class="modal-name">${p.name}</div>
       <div class="modal-meta-row">
         <span class="modal-tag">${cat ? cat.label : ''}</span>
+        <span class="modal-tag" id="modalColorTag">${COLOR_LABELS[selectedColor]||selectedColor}</span>
         <span class="modal-tag">${p.cond}</span>
       </div>
       <div class="modal-price">Harga Mulai<strong>${formatRupiah(p.price)}</strong></div>
+      ${colorOptionsHtml}
       <div class="modal-desc-label">Deskripsi Produk</div>
       <p class="modal-desc">${p.desc}. Tersedia di seluruh cabang HarmoniFashion dengan jaminan keaslian produk dan layanan konsultasi personal.</p>
       <div class="modal-actions">
@@ -1536,6 +1033,33 @@ function renderModal(p, selectedColor) {
       </div>
     </div>
   `;
+}
+
+function switchColor(productId, color) {
+  const p = PRODUCTS.find(x => x.id === productId);
+  if (!p) return;
+  currentSelectedColor = color;
+  const img = document.getElementById('modalMainImg');
+  if (img) {
+    img.style.opacity = '0';
+    setTimeout(() => {
+      img.src = 'https://images.unsplash.com/photo-' + (p.colorVariants[color] || p.img) + '?w=700&q=85';
+      img.onload = () => { img.style.opacity = '1'; };
+      img.onerror = () => { img.style.opacity = '1'; };
+    }, 200);
+  }
+  const colorTag = document.getElementById('modalColorTag');
+  if (colorTag) colorTag.textContent = COLOR_LABELS[color] || color;
+  document.querySelectorAll('.color-option-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.getAttribute('onclick').includes(`'${color}'`));
+  });
+  const nameEl = document.querySelector('.color-selected-name strong');
+  if (nameEl) nameEl.textContent = COLOR_LABELS[color] || color;
+  const waEl = document.querySelector('.btn-primary');
+  if (waEl) {
+    const waText = encodeURIComponent('Halo HarmoniFashion, saya ingin tanya tentang produk "' + p.name + '" (' + p.brand + ') warna ' + (COLOR_LABELS[color]||color) + '.');
+    waEl.href = `https://wa.me/${CS_WHATSAPP}?text=${waText}`;
+  }
 }
 
 function closeModal() {
@@ -1560,309 +1084,17 @@ document.addEventListener('click', e => {
   if (sidebar.classList.contains('open') && !sidebar.contains(e.target) && !e.target.closest('.filter-toggle')) sidebar.classList.remove('open');
 });
 
-/* ============ ADMIN PANEL ============ */
-function enterAdminPanel() {
-  if (!currentUser || currentUser.role !== 'admin') return;
-  document.body.classList.add('admin-mode');
-  document.getElementById('adminShell').classList.add('open');
-  document.body.style.overflow = '';
-  setAdminPage('dashboard');
-  window.scrollTo({ top: 0 });
-}
-function exitAdminPanel() {
-  document.body.classList.remove('admin-mode');
-  document.getElementById('adminShell').classList.remove('open');
-}
-
-function setAdminPage(page) {
-  adminCurrentPage = page;
-  document.querySelectorAll('.admin-nav-item[data-page]').forEach(b => b.classList.toggle('active', b.dataset.page === page));
-  const main = document.getElementById('adminMain');
-  if (page === 'dashboard') main.innerHTML = renderAdminDashboard();
-  else if (page === 'products') main.innerHTML = renderAdminProducts();
-  else if (page === 'stores') main.innerHTML = renderAdminStores();
-  else if (page === 'reviews') main.innerHTML = renderAdminReviews();
-}
-
-/* ── ADMIN: DASHBOARD ── */
-function renderAdminDashboard() {
-  const totalProducts = PRODUCTS.length;
-  const totalStores = STORES.length;
-  const totalReviews = STORES.reduce((a, s) => a + (storeComments[s.id] ? storeComments[s.id].length : 0), 0);
-  const totalValue = PRODUCTS.reduce((a, p) => a + Number(p.price||0), 0);
-  return `
-    <div class="admin-header">
-      <div>
-        <h1 class="admin-page-title">Ringkasan <em>Dashboard</em></h1>
-        <p class="admin-page-sub">Gambaran umum data toko HarmoniFashion yang terhubung ke Supabase.</p>
-      </div>
-    </div>
-    <div class="admin-stats-row">
-      <div class="admin-stat-card"><div class="admin-stat-label">Total Produk</div><div class="admin-stat-value">${totalProducts}</div></div>
-      <div class="admin-stat-card"><div class="admin-stat-label">Total Cabang</div><div class="admin-stat-value">${totalStores}</div></div>
-      <div class="admin-stat-card"><div class="admin-stat-label">Total Ulasan</div><div class="admin-stat-value">${totalReviews}</div></div>
-      <div class="admin-stat-card"><div class="admin-stat-label">Estimasi Nilai Katalog</div><div class="admin-stat-value" style="font-size:20px;">${formatRupiah(totalValue)}</div></div>
-    </div>
-    <div class="admin-panel">
-      <div class="admin-panel-title">Produk Terbaru</div>
-      <div class="admin-table-wrap">
-        <table class="admin-table">
-          <thead><tr><th></th><th>Nama Produk</th><th>Brand</th><th>Kategori</th><th>Harga</th></tr></thead>
-          <tbody>
-            ${PRODUCTS.slice(0, 5).map(p => `
-              <tr>
-                <td><img class="admin-thumb" src="${getProductImgUrl(p)}" alt="${p.name}" onerror="this.src='https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=80&q=60'" /></td>
-                <td>${p.name}</td>
-                <td>${p.brand}</td>
-                <td>${(CATEGORIES.find(c=>c.id===p.cat)||{}).label || p.cat}</td>
-                <td>${formatRupiah(p.price)}</td>
-              </tr>`).join('')}
-          </tbody>
-        </table>
-      </div>
-    </div>
-  `;
-}
-
-/* ── ADMIN: PRODUCTS ── */
-function renderAdminProducts() {
-  adminEditState = { type: null, id: null };
-  return `
-    <div class="admin-header">
-      <div>
-        <h1 class="admin-page-title">Kelola <em>Produk</em></h1>
-        <p class="admin-page-sub">Tambah, ubah, atau hapus produk. Data tersimpan ke Supabase secara real-time.</p>
-      </div>
-    </div>
-    <div class="admin-panel">
-      <div class="admin-panel-title">Tambah Produk Baru</div>
-      <div id="productFormArea">${productFormHtml()}</div>
-    </div>
-    <div class="admin-panel">
-      <div class="admin-panel-title">Daftar Produk (${PRODUCTS.length})</div>
-      <div class="admin-table-wrap">
-        <table class="admin-table">
-          <thead><tr><th></th><th>Nama</th><th>Brand</th><th>Kategori</th><th>Harga</th><th>Aksi</th></tr></thead>
-          <tbody id="productTableBody">${productRowsHtml()}</tbody>
-        </table>
-      </div>
-    </div>
-  `;
-}
-
-function categoryOptionsHtml(selected) {
-  return CATEGORIES.map(c => `<option value="${c.id}" ${c.id===selected?'selected':''}>${c.label}</option>`).join('');
-}
-
-function productRowsHtml() {
-  if (!PRODUCTS.length) return '<tr><td colspan="6" class="admin-empty">Belum ada produk. Tambahkan melalui form di atas atau langsung dari Supabase Table Editor.</td></tr>';
-  return PRODUCTS.map(p => `
-    <tr>
-      <td><img class="admin-thumb" src="${getProductImgUrl(p)}" alt="${p.name}" onerror="this.src='https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=80&q=60'" /></td>
-      <td>${p.name}</td>
-      <td>${p.brand}</td>
-      <td>${(CATEGORIES.find(c=>c.id===p.cat)||{}).label || p.cat}</td>
-      <td>${formatRupiah(p.price)}</td>
-      <td>
-        <button class="btn-icon-sm" onclick="editProduct(${JSON.stringify(p.id)})">Ubah</button>
-        <button class="btn-icon-sm danger" onclick="deleteProduct(${JSON.stringify(p.id)})">Hapus</button>
-      </td>
-    </tr>`).join('');
-}
-
-function productFormHtml(p) {
-  const editing = !!p;
-  return `
-    <div class="admin-form-grid">
-      <div class="admin-field"><label>Nama Produk</label><input type="text" id="pf-name" value="${editing?p.name:''}" placeholder="Contoh: Classic Flap Bag" /></div>
-      <div class="admin-field"><label>Brand</label><input type="text" id="pf-brand" value="${editing?p.brand:''}" placeholder="Contoh: Chanel" /></div>
-      <div class="admin-field"><label>Kategori</label><select id="pf-cat">${categoryOptionsHtml(editing?p.cat:CATEGORIES[0].id)}</select></div>
-      <div class="admin-field"><label>Harga (Rp)</label><input type="number" id="pf-price" min="0" value="${editing?p.price:''}" placeholder="Contoh: 95000000" /></div>
-      <div class="admin-field"><label>URL Foto Produk</label><input type="text" id="pf-img-url" value="${editing?(p.image_url||''):''}" placeholder="https://... atau URL Unsplash" /></div>
-    </div>
-    <div class="admin-form-grid full">
-      <div class="admin-field"><label>Deskripsi</label><textarea id="pf-desc" rows="2">${editing?p.desc:''}</textarea></div>
-    </div>
-    <div style="padding:0 20px 20px;">
-      <button class="btn-admin-action gold" onclick="saveProductForm(${editing?JSON.stringify(p.id):'null'})">${editing?'Simpan Perubahan':'Tambah Produk ke Supabase'}</button>
-      ${editing?`<button class="btn-admin-action" style="margin-left:8px;" onclick="cancelProductEdit()">Batal</button>`:''}
-      <span id="pf-status" style="font-size:11px;color:var(--gold);margin-left:12px;"></span>
-    </div>
-  `;
-}
-
-function editProduct(id) {
-  const p = PRODUCTS.find(x => String(x.id) === String(id));
-  if (!p) return;
-  adminEditState = { type: 'product', id };
-  document.getElementById('productFormArea').innerHTML = productFormHtml(p);
-  document.getElementById('productFormArea').scrollIntoView({ behavior: 'smooth', block: 'center' });
-}
-
-function cancelProductEdit() {
-  adminEditState = { type: null, id: null };
-  document.getElementById('productFormArea').innerHTML = productFormHtml();
-}
-
-async function saveProductForm(id) {
-  const name = document.getElementById('pf-name').value.trim();
-  const brand = document.getElementById('pf-brand').value.trim();
-  const cat = document.getElementById('pf-cat').value;
-  const price = parseInt(document.getElementById('pf-price').value) || 0;
-  const desc = document.getElementById('pf-desc').value.trim();
-  const image_url = document.getElementById('pf-img-url').value.trim();
-  if (!name || !brand) { alert('Nama produk dan brand wajib diisi.'); return; }
-
-  const statusEl = document.getElementById('pf-status');
-  statusEl.textContent = 'Menyimpan...';
-
-  try {
-    await saveProductToSupabase({ id: id || null, name, brand, cat, price, desc, image_url });
-    adminEditState = { type: null, id: null };
-    document.getElementById('productFormArea').innerHTML = productFormHtml();
-    document.getElementById('productTableBody').innerHTML = productRowsHtml();
-    statusEl && (statusEl.textContent = '');
-    alert('Produk berhasil disimpan ke Supabase!');
-  } catch (e) {
-    alert('Gagal menyimpan: ' + e.message);
-    statusEl.textContent = '';
-  }
-}
-
-async function deleteProduct(id) {
-  if (!confirm('Hapus produk ini secara permanen dari Supabase?')) return;
-  try {
-    await deleteProductFromSupabase(id);
-    document.getElementById('productTableBody').innerHTML = productRowsHtml();
-  } catch (e) {
-    alert('Gagal hapus: ' + e.message);
-  }
-}
-
-/* ── ADMIN: STORES ── */
-function renderAdminStores() {
-  return `
-    <div class="admin-header">
-      <div>
-        <h1 class="admin-page-title">Kelola <em>Cabang</em></h1>
-        <p class="admin-page-sub">Daftar cabang/toko HarmoniFashion.</p>
-      </div>
-    </div>
-    <div class="admin-panel">
-      <div class="admin-panel-title">Daftar Cabang (${STORES.length})</div>
-      <div class="admin-table-wrap">
-        <table class="admin-table">
-          <thead><tr><th>Nama Cabang</th><th>Alamat</th><th>Telepon</th><th>Rating</th></tr></thead>
-          <tbody>
-            ${STORES.map(s => {
-              const r = storeRatings[s.id] || { total: 0, count: 0 };
-              const avg = r.count ? (r.total / r.count).toFixed(1) : '—';
-              return `<tr>
-                <td>${s.name}</td>
-                <td>${s.address}</td>
-                <td>${s.phone}</td>
-                <td>${avg}${r.count ? ' / 5 ('+r.count+')' : ''}</td>
-              </tr>`;
-            }).join('')}
-          </tbody>
-        </table>
-      </div>
-    </div>
-  `;
-}
-
-/* ── ADMIN: REVIEWS ── */
-function renderAdminReviews() {
-  const rows = [];
-  STORES.forEach(s => {
-    (storeComments[s.id] || []).forEach((c, idx) => {
-      rows.push({ storeId: s.id, storeName: s.name, idx, ...c });
-    });
-  });
-  return `
-    <div class="admin-header">
-      <div>
-        <h1 class="admin-page-title">Ulasan <em>Pelanggan</em></h1>
-        <p class="admin-page-sub">Pantau dan moderasi komentar/ulasan yang dikirim pelanggan dari semua cabang.</p>
-      </div>
-    </div>
-    <div class="admin-panel">
-      <div class="admin-panel-title">Seluruh Ulasan (${rows.length})</div>
-      <div class="admin-table-wrap">
-        <table class="admin-table">
-          <thead><tr><th>Cabang</th><th>Nama</th><th>Rating</th><th>Komentar</th><th>Tanggal</th><th>Aksi</th></tr></thead>
-          <tbody>
-            ${rows.length ? rows.map(r => `
-              <tr>
-                <td>${r.storeName}</td>
-                <td>${r.author || 'Anonim'}</td>
-                <td>${'★'.repeat(r.rating||0)}${'☆'.repeat(5-(r.rating||0))}</td>
-                <td style="max-width:280px;">${r.text || '<em>(tanpa teks)</em>'}</td>
-                <td>${formatDate(r.date)}</td>
-                <td><button class="btn-icon-sm danger" onclick="deleteReview('${r.storeId}',${r.idx},${JSON.stringify(r.id)})">Hapus</button></td>
-              </tr>`).join('') : '<tr><td colspan="6" class="admin-empty">Belum ada ulasan dari pelanggan.</td></tr>'}
-          </tbody>
-        </table>
-      </div>
-    </div>
-  `;
-}
-
-async function deleteReview(storeId, idx, reviewId) {
-  if (!confirm('Hapus ulasan ini?')) return;
-  try {
-    if (reviewId) await deleteReviewFromSupabase(reviewId);
-    await loadReviewsFromSupabase();
-    setAdminPage('reviews');
-  } catch (e) {
-    // fallback local
-    if (storeComments[storeId]) storeComments[storeId].splice(idx, 1);
-    setAdminPage('reviews');
-    const listEl = document.getElementById('comment-list-' + storeId);
-    if (listEl) renderComments(storeId);
-  }
-}
-
-/* ============ FALLBACK PRODUCTS (used if Supabase empty) ============ */
-function getFallbackProducts() {
-  return [
-    {id:1,cat:'handbags',brand:'Chanel',name:'Classic Flap Bag Medium',desc:'Quilted Lambskin / Gold Hardware / Medium',price:95000000,img:'1548036328-c9fa89d128fa',image_url:'',badge:'Bestseller',color:'black',cond:'Brand New',colorVariants:{}},
-    {id:2,cat:'handbags',brand:'Louis Vuitton',name:'Neverfull MM Tote',desc:'Monogram Canvas / Tote Bag',price:28500000,img:'1584917865442-de89df76afd3',image_url:'',color:'brown',cond:'Brand New',colorVariants:{}},
-    {id:3,cat:'handbags',brand:'Hermès',name:'Birkin 30',desc:'Togo Leather / Gold Hardware',price:320000000,img:'1591561954555-607968c989ab',image_url:'',badge:'Eksklusif',color:'black',cond:'Brand New',colorVariants:{}},
-    {id:4,cat:'handbags',brand:'Prada',name:'Re-Edition 2005 Shoulder Bag',desc:'Re-Nylon / Shoulder Bag',price:18200000,img:'1548036328-c9fa89d128fa',image_url:'',color:'black',cond:'Like New',colorVariants:{}},
-    {id:5,cat:'handbags',brand:'Gucci',name:'Jackie 1961 Small Hobo',desc:'Leather / GG Hardware',price:24500000,img:'1526170375885-4d8ecf77b99f',image_url:'',color:'brown',cond:'Brand New',colorVariants:{}},
-    {id:11,cat:'ready-to-wear',brand:'Chanel',name:'Tweed Bouclé Jacket',desc:'Iconic CC Button / Bouclé Wool',price:42000000,img:'1490481702701-2a2be1926c0f',image_url:'',badge:'Bestseller',color:'beige',cond:'Brand New',colorVariants:{}},
-    {id:12,cat:'ready-to-wear',brand:'Dior',name:'Bar Jacket',desc:'Wool / Silk / Iconic Silhouette',price:68000000,img:'1509631179256-f30d090da1f3',image_url:'',badge:'Eksklusif',color:'black',cond:'Brand New',colorVariants:{}},
-    {id:21,cat:'shoes',brand:'Christian Louboutin',name:'Pigalle 100 Pumps',desc:'Patent Leather / Red Sole / 100mm',price:12500000,img:'1542291026-7eec264ef638',image_url:'',badge:'Ikonik',color:'black',cond:'Brand New',colorVariants:{}},
-    {id:22,cat:'shoes',brand:'Gucci',name:'Horsebit 1953 Loafers',desc:'Leather / Gold Horsebit Detail',price:9800000,img:'1543163765179-e3606a487e2e',image_url:'',color:'brown',cond:'Brand New',colorVariants:{}},
-    {id:31,cat:'watches',brand:'Rolex',name:'Datejust 41',desc:'Oyster Steel & Gold / Jubilee Bracelet',price:245000000,img:'1523275335684-37898b6baf30',image_url:'',badge:'Bestseller',color:'silver',cond:'Brand New',colorVariants:{}},
-    {id:32,cat:'watches',brand:'Audemars Piguet',name:'Royal Oak 15500ST',desc:'Stainless Steel / Self-winding',price:580000000,img:'1515562141207-7a88fb7ce338',image_url:'',badge:'Limited Edition',color:'silver',cond:'Brand New',colorVariants:{}},
-    {id:41,cat:'accessories',brand:'Hermès',name:'Carré 90 Silk Scarf',desc:'100% Silk / 90x90cm',price:8500000,img:'1601924994987-69e26d50dc26',image_url:'',color:'red',cond:'Brand New',colorVariants:{}},
-    {id:51,cat:'fragrances',brand:'Chanel',name:'N°5 Eau de Parfum',desc:'Floral Aldehyde / 100ml / Women',price:3800000,img:'1541643600914-78b084683702',image_url:'',badge:'Ikonik',color:'white',cond:'Brand New',colorVariants:{}},
-    {id:61,cat:'eyewear',brand:'Chanel',name:'CC Pearl Square Sunglasses',desc:'Acetate / Pearl Detail',price:9500000,img:'1511499767150-a48a237f0083',image_url:'',color:'black',cond:'Brand New',colorVariants:{}}
-  ];
-}
-
-/* ============ INIT ============ */
-async function init() {
-  buildCategoryNav();
-  buildSections();
-  buildStores();
-  updateOverallRating();
-
-  // Load products from Supabase
-  await loadProductsFromSupabase();
-
-  // Restore session & load reviews
-  await restoreSession();
-  await loadReviewsFromSupabase();
-}
-
 init();
-
-
 </script>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+
+<script>
+const supabase = window.supabase.createClient(
+ 'https://abehrtwxtfcoadlkoxrj.supabase.co/rest/v1/',
+ 'sb_publishable_tsNffliLsn2gBB_E_B-_vg_Kcjpr7hm'
+);
+</script>
+
 </body>
 </html>
