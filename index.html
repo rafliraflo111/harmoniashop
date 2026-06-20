@@ -321,6 +321,92 @@
     body.dark .comment-author { color: var(--off-white); }
     body.dark .comment-text { color: #aaa; }
 
+    /* ── AUTH MODAL ── */
+    .auth-overlay { position: fixed; inset: 0; background: rgba(13,13,13,0.78); display: none; align-items: center; justify-content: center; z-index: 700; padding: 24px; }
+    .auth-overlay.open { display: flex; }
+    .auth-box { background: var(--white); max-width: 380px; width: 100%; padding: 40px 36px; position: relative; }
+    .auth-close { position: absolute; top: 14px; right: 14px; background: none; border: none; color: var(--mid); width: 28px; height: 28px; cursor: pointer; font-size: 16px; }
+    .auth-close:hover { color: var(--gold); }
+    .auth-eyebrow { font-size: 10px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold); margin-bottom: 10px; text-align: center; }
+    .auth-title { font-family: 'Cormorant Garamond', serif; font-size: 26px; font-weight: 400; color: var(--black); text-align: center; margin-bottom: 24px; }
+    .auth-tabs { display: flex; border-bottom: 1px solid #e8e3dc; margin-bottom: 22px; }
+    .auth-tab { flex: 1; background: none; border: none; padding: 10px; font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--mid); cursor: pointer; font-family: 'Jost', sans-serif; border-bottom: 2px solid transparent; transition: all 0.2s; }
+    .auth-tab.active { color: var(--gold); border-bottom-color: var(--gold); font-weight: 500; }
+    .auth-field { margin-bottom: 16px; }
+    .auth-label { display: block; font-size: 10.5px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--mid); margin-bottom: 7px; }
+    .auth-input { width: 100%; border: 1px solid #e0dbd4; background: var(--off-white); font-family: 'Jost', sans-serif; font-size: 13px; color: var(--dark); padding: 10px 12px; letter-spacing: 0.02em; outline: none; transition: border-color 0.2s; }
+    .auth-input:focus { border-color: var(--gold); }
+    .auth-error { font-size: 11px; color: #c62828; margin-bottom: 14px; letter-spacing: 0.03em; display: none; }
+    .auth-error.show { display: block; }
+    .auth-hint { font-size: 10.5px; color: #aaa; margin-top: 16px; text-align: center; line-height: 1.7; letter-spacing: 0.02em; }
+    .auth-hint strong { color: var(--mid); }
+    .btn-auth-submit { width: 100%; background: var(--gold); color: var(--black); border: none; padding: 12px; font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; font-family: 'Jost', sans-serif; font-weight: 500; cursor: pointer; transition: background 0.2s; }
+    .btn-auth-submit:hover { background: var(--gold-light); }
+    body.dark .auth-box { background: var(--charcoal); }
+    body.dark .auth-title { color: var(--off-white); }
+    body.dark .auth-tabs { border-color: #2e2e2e; }
+    body.dark .auth-input { background: var(--dark); border-color: #3a3a3a; color: #ccc; }
+    body.dark .auth-label { color: #bbb; }
+    body.dark .auth-hint strong { color: #bbb; }
+
+    /* ── NAV USER STATE ── */
+    .user-pill { display: flex; align-items: center; gap: 10px; }
+    .user-pill-name { font-size: 11px; letter-spacing: 0.08em; color: #ccc; }
+    .user-pill-name strong { color: var(--gold); }
+    .btn-logout { background: none; border: 1px solid #3a3a3a; color: #ccc; padding: 7px 16px; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer; font-family: 'Jost', sans-serif; transition: all 0.2s; }
+    .btn-logout:hover { border-color: var(--gold); color: var(--gold); }
+    .btn-admin-panel { background: none; border: 1px solid var(--gold); color: var(--gold); padding: 7px 16px; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer; font-family: 'Jost', sans-serif; transition: all 0.2s; text-decoration: none; }
+    .btn-admin-panel:hover { background: var(--gold); color: var(--black); }
+
+    /* ── ADMIN DASHBOARD ── */
+    .admin-shell { display: none; min-height: 100vh; background: var(--off-white); }
+    .admin-shell.open { display: flex; }
+    body.admin-mode > nav, body.admin-mode > .social-bar, body.admin-mode > .cat-bar, body.admin-mode > .hero,
+    body.admin-mode > .layout, body.admin-mode > #stores-section, body.admin-mode > footer { display: none !important; }
+    .admin-sidebar { width: 230px; flex-shrink: 0; background: var(--black); padding: 28px 0; position: sticky; top: 0; height: 100vh; }
+    .admin-logo { font-family: 'Cormorant Garamond', serif; font-size: 19px; letter-spacing: 0.14em; color: var(--gold); padding: 0 24px 24px; border-bottom: 1px solid #2a2a2a; margin-bottom: 18px; }
+    .admin-logo span { font-style: italic; color: var(--white); }
+    .admin-logo small { display: block; font-family: 'Jost', sans-serif; font-size: 9px; letter-spacing: 0.2em; color: #777; margin-top: 4px; text-transform: uppercase; }
+    .admin-nav-item { display: flex; align-items: center; gap: 10px; padding: 12px 24px; font-size: 12px; letter-spacing: 0.06em; color: #aaa; cursor: pointer; border: none; background: none; width: 100%; text-align: left; font-family: 'Jost', sans-serif; border-left: 3px solid transparent; transition: all 0.2s; }
+    .admin-nav-item:hover { color: var(--gold-light); background: #181818; }
+    .admin-nav-item.active { color: var(--gold); background: #181818; border-left-color: var(--gold); }
+    .admin-nav-divider { height: 1px; background: #2a2a2a; margin: 16px 24px; }
+    .admin-main { flex: 1; padding: 32px 40px; overflow-y: auto; height: 100vh; }
+    .admin-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 28px; flex-wrap: wrap; gap: 12px; }
+    .admin-page-title { font-family: 'Cormorant Garamond', serif; font-size: 30px; font-weight: 300; color: var(--black); }
+    .admin-page-title em { font-style: italic; color: var(--gold); }
+    .admin-page-sub { font-size: 12px; color: var(--mid); margin-top: 4px; }
+    .admin-stats-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px; margin-bottom: 32px; }
+    .admin-stat-card { background: var(--white); border: 1px solid #e8e3dc; padding: 20px 22px; }
+    .admin-stat-label { font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold); margin-bottom: 8px; }
+    .admin-stat-value { font-family: 'Cormorant Garamond', serif; font-size: 30px; color: var(--black); }
+    .admin-panel { background: var(--white); border: 1px solid #e8e3dc; padding: 24px 26px; margin-bottom: 24px; }
+    .admin-panel-title { font-size: 13px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--black); font-weight: 500; margin-bottom: 18px; padding-bottom: 12px; border-bottom: 1px solid #e8e3dc; display: flex; justify-content: space-between; align-items: center; }
+    .admin-table { width: 100%; border-collapse: collapse; font-size: 12.5px; }
+    .admin-table th { text-align: left; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold); padding: 9px 10px; border-bottom: 1px solid var(--gold-pale); white-space: nowrap; }
+    .admin-table td { padding: 10px 10px; border-bottom: 1px solid #f0ece4; color: var(--dark); vertical-align: middle; }
+    .admin-table tr:hover td { background: var(--off-white); }
+    .admin-table-wrap { overflow-x: auto; }
+    .admin-badge { font-size: 9.5px; letter-spacing: 0.08em; text-transform: uppercase; padding: 3px 8px; background: var(--gold-pale); color: var(--mid); display: inline-block; }
+    .admin-form-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; margin-bottom: 16px; }
+    .admin-form-grid.full { grid-template-columns: 1fr; }
+    .admin-field label { display: block; font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--mid); margin-bottom: 6px; }
+    .admin-field input, .admin-field select, .admin-field textarea { width: 100%; border: 1px solid #e0dbd4; background: var(--off-white); font-family: 'Jost', sans-serif; font-size: 12.5px; color: var(--dark); padding: 8px 10px; outline: none; transition: border-color 0.2s; }
+    .admin-field input:focus, .admin-field select:focus, .admin-field textarea:focus { border-color: var(--gold); }
+    .btn-admin-action { background: var(--black); color: var(--gold); border: none; padding: 9px 18px; font-size: 10.5px; letter-spacing: 0.14em; text-transform: uppercase; cursor: pointer; font-family: 'Jost', sans-serif; transition: background 0.2s; }
+    .btn-admin-action:hover { background: var(--charcoal); }
+    .btn-admin-action.gold { background: var(--gold); color: var(--black); }
+    .btn-admin-action.gold:hover { background: var(--gold-light); }
+    .btn-admin-action.danger { background: none; border: 1px solid #c62828; color: #c62828; }
+    .btn-admin-action.danger:hover { background: #c62828; color: #fff; }
+    .btn-icon-sm { background: none; border: 1px solid #e0dbd4; color: var(--mid); padding: 5px 10px; font-size: 10.5px; cursor: pointer; font-family: 'Jost', sans-serif; margin-right: 5px; transition: all 0.15s; }
+    .btn-icon-sm:hover { border-color: var(--gold); color: var(--gold); }
+    .btn-icon-sm.danger:hover { border-color: #c62828; color: #c62828; }
+    .admin-empty { text-align: center; padding: 30px; color: #aaa; font-size: 12px; }
+    .admin-thumb { width: 38px; height: 50px; object-fit: cover; border: 1px solid #eae5de; }
+    .admin-back-link { font-size: 11px; letter-spacing: 0.1em; color: var(--mid); text-decoration: none; cursor: pointer; background: none; border: none; font-family: 'Jost', sans-serif; }
+    .admin-back-link:hover { color: var(--gold); }
+
     /* ── RESPONSIVE ── */
     @media (max-width: 900px) {
       nav { padding: 0 20px; }
@@ -338,11 +424,20 @@
       .modal-box { grid-template-columns: 1fr; }
       .modal-img-wrap { min-height: 220px; }
       .modal-img-wrap img { min-height: 220px; }
+      .admin-shell.open { flex-direction: column; }
+      .admin-sidebar { width: 100%; height: auto; position: relative; padding: 16px 0; display: flex; align-items: center; overflow-x: auto; }
+      .admin-logo { display: none; }
+      .admin-nav-divider { display: none; }
+      .admin-nav-item { width: auto; white-space: nowrap; border-left: none; border-bottom: 3px solid transparent; padding: 10px 16px; }
+      .admin-nav-item.active { border-left: none; border-bottom-color: var(--gold); }
+      .admin-main { height: auto; padding: 24px 18px; }
+      .admin-form-grid { grid-template-columns: 1fr; }
     }
     @media (max-width: 560px) {
       .grid { grid-template-columns: 1fr 1fr; gap: 12px; }
       .card-body { padding: 12px; }
       .theme-btns { display: none; }
+      .user-pill-name { display: none; }
     }
   </style>
 </head>
@@ -356,7 +451,9 @@
       <button class="theme-btn" onclick="setTheme('dark')">Gelap</button>
     </div>
     <button class="filter-toggle" onclick="toggleSidebar()">☰ Filter</button>
-    <a href="#" class="btn-login" onclick="return false">Login</a>
+    <div id="navAuthArea">
+      <a href="#" class="btn-login" onclick="return openAuthModal()">Login</a>
+    </div>
   </div>
 </nav>
 
@@ -537,6 +634,48 @@
   <img id="lightboxImg" src="" alt="Foto Bukti" />
 </div>
 
+<!-- AUTH (LOGIN) MODAL -->
+<div class="auth-overlay" id="authOverlay" onclick="if(event.target===this) closeAuthModal()">
+  <div class="auth-box">
+    <button class="auth-close" onclick="closeAuthModal()">✕</button>
+    <p class="auth-eyebrow">HarmoniFashion</p>
+    <h2 class="auth-title">Masuk ke Akun</h2>
+    <div class="auth-tabs">
+      <button class="auth-tab active" id="tabCustomer" onclick="switchAuthTab('customer')">Customer</button>
+      <button class="auth-tab" id="tabAdmin" onclick="switchAuthTab('admin')">Admin</button>
+    </div>
+    <p class="auth-error" id="authError"></p>
+    <form onsubmit="return handleLogin(event)">
+      <div class="auth-field">
+        <label class="auth-label" id="authUserLabel">Username / Email</label>
+        <input class="auth-input" id="authUsername" type="text" autocomplete="username" placeholder="Masukkan username Anda" required />
+      </div>
+      <div class="auth-field">
+        <label class="auth-label">Kata Sandi</label>
+        <input class="auth-input" id="authPassword" type="password" autocomplete="current-password" placeholder="Masukkan kata sandi" required />
+      </div>
+      <button type="submit" class="btn-auth-submit" id="authSubmitBtn">Masuk sebagai Customer</button>
+    </form>
+    <p class="auth-hint" id="authHint">Belum punya akun? <strong>Daftar otomatis</strong> saat login pertama kali sebagai Customer.</p>
+  </div>
+</div>
+
+<!-- ADMIN DASHBOARD SHELL -->
+<div class="admin-shell" id="adminShell">
+  <aside class="admin-sidebar">
+    <div class="admin-logo">Harmoni<span>Fashion</span><small>Admin Panel</small></div>
+    <button class="admin-nav-item active" data-page="dashboard" onclick="setAdminPage('dashboard')">📊 Dashboard</button>
+    <button class="admin-nav-item" data-page="products" onclick="setAdminPage('products')">🛍️ Kelola Produk</button>
+    <button class="admin-nav-item" data-page="categories" onclick="setAdminPage('categories')">🗂️ Kelola Kategori</button>
+    <button class="admin-nav-item" data-page="stores" onclick="setAdminPage('stores')">📍 Kelola Cabang</button>
+    <button class="admin-nav-item" data-page="reviews" onclick="setAdminPage('reviews')">💬 Ulasan Pelanggan</button>
+    <div class="admin-nav-divider"></div>
+    <button class="admin-nav-item" onclick="exitAdminPanel()">🌐 Lihat Situs Frontend</button>
+    <button class="admin-nav-item" onclick="handleLogout()">🚪 Keluar (Logout)</button>
+  </aside>
+  <main class="admin-main" id="adminMain"></main>
+</div>
+
 <script>
 /* ============ DATA ============ */
 const CATEGORIES = [
@@ -558,16 +697,78 @@ const COLOR_HEX = {
   red: '#c62828', navy: '#1a237e', gold: '#C9A84C', silver: '#9e9e9e'
 };
 
-async function loadProducts() {
-
- const { data, error } =
- await supabase
- .from('products')
- .select('*');
-
- console.log(data);
-
-}
+const PRODUCTS = [
+  {id:1,cat:'handbags',brand:'Chanel',name:'Classic Flap Bag Medium',desc:'Quilted Lambskin / Gold Hardware / Medium',price:95000000,img:'1548036328-c9fa89d128fa',badge:'Bestseller',color:'black',cond:'Brand New',colorVariants:{black:'1548036328-c9fa89d128fa',white:'1584917865442-de89df76afd3',brown:'1591561954555-607968c989ab',red:'1526170375885-4d8ecf77b99f'}},
+  {id:2,cat:'handbags',brand:'Louis Vuitton',name:'Neverfull MM Tote',desc:'Monogram Canvas / Tote Bag / Damier Ebene Lining',price:28500000,img:'1584917865442-de89df76afd3',color:'brown',cond:'Brand New',colorVariants:{brown:'1584917865442-de89df76afd3',black:'1548036328-c9fa89d128fa',beige:'1591561954555-607968c989ab'}},
+  {id:3,cat:'handbags',brand:'Hermès',name:'Birkin 30',desc:'Togo Leather / Gold Hardware / Noir',price:320000000,img:'1591561954555-607968c989ab',badge:'Eksklusif',color:'black',cond:'Brand New',colorVariants:{black:'1591561954555-607968c989ab',white:'1584917865442-de89df76afd3',beige:'1526170375885-4d8ecf77b99f',brown:'1548036328-c9fa89d128fa'}},
+  {id:4,cat:'handbags',brand:'Prada',name:'Re-Edition 2005 Shoulder Bag',desc:'Re-Nylon / Shoulder Bag / Black',price:18200000,img:'1548036328-c9fa89d128fa',color:'black',cond:'Like New',colorVariants:{black:'1548036328-c9fa89d128fa',white:'1526170375885-4d8ecf77b99f',navy:'1591561954555-607968c989ab'}},
+  {id:5,cat:'handbags',brand:'Gucci',name:'Jackie 1961 Small Hobo',desc:'Leather / GG Hardware / Tan',price:24500000,img:'1526170375885-4d8ecf77b99f',color:'brown',cond:'Brand New',colorVariants:{brown:'1526170375885-4d8ecf77b99f',black:'1548036328-c9fa89d128fa',white:'1584917865442-de89df76afd3'}},
+  {id:6,cat:'handbags',brand:'Saint Laurent',name:'Loulou Puffer Medium',desc:'Quilted Leather / Chain Strap',price:21800000,img:'1584917865442-de89df76afd3',color:'black',cond:'Very Good',colorVariants:{black:'1584917865442-de89df76afd3',white:'1591561954555-607968c989ab',red:'1548036328-c9fa89d128fa'}},
+  {id:7,cat:'handbags',brand:'Bottega Veneta',name:'Cassette Crossbody',desc:'Intrecciato Leather / Crossbody',price:32000000,img:'1591561954555-607968c989ab',color:'beige',cond:'Brand New',colorVariants:{beige:'1591561954555-607968c989ab',black:'1548036328-c9fa89d128fa',brown:'1526170375885-4d8ecf77b99f'}},
+  {id:8,cat:'handbags',brand:'Fendi',name:'Baguette Medium',desc:'Embroidered Canvas / FF Logo',price:26500000,img:'1526170375885-4d8ecf77b99f',color:'navy',cond:'Brand New',colorVariants:{navy:'1526170375885-4d8ecf77b99f',black:'1548036328-c9fa89d128fa',white:'1584917865442-de89df76afd3'}},
+  {id:9,cat:'handbags',brand:'Dior',name:'Lady Dior Medium',desc:'Cannage Lambskin / Silver Hardware',price:78000000,img:'1548036328-c9fa89d128fa',badge:'Ikonik',color:'red',cond:'Like New',colorVariants:{red:'1548036328-c9fa89d128fa',black:'1591561954555-607968c989ab',white:'1584917865442-de89df76afd3'}},
+  {id:10,cat:'handbags',brand:'Balenciaga',name:'Hourglass Top Handle Small',desc:'Leather / Gold-tone Hardware',price:29800000,img:'1584917865442-de89df76afd3',color:'black',cond:'Good',colorVariants:{black:'1584917865442-de89df76afd3',white:'1526170375885-4d8ecf77b99f',beige:'1591561954555-607968c989ab'}},
+  {id:11,cat:'ready-to-wear',brand:'Chanel',name:'Tweed Bouclé Jacket',desc:'Iconic CC Button / Bouclé Wool',price:42000000,img:'1490481702701-2a2be1926c0f',badge:'Bestseller',color:'beige',cond:'Brand New',colorVariants:{beige:'1490481702701-2a2be1926c0f',black:'1509631179256-f30d090da1f3',white:'1551488831-ac6ea22a41f6'}},
+  {id:12,cat:'ready-to-wear',brand:'Dior',name:'Bar Jacket',desc:'Wool / Silk / Iconic Silhouette',price:68000000,img:'1509631179256-f30d090da1f3',badge:'Eksklusif',color:'black',cond:'Brand New',colorVariants:{black:'1509631179256-f30d090da1f3',white:'1551488831-ac6ea22a41f6',beige:'1490481702701-2a2be1926c0f'}},
+  {id:13,cat:'ready-to-wear',brand:'Saint Laurent',name:'Le Smoking Blazer',desc:'Tuxedo Style / Peak Lapels',price:35000000,img:'1551488831-ac6ea22a41f6',color:'black',cond:'Brand New',colorVariants:{black:'1551488831-ac6ea22a41f6',white:'1490481702701-2a2be1926c0f',navy:'1509631179256-f30d090da1f3'}},
+  {id:14,cat:'ready-to-wear',brand:'Gucci',name:'GG Logo Wool Coat',desc:'Double Faced Wool / Belt',price:29500000,img:'1490481702701-2a2be1926c0f',color:'beige',cond:'Like New',colorVariants:{beige:'1490481702701-2a2be1926c0f',black:'1509631179256-f30d090da1f3',brown:'1551488831-ac6ea22a41f6'}},
+  {id:15,cat:'ready-to-wear',brand:'Valentino',name:'Garavani Crepe Couture Dress',desc:'Silk Crepe / Bow Detail',price:48000000,img:'1509631179256-f30d090da1f3',badge:'New Season',color:'red',cond:'Brand New',colorVariants:{red:'1509631179256-f30d090da1f3',black:'1551488831-ac6ea22a41f6',white:'1490481702701-2a2be1926c0f'}},
+  {id:16,cat:'ready-to-wear',brand:'Versace',name:'Medusa Head Silk Shirt',desc:'Silk / Medusa Print / Relaxed Fit',price:14800000,img:'1551488831-ac6ea22a41f6',color:'black',cond:'Brand New',colorVariants:{black:'1551488831-ac6ea22a41f6',white:'1490481702701-2a2be1926c0f',gold:'1509631179256-f30d090da1f3'}},
+  {id:17,cat:'ready-to-wear',brand:'Burberry',name:'Vintage Check Trench Coat',desc:'Cotton Gabardine / House Check',price:32500000,img:'1490481702701-2a2be1926c0f',color:'beige',cond:'Very Good',colorVariants:{beige:'1490481702701-2a2be1926c0f',black:'1509631179256-f30d090da1f3',navy:'1551488831-ac6ea22a41f6'}},
+  {id:18,cat:'ready-to-wear',brand:'Prada',name:'Re-Nylon Padded Jacket',desc:'Re-Nylon / Triangle Logo / Puffer',price:22000000,img:'1509631179256-f30d090da1f3',color:'black',cond:'Brand New',colorVariants:{black:'1509631179256-f30d090da1f3',white:'1490481702701-2a2be1926c0f',navy:'1551488831-ac6ea22a41f6'}},
+  {id:19,cat:'ready-to-wear',brand:'Balenciaga',name:'Logo Oversized Hoodie',desc:'Cotton Fleece / BB Logo / Drop Shoulder',price:11500000,img:'1551488831-ac6ea22a41f6',color:'black',cond:'Good',colorVariants:{black:'1551488831-ac6ea22a41f6',white:'1490481702701-2a2be1926c0f',navy:'1509631179256-f30d090da1f3'}},
+  {id:20,cat:'ready-to-wear',brand:'Fendi',name:'FF Print Silk Kaftan',desc:'Silk / FF Monogram / Kaftan Style',price:18700000,img:'1490481702701-2a2be1926c0f',color:'beige',cond:'Brand New',colorVariants:{beige:'1490481702701-2a2be1926c0f',white:'1551488831-ac6ea22a41f6',black:'1509631179256-f30d090da1f3'}},
+  {id:21,cat:'shoes',brand:'Christian Louboutin',name:'Pigalle 100 Pumps',desc:'Patent Leather / Red Sole / 100mm',price:12500000,img:'1542291026-7eec264ef638',badge:'Ikonik',color:'black',cond:'Brand New',colorVariants:{black:'1542291026-7eec264ef638',red:'1543163765179-e3606a487e2e',white:'1560343757-4f8f8fb03e93'}},
+  {id:22,cat:'shoes',brand:'Gucci',name:'Horsebit 1953 Loafers',desc:'Leather / Gold Horsebit Detail',price:9800000,img:'1543163765179-e3606a487e2e',color:'brown',cond:'Brand New',colorVariants:{brown:'1543163765179-e3606a487e2e',black:'1542291026-7eec264ef638',white:'1560343757-4f8f8fb03e93'}},
+  {id:23,cat:'shoes',brand:'Chanel',name:'Slingback Pumps',desc:'Leather / Two-tone / 85mm',price:11200000,img:'1560343757-4f8f8fb03e93',badge:'Bestseller',color:'beige',cond:'Brand New',colorVariants:{beige:'1560343757-4f8f8fb03e93',black:'1542291026-7eec264ef638',white:'1543163765179-e3606a487e2e'}},
+  {id:24,cat:'shoes',brand:'Hermès',name:'Oran Sandal',desc:'Calfskin / H Buckle / Flat',price:13500000,img:'1542291026-7eec264ef638',badge:'Eksklusif',color:'gold',cond:'Brand New',colorVariants:{gold:'1542291026-7eec264ef638',black:'1560343757-4f8f8fb03e93',white:'1543163765179-e3606a487e2e'}},
+  {id:25,cat:'shoes',brand:'Prada',name:'Monolith Boots',desc:'Brushed Leather / Lug Sole',price:18000000,img:'1543163765179-e3606a487e2e',color:'black',cond:'Brand New',colorVariants:{black:'1543163765179-e3606a487e2e',white:'1560343757-4f8f8fb03e93',brown:'1542291026-7eec264ef638'}},
+  {id:26,cat:'shoes',brand:'Balenciaga',name:'Triple S Sneaker',desc:'Mesh / Leather / Exaggerated Sole',price:14200000,img:'1560343757-4f8f8fb03e93',color:'white',cond:'Like New',colorVariants:{white:'1560343757-4f8f8fb03e93',black:'1542291026-7eec264ef638',navy:'1543163765179-e3606a487e2e'}},
+  {id:27,cat:'shoes',brand:'Saint Laurent',name:'Cassandra Mule',desc:'Leather / Square Toe / YSL Buckle',price:9500000,img:'1542291026-7eec264ef638',color:'black',cond:'Brand New',colorVariants:{black:'1542291026-7eec264ef638',beige:'1560343757-4f8f8fb03e93',red:'1543163765179-e3606a487e2e'}},
+  {id:28,cat:'shoes',brand:'Dior',name:'B23 High-top Sneaker',desc:'Oblique Canvas / Rubber Sole',price:12800000,img:'1543163765179-e3606a487e2e',badge:'New Season',color:'beige',cond:'Brand New',colorVariants:{beige:'1543163765179-e3606a487e2e',black:'1542291026-7eec264ef638',white:'1560343757-4f8f8fb03e93'}},
+  {id:29,cat:'shoes',brand:'Versace',name:'Medusa Head Heels',desc:'Leather / Gold Medusa / 95mm',price:10500000,img:'1560343757-4f8f8fb03e93',color:'gold',cond:'Brand New',colorVariants:{gold:'1560343757-4f8f8fb03e93',black:'1542291026-7eec264ef638',white:'1543163765179-e3606a487e2e'}},
+  {id:30,cat:'shoes',brand:'Bottega Veneta',name:'Stretch Ankle Boot',desc:'Intrecciato Leather / Stretch',price:16500000,img:'1542291026-7eec264ef638',badge:'Eksklusif',color:'black',cond:'Brand New',colorVariants:{black:'1542291026-7eec264ef638',brown:'1543163765179-e3606a487e2e',beige:'1560343757-4f8f8fb03e93'}},
+  {id:31,cat:'watches',brand:'Rolex',name:'Datejust 41',desc:'Oyster Steel & Gold / Jubilee Bracelet',price:245000000,img:'1523275335684-37898b6baf30',badge:'Bestseller',color:'silver',cond:'Brand New',colorVariants:{silver:'1523275335684-37898b6baf30',gold:'1515562141207-7a88fb7ce338',black:'1524592094714-0f0654e20314'}},
+  {id:32,cat:'watches',brand:'Audemars Piguet',name:'Royal Oak 15500ST',desc:'Stainless Steel / Self-winding',price:580000000,img:'1515562141207-7a88fb7ce338',badge:'Limited Edition',color:'silver',cond:'Brand New',colorVariants:{silver:'1515562141207-7a88fb7ce338',gold:'1524592094714-0f0654e20314',white:'1599643478518-a784e5dc4c8f'}},
+  {id:33,cat:'watches',brand:'Patek Philippe',name:'Calatrava Pilot',desc:'White Gold / Hand-wound / Sapphire Crystal',price:650000000,img:'1523275335684-37898b6baf30',badge:'Eksklusif',color:'silver',cond:'Brand New',colorVariants:{silver:'1523275335684-37898b6baf30',gold:'1515562141207-7a88fb7ce338',black:'1524592094714-0f0654e20314'}},
+  {id:34,cat:'watches',brand:'Tiffany & Co.',name:'HardWear Link Necklace',desc:'18K Gold / Diamond / 16 Inch',price:62000000,img:'1599643478518-a784e5dc4c8f',color:'gold',cond:'Brand New',colorVariants:{gold:'1599643478518-a784e5dc4c8f',silver:'1523275335684-37898b6baf30',white:'1515562141207-7a88fb7ce338'}},
+  {id:35,cat:'watches',brand:'Rolex',name:'Submariner Date',desc:'Oystersteel / Black Ceramic Bezel',price:175000000,img:'1524592094714-0f0654e20314',badge:'Ikonik',color:'black',cond:'Like New',colorVariants:{black:'1524592094714-0f0654e20314',silver:'1523275335684-37898b6baf30',gold:'1515562141207-7a88fb7ce338'}},
+  {id:36,cat:'watches',brand:'Cartier',name:'Tank Must Watch',desc:'Steel / Leather Strap / Roman Numeral',price:28500000,img:'1515562141207-7a88fb7ce338',color:'brown',cond:'Brand New',colorVariants:{brown:'1515562141207-7a88fb7ce338',silver:'1524592094714-0f0654e20314',gold:'1599643478518-a784e5dc4c8f'}},
+  {id:37,cat:'watches',brand:'Bulgari',name:'Serpenti Viper Bracelet',desc:'18K Gold / Pavé Diamond',price:95000000,img:'1523275335684-37898b6baf30',color:'gold',cond:'Very Good',colorVariants:{gold:'1523275335684-37898b6baf30',white:'1599643478518-a784e5dc4c8f',silver:'1524592094714-0f0654e20314'}},
+  {id:38,cat:'watches',brand:'Van Cleef & Arpels',name:'Alhambra Necklace',desc:'18K Gold / Mother-of-Pearl',price:48000000,img:'1599643478518-a784e5dc4c8f',color:'white',cond:'Brand New',colorVariants:{white:'1599643478518-a784e5dc4c8f',gold:'1515562141207-7a88fb7ce338',silver:'1523275335684-37898b6baf30'}},
+  {id:39,cat:'watches',brand:'Patek Philippe',name:'Nautilus 5711',desc:'Stainless Steel / Blue Dial / Automatic',price:980000000,img:'1524592094714-0f0654e20314',badge:'Limited Edition',color:'silver',cond:'Brand New',colorVariants:{silver:'1524592094714-0f0654e20314',gold:'1515562141207-7a88fb7ce338',navy:'1599643478518-a784e5dc4c8f'}},
+  {id:40,cat:'watches',brand:'Tiffany & Co.',name:'T Wire Bracelet',desc:'18K Rose Gold / Wire Bracelet',price:32500000,img:'1515562141207-7a88fb7ce338',color:'gold',cond:'Good',colorVariants:{gold:'1515562141207-7a88fb7ce338',silver:'1523275335684-37898b6baf30',white:'1599643478518-a784e5dc4c8f'}},
+  {id:41,cat:'accessories',brand:'Hermès',name:'Carré 90 Silk Scarf',desc:'100% Silk / 90x90cm',price:8500000,img:'1601924994987-69e26d50dc26',color:'red',cond:'Brand New',colorVariants:{red:'1601924994987-69e26d50dc26',white:'1553062407-98eeb64c6a62',navy:'1585386959984-a4155224a1ad',black:'1526170375885-4d8ecf77b99f'}},
+  {id:42,cat:'accessories',brand:'Gucci',name:'GG Marmont Belt',desc:'Leather / Chevron / Double G Buckle',price:6200000,img:'1553062407-98eeb64c6a62',color:'black',cond:'Brand New',colorVariants:{black:'1553062407-98eeb64c6a62',white:'1601924994987-69e26d50dc26',brown:'1585386959984-a4155224a1ad'}},
+  {id:43,cat:'accessories',brand:'Chanel',name:'Classic Card Holder',desc:'Lambskin / Gold CC',price:14000000,img:'1585386959984-a4155224a1ad',badge:'Bestseller',color:'black',cond:'Brand New',colorVariants:{black:'1585386959984-a4155224a1ad',white:'1553062407-98eeb64c6a62',beige:'1601924994987-69e26d50dc26'}},
+  {id:44,cat:'accessories',brand:'Louis Vuitton',name:'Agenda PM',desc:'Damier Ebene / Ring Agenda',price:7800000,img:'1526170375885-4d8ecf77b99f',color:'brown',cond:'Like New',colorVariants:{brown:'1526170375885-4d8ecf77b99f',black:'1553062407-98eeb64c6a62',white:'1585386959984-a4155224a1ad'}},
+  {id:45,cat:'accessories',brand:'Burberry',name:'Vintage Check Scarf',desc:'Wool & Silk / Beige Check',price:5800000,img:'1601924994987-69e26d50dc26',color:'beige',cond:'Brand New',colorVariants:{beige:'1601924994987-69e26d50dc26',black:'1553062407-98eeb64c6a62',red:'1585386959984-a4155224a1ad'}},
+  {id:46,cat:'accessories',brand:'Fendi',name:'FF Logo Hair Clip Set',desc:'Resin / Gold-tone / Set of 3',price:3200000,img:'1553062407-98eeb64c6a62',color:'gold',cond:'Brand New',colorVariants:{gold:'1553062407-98eeb64c6a62',black:'1585386959984-a4155224a1ad',white:'1601924994987-69e26d50dc26'}},
+  {id:47,cat:'accessories',brand:'Hermès',name:'Kelly Wallet to Go',desc:'Epsom Leather / Etoupe / Card Slots',price:32000000,img:'1585386959984-a4155224a1ad',badge:'Eksklusif',color:'beige',cond:'Brand New',colorVariants:{beige:'1585386959984-a4155224a1ad',black:'1553062407-98eeb64c6a62',brown:'1526170375885-4d8ecf77b99f'}},
+  {id:48,cat:'accessories',brand:'Versace',name:'Medusa Buckle Belt',desc:'Leather / Black / Gold Buckle',price:7500000,img:'1526170375885-4d8ecf77b99f',color:'black',cond:'Very Good',colorVariants:{black:'1526170375885-4d8ecf77b99f',white:'1601924994987-69e26d50dc26',brown:'1553062407-98eeb64c6a62'}},
+  {id:49,cat:'accessories',brand:'Saint Laurent',name:'Tassel Keychain Charm',desc:'Leather / Gold Hardware',price:2800000,img:'1601924994987-69e26d50dc26',color:'black',cond:'Good',colorVariants:{black:'1601924994987-69e26d50dc26',white:'1585386959984-a4155224a1ad',red:'1553062407-98eeb64c6a62'}},
+  {id:50,cat:'accessories',brand:'Balenciaga',name:'Logo Print Silk Bandana',desc:'Silk / Multicolor Print / 70x70cm',price:4500000,img:'1553062407-98eeb64c6a62',color:'navy',cond:'Brand New',colorVariants:{navy:'1553062407-98eeb64c6a62',black:'1585386959984-a4155224a1ad',white:'1601924994987-69e26d50dc26'}},
+  {id:51,cat:'fragrances',brand:'Chanel',name:'N°5 Eau de Parfum',desc:'Floral Aldehyde / 100ml / Women',price:3800000,img:'1541643600914-78b084683702',badge:'Ikonik',color:'white',cond:'Brand New',colorVariants:{white:'1541643600914-78b084683702',black:'1588514912908-68b2cdd46af6',gold:'1547887538-e3a2f32cb1cc'}},
+  {id:52,cat:'fragrances',brand:'Dior',name:'Sauvage Elixir',desc:'Woody Spicy / 60ml / Men',price:3200000,img:'1588514912908-68b2cdd46af6',color:'black',cond:'Brand New',colorVariants:{black:'1588514912908-68b2cdd46af6',white:'1541643600914-78b084683702',silver:'1592945403244-b3fbafd7f539'}},
+  {id:53,cat:'fragrances',brand:'Tom Ford',name:'Black Orchid EDP',desc:'Oriental Floral / 100ml / Unisex',price:4500000,img:'1547887538-e3a2f32cb1cc',color:'black',cond:'Brand New',colorVariants:{black:'1547887538-e3a2f32cb1cc',white:'1541643600914-78b084683702',gold:'1588514912908-68b2cdd46af6'}},
+  {id:54,cat:'fragrances',brand:'Yves Saint Laurent',name:'Mon Paris EDP',desc:'Floral Chypre / 90ml / Women',price:2900000,img:'1592945403244-b3fbafd7f539',color:'red',cond:'Brand New',colorVariants:{red:'1592945403244-b3fbafd7f539',white:'1541643600914-78b084683702',black:'1588514912908-68b2cdd46af6'}},
+  {id:55,cat:'fragrances',brand:'Gucci',name:'Bloom EDP',desc:'White Floral / 100ml / Women',price:2600000,img:'1541643600914-78b084683702',color:'white',cond:'Brand New',colorVariants:{white:'1541643600914-78b084683702',black:'1547887538-e3a2f32cb1cc',gold:'1592945403244-b3fbafd7f539'}},
+  {id:56,cat:'fragrances',brand:'Hermès',name:"Terre d'Hermès EDT",desc:'Woody Mineral / 100ml / Men',price:2400000,img:'1588514912908-68b2cdd46af6',color:'brown',cond:'Brand New',colorVariants:{brown:'1588514912908-68b2cdd46af6',black:'1547887538-e3a2f32cb1cc',white:'1541643600914-78b084683702'}},
+  {id:57,cat:'fragrances',brand:'Bulgari',name:'Omnia Crystalline EDT',desc:'Floral Fruity / 65ml / Women',price:2100000,img:'1547887538-e3a2f32cb1cc',color:'white',cond:'Like New',colorVariants:{white:'1547887538-e3a2f32cb1cc',gold:'1541643600914-78b084683702',black:'1588514912908-68b2cdd46af6'}},
+  {id:58,cat:'fragrances',brand:'Prada',name:'Luna Rossa Carbon EDT',desc:'Aromatic Woody / 100ml / Men',price:2700000,img:'1592945403244-b3fbafd7f539',color:'navy',cond:'Brand New',colorVariants:{navy:'1592945403244-b3fbafd7f539',black:'1588514912908-68b2cdd46af6',silver:'1547887538-e3a2f32cb1cc'}},
+  {id:59,cat:'fragrances',brand:'Versace',name:'Eros EDT',desc:'Fresh Woody / 100ml / Men',price:1900000,img:'1541643600914-78b084683702',color:'navy',cond:'Good',colorVariants:{navy:'1541643600914-78b084683702',black:'1588514912908-68b2cdd46af6',white:'1547887538-e3a2f32cb1cc'}},
+  {id:60,cat:'fragrances',brand:'Burberry',name:'Her Eau de Parfum',desc:'Fruity Floral / 100ml / Women',price:2300000,img:'1588514912908-68b2cdd46af6',badge:'New Season',color:'red',cond:'Brand New',colorVariants:{red:'1588514912908-68b2cdd46af6',white:'1541643600914-78b084683702',black:'1547887538-e3a2f32cb1cc'}},
+  {id:61,cat:'eyewear',brand:'Chanel',name:'CC Pearl Square Sunglasses',desc:'Acetate / Pearl Detail',price:9500000,img:'1511499767150-a48a237f0083',color:'black',cond:'Brand New',colorVariants:{black:'1511499767150-a48a237f0083',white:'1508296695146-257a814070b4',beige:'1473496169904-658ba7574b0d'}},
+  {id:62,cat:'eyewear',brand:'Gucci',name:'GG Round Frame',desc:'Metal / Gold / Blue Lens',price:7200000,img:'1508296695146-257a814070b4',color:'gold',cond:'Brand New',colorVariants:{gold:'1508296695146-257a814070b4',black:'1511499767150-a48a237f0083',silver:'1473496169904-658ba7574b0d'}},
+  {id:63,cat:'eyewear',brand:'Dior',name:'So Real Pop Sunglasses',desc:'Metal / Mirror Lens',price:8100000,img:'1473496169904-658ba7574b0d',badge:'Ikonik',color:'gold',cond:'Brand New',colorVariants:{gold:'1473496169904-658ba7574b0d',black:'1572635196237-14b3f281503f',silver:'1511499767150-a48a237f0083'}},
+  {id:64,cat:'eyewear',brand:'Prada',name:'Symbole Sunglasses',desc:'Acetate / Cat Eye',price:6800000,img:'1572635196237-14b3f281503f',color:'black',cond:'Brand New',colorVariants:{black:'1572635196237-14b3f281503f',white:'1508296695146-257a814070b4',brown:'1473496169904-658ba7574b0d'}},
+  {id:65,cat:'eyewear',brand:'Versace',name:'Medusa Biggie Sunglasses',desc:'Acetate / Gold Medusa',price:7900000,img:'1511499767150-a48a237f0083',color:'black',cond:'Like New',colorVariants:{black:'1511499767150-a48a237f0083',gold:'1508296695146-257a814070b4',brown:'1572635196237-14b3f281503f'}},
+  {id:66,cat:'eyewear',brand:'Saint Laurent',name:'SL 1 Aviator',desc:'Metal / Green Lens',price:6500000,img:'1508296695146-257a814070b4',color:'silver',cond:'Brand New',colorVariants:{silver:'1508296695146-257a814070b4',gold:'1473496169904-658ba7574b0d',black:'1511499767150-a48a237f0083'}},
+  {id:67,cat:'eyewear',brand:'Burberry',name:'Check Detail Square Frame',desc:'Acetate / Square Frame',price:5900000,img:'1473496169904-658ba7574b0d',color:'brown',cond:'Very Good',colorVariants:{brown:'1473496169904-658ba7574b0d',black:'1511499767150-a48a237f0083',beige:'1572635196237-14b3f281503f'}},
+  {id:68,cat:'eyewear',brand:'Fendi',name:'FF Logo Cat Eye Sunglasses',desc:'Acetate / Gradient Lens',price:6200000,img:'1572635196237-14b3f281503f',color:'beige',cond:'Brand New',colorVariants:{beige:'1572635196237-14b3f281503f',black:'1511499767150-a48a237f0083',gold:'1508296695146-257a814070b4'}},
+  {id:69,cat:'eyewear',brand:'Bottega Veneta',name:'Oversized Round Sunglasses',desc:'Acetate / Oversized Round',price:7000000,img:'1511499767150-a48a237f0083',color:'black',cond:'Good',colorVariants:{black:'1511499767150-a48a237f0083',brown:'1473496169904-658ba7574b0d',white:'1508296695146-257a814070b4'}},
+  {id:70,cat:'eyewear',brand:'Balenciaga',name:'Shield Wrap Sunglasses',desc:'Acetate / Futuristic Shield',price:8400000,img:'1508296695146-257a814070b4',badge:'Limited Edition',color:'black',cond:'Brand New',colorVariants:{black:'1508296695146-257a814070b4',white:'1511499767150-a48a237f0083',silver:'1473496169904-658ba7574b0d'}}
+];
 
 const STORES = [
   { id:'jakarta', name:'HarmoniFashion Jakarta', address:'Jl. Jenderal Sudirman Kav. 52–53, Senayan, Jakarta Pusat 10270', phone:'+62 21 5793 1888', hours:'Senin–Minggu, 10:00–21:00 WIB', query:'Jl Jenderal Sudirman Kav 52-53 Senayan Jakarta Pusat',
@@ -579,6 +780,38 @@ const STORES = [
 ];
 
 const CS_WHATSAPP = '6281234567890';
+
+/* ============ AUTH DATA ============
+   Catatan: ini adalah simulasi front-end (in-browser).
+   Akun admin sudah ditentukan (kredensial tetap).
+   Akun customer didaftarkan otomatis saat login pertama kali
+   dan disimpan di localStorage browser pengguna. */
+const ADMIN_ACCOUNTS = [
+  { username: 'admin', password: 'admin123', name: 'Administrator' }
+];
+const LS_KEY_USERS = 'hf_customer_users';
+const LS_KEY_SESSION = 'hf_session';
+
+function loadCustomerUsers() {
+  try { return JSON.parse(localStorage.getItem(LS_KEY_USERS)) || {}; }
+  catch (e) { return {}; }
+}
+function saveCustomerUsers(users) {
+  localStorage.setItem(LS_KEY_USERS, JSON.stringify(users));
+}
+function loadSession() {
+  try { return JSON.parse(localStorage.getItem(LS_KEY_SESSION)) || null; }
+  catch (e) { return null; }
+}
+function saveSession(session) {
+  if (session) localStorage.setItem(LS_KEY_SESSION, JSON.stringify(session));
+  else localStorage.removeItem(LS_KEY_SESSION);
+}
+
+let currentUser = null; // { username, name, role: 'customer' | 'admin' }
+let authMode = 'customer'; // active tab on the login modal
+let adminCurrentPage = 'dashboard';
+let adminEditState = { type: null, id: null }; // tracks which record is being edited in a form
 
 /* ============ STATE ============ */
 let activeCategory = 'all';
@@ -623,6 +856,116 @@ function init() {
   buildStores();
   applyFilters();
   updateOverallRating();
+  restoreSession();
+}
+
+/* ============ AUTH: MODAL ============ */
+function openAuthModal() {
+  document.getElementById('authOverlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+  switchAuthTab('customer');
+  return false;
+}
+function closeAuthModal() {
+  document.getElementById('authOverlay').classList.remove('open');
+  document.body.style.overflow = '';
+  document.getElementById('authError').classList.remove('show');
+  document.getElementById('authUsername').value = '';
+  document.getElementById('authPassword').value = '';
+}
+function switchAuthTab(mode) {
+  authMode = mode;
+  document.getElementById('tabCustomer').classList.toggle('active', mode === 'customer');
+  document.getElementById('tabAdmin').classList.toggle('active', mode === 'admin');
+  document.getElementById('authError').classList.remove('show');
+  const submitBtn = document.getElementById('authSubmitBtn');
+  const hint = document.getElementById('authHint');
+  const userLabel = document.getElementById('authUserLabel');
+  if (mode === 'admin') {
+    submitBtn.textContent = 'Masuk sebagai Admin';
+    userLabel.textContent = 'Username Admin';
+    hint.innerHTML = 'Akses ini khusus untuk pengelola toko HarmoniFashion.';
+  } else {
+    submitBtn.textContent = 'Masuk sebagai Customer';
+    userLabel.textContent = 'Username / Email';
+    hint.innerHTML = 'Belum punya akun? <strong>Daftar otomatis</strong> saat login pertama kali sebagai Customer.';
+  }
+}
+function showAuthError(msg) {
+  const el = document.getElementById('authError');
+  el.textContent = msg;
+  el.classList.add('show');
+}
+
+/* ============ AUTH: LOGIN / LOGOUT ============ */
+function handleLogin(e) {
+  e.preventDefault();
+  const username = document.getElementById('authUsername').value.trim();
+  const password = document.getElementById('authPassword').value;
+  if (!username || !password) { showAuthError('Username dan kata sandi wajib diisi.'); return false; }
+
+  if (authMode === 'admin') {
+    const admin = ADMIN_ACCOUNTS.find(a => a.username.toLowerCase() === username.toLowerCase() && a.password === password);
+    if (!admin) { showAuthError('Username atau kata sandi Admin salah.'); return false; }
+    currentUser = { username: admin.username, name: admin.name, role: 'admin' };
+    saveSession(currentUser);
+    closeAuthModal();
+    renderNavAuthArea();
+    enterAdminPanel();
+    return false;
+  }
+
+  // Customer login: auto-register on first login, otherwise verify password
+  const users = loadCustomerUsers();
+  const key = username.toLowerCase();
+  if (users[key]) {
+    if (users[key].password !== password) { showAuthError('Kata sandi salah. Silakan coba lagi.'); return false; }
+  } else {
+    users[key] = { username, password, name: username };
+    saveCustomerUsers(users);
+  }
+  currentUser = { username: users[key].username, name: users[key].name, role: 'customer' };
+  saveSession(currentUser);
+  closeAuthModal();
+  renderNavAuthArea();
+  return false;
+}
+
+function handleLogout() {
+  currentUser = null;
+  saveSession(null);
+  exitAdminPanel();
+  renderNavAuthArea();
+}
+
+function restoreSession() {
+  const session = loadSession();
+  if (!session) { renderNavAuthArea(); return; }
+  currentUser = session;
+  renderNavAuthArea();
+  if (currentUser.role === 'admin') enterAdminPanel();
+}
+
+function renderNavAuthArea() {
+  const area = document.getElementById('navAuthArea');
+  if (!currentUser) {
+    area.innerHTML = '<a href="#" class="btn-login" onclick="return openAuthModal()">Login</a>';
+    return;
+  }
+  if (currentUser.role === 'admin') {
+    area.innerHTML = `
+      <div class="user-pill">
+        <span class="user-pill-name">Halo, <strong>${currentUser.name}</strong> (Admin)</span>
+        <button class="btn-admin-panel" onclick="enterAdminPanel()">Dashboard</button>
+        <button class="btn-logout" onclick="handleLogout()">Keluar</button>
+      </div>`;
+  } else {
+    area.innerHTML = `
+      <div class="user-pill">
+        <span class="user-pill-name">Halo, <strong>${currentUser.name}</strong></span>
+        <button class="btn-logout" onclick="handleLogout()">Keluar</button>
+      </div>`;
+  }
 }
 
 function buildCategoryNav() {
@@ -1084,17 +1427,452 @@ document.addEventListener('click', e => {
   if (sidebar.classList.contains('open') && !sidebar.contains(e.target) && !e.target.closest('.filter-toggle')) sidebar.classList.remove('open');
 });
 
+/* ============ ADMIN: ENTER / EXIT PANEL ============ */
+function enterAdminPanel() {
+  if (!currentUser || currentUser.role !== 'admin') return;
+  document.body.classList.add('admin-mode');
+  document.getElementById('adminShell').classList.add('open');
+  document.body.style.overflow = '';
+  setAdminPage('dashboard');
+  window.scrollTo({ top: 0 });
+}
+function exitAdminPanel() {
+  document.body.classList.remove('admin-mode');
+  document.getElementById('adminShell').classList.remove('open');
+}
+
+function setAdminPage(page) {
+  adminCurrentPage = page;
+  document.querySelectorAll('.admin-nav-item[data-page]').forEach(b => b.classList.toggle('active', b.dataset.page === page));
+  const main = document.getElementById('adminMain');
+  if (page === 'dashboard') main.innerHTML = renderAdminDashboard();
+  else if (page === 'products') main.innerHTML = renderAdminProducts();
+  else if (page === 'categories') main.innerHTML = renderAdminCategories();
+  else if (page === 'stores') main.innerHTML = renderAdminStores();
+  else if (page === 'reviews') main.innerHTML = renderAdminReviews();
+}
+
+/* ============ ADMIN: DASHBOARD OVERVIEW ============ */
+function renderAdminDashboard() {
+  const totalProducts = PRODUCTS.length;
+  const totalCategories = CATEGORIES.length;
+  const totalStores = STORES.length;
+  const totalReviews = STORES.reduce((a, s) => a + (storeComments[s.id] ? storeComments[s.id].length : 0), 0);
+  const totalValue = PRODUCTS.reduce((a, p) => a + p.price, 0);
+  const customerCount = Object.keys(loadCustomerUsers()).length;
+  return `
+    <div class="admin-header">
+      <div>
+        <h1 class="admin-page-title">Ringkasan <em>Dashboard</em></h1>
+        <p class="admin-page-sub">Gambaran umum data toko HarmoniFashion saat ini.</p>
+      </div>
+    </div>
+    <div class="admin-stats-row">
+      <div class="admin-stat-card"><div class="admin-stat-label">Total Produk</div><div class="admin-stat-value">${totalProducts}</div></div>
+      <div class="admin-stat-card"><div class="admin-stat-label">Total Kategori</div><div class="admin-stat-value">${totalCategories}</div></div>
+      <div class="admin-stat-card"><div class="admin-stat-label">Total Cabang</div><div class="admin-stat-value">${totalStores}</div></div>
+      <div class="admin-stat-card"><div class="admin-stat-label">Total Ulasan</div><div class="admin-stat-value">${totalReviews}</div></div>
+      <div class="admin-stat-card"><div class="admin-stat-label">Akun Customer Terdaftar</div><div class="admin-stat-value">${customerCount}</div></div>
+      <div class="admin-stat-card"><div class="admin-stat-label">Estimasi Nilai Katalog</div><div class="admin-stat-value" style="font-size:20px;">${formatRupiah(totalValue)}</div></div>
+    </div>
+    <div class="admin-panel">
+      <div class="admin-panel-title">Produk Terbaru Ditambahkan</div>
+      <div class="admin-table-wrap">
+        <table class="admin-table">
+          <thead><tr><th></th><th>Nama Produk</th><th>Brand</th><th>Kategori</th><th>Harga</th></tr></thead>
+          <tbody>
+            ${PRODUCTS.slice(-5).reverse().map(p => `
+              <tr>
+                <td><img class="admin-thumb" src="https://images.unsplash.com/photo-${p.img}?w=80&q=60" alt="${p.name}"/></td>
+                <td>${p.name}</td>
+                <td>${p.brand}</td>
+                <td>${(CATEGORIES.find(c=>c.id===p.cat)||{}).label || p.cat}</td>
+                <td>${formatRupiah(p.price)}</td>
+              </tr>`).join('')}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  `;
+}
+
+/* ============ ADMIN: PRODUCTS CRUD ============ */
+function categoryOptionsHtml(selected) {
+  return CATEGORIES.map(c => `<option value="${c.id}" ${c.id===selected?'selected':''}>${c.label}</option>`).join('');
+}
+function renderAdminProducts() {
+  adminEditState = { type: null, id: null };
+  return `
+    <div class="admin-header">
+      <div>
+        <h1 class="admin-page-title">Kelola <em>Produk</em></h1>
+        <p class="admin-page-sub">Tambah, ubah, atau hapus produk pada katalog HarmoniFashion.</p>
+      </div>
+    </div>
+    <div class="admin-panel">
+      <div class="admin-panel-title">Tambah Produk Baru</div>
+      <div id="productFormArea">${productFormHtml()}</div>
+    </div>
+    <div class="admin-panel">
+      <div class="admin-panel-title">Daftar Produk (${PRODUCTS.length})</div>
+      <div class="admin-table-wrap">
+        <table class="admin-table">
+          <thead><tr><th></th><th>Nama</th><th>Brand</th><th>Kategori</th><th>Harga</th><th>Kondisi</th><th>Aksi</th></tr></thead>
+          <tbody id="productTableBody">${productRowsHtml()}</tbody>
+        </table>
+      </div>
+    </div>
+  `;
+}
+function productRowsHtml() {
+  if (!PRODUCTS.length) return '<tr><td colspan="7" class="admin-empty">Belum ada produk.</td></tr>';
+  return PRODUCTS.map(p => `
+    <tr>
+      <td><img class="admin-thumb" src="https://images.unsplash.com/photo-${p.img}?w=80&q=60" alt="${p.name}"/></td>
+      <td>${p.name}</td>
+      <td>${p.brand}</td>
+      <td>${(CATEGORIES.find(c=>c.id===p.cat)||{}).label || p.cat}</td>
+      <td>${formatRupiah(p.price)}</td>
+      <td><span class="admin-badge">${p.cond}</span></td>
+      <td>
+        <button class="btn-icon-sm" onclick="editProduct(${p.id})">Ubah</button>
+        <button class="btn-icon-sm danger" onclick="deleteProduct(${p.id})">Hapus</button>
+      </td>
+    </tr>`).join('');
+}
+function productFormHtml(p) {
+  const editing = !!p;
+  return `
+    <form onsubmit="return saveProductForm(event)">
+      <div class="admin-form-grid">
+        <div class="admin-field"><label>Nama Produk</label><input type="text" id="pf-name" value="${editing?p.name:''}" required /></div>
+        <div class="admin-field"><label>Brand</label><input type="text" id="pf-brand" value="${editing?p.brand:''}" required /></div>
+        <div class="admin-field"><label>Kategori</label><select id="pf-cat">${categoryOptionsHtml(editing?p.cat:CATEGORIES[0].id)}</select></div>
+        <div class="admin-field"><label>Harga (Rp)</label><input type="number" id="pf-price" min="0" value="${editing?p.price:''}" required /></div>
+        <div class="admin-field"><label>Kondisi</label>
+          <select id="pf-cond">
+            ${['Brand New','Like New','Very Good','Good'].map(c => `<option value="${c}" ${editing && p.cond===c?'selected':''}>${c}</option>`).join('')}
+          </select>
+        </div>
+        <div class="admin-field"><label>Warna Utama (kode singkat, cth: black)</label><input type="text" id="pf-color" value="${editing?p.color:''}" placeholder="black" required /></div>
+        <div class="admin-field"><label>Badge (opsional, cth: Bestseller)</label><input type="text" id="pf-badge" value="${editing && p.badge ? p.badge : ''}" /></div>
+        <div class="admin-field"><label>ID Foto Unsplash (opsional)</label><input type="text" id="pf-img" value="${editing?p.img:''}" placeholder="1548036328-c9fa89d128fa" /></div>
+      </div>
+      <div class="admin-form-grid full">
+        <div class="admin-field"><label>Deskripsi Singkat</label><textarea id="pf-desc" rows="2">${editing?p.desc:''}</textarea></div>
+      </div>
+      <button type="submit" class="btn-admin-action gold">${editing?'Simpan Perubahan':'Tambah Produk'}</button>
+      ${editing?`<button type="button" class="btn-admin-action" style="margin-left:8px;" onclick="cancelProductEdit()">Batal</button>`:''}
+    </form>
+  `;
+}
+function editProduct(id) {
+  const p = PRODUCTS.find(x => x.id === id);
+  if (!p) return;
+  adminEditState = { type: 'product', id };
+  document.getElementById('productFormArea').innerHTML = productFormHtml(p);
+  document.getElementById('productFormArea').scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+function cancelProductEdit() {
+  adminEditState = { type: null, id: null };
+  document.getElementById('productFormArea').innerHTML = productFormHtml();
+}
+function saveProductForm(e) {
+  e.preventDefault();
+  const data = {
+    cat: document.getElementById('pf-cat').value,
+    brand: document.getElementById('pf-brand').value.trim(),
+    name: document.getElementById('pf-name').value.trim(),
+    desc: document.getElementById('pf-desc').value.trim(),
+    price: Number(document.getElementById('pf-price').value) || 0,
+    img: document.getElementById('pf-img').value.trim() || '1548036328-c9fa89d128fa',
+    color: document.getElementById('pf-color').value.trim().toLowerCase() || 'black',
+    cond: document.getElementById('pf-cond').value,
+  };
+  const badge = document.getElementById('pf-badge').value.trim();
+  if (badge) data.badge = badge;
+
+  if (adminEditState.type === 'product' && adminEditState.id != null) {
+    const idx = PRODUCTS.findIndex(p => p.id === adminEditState.id);
+    if (idx > -1) PRODUCTS[idx] = { ...PRODUCTS[idx], ...data, colorVariants: { [data.color]: data.img } };
+  } else {
+    const newId = PRODUCTS.length ? Math.max(...PRODUCTS.map(p => p.id)) + 1 : 1;
+    PRODUCTS.push({ id: newId, ...data, colorVariants: { [data.color]: data.img } });
+  }
+  adminEditState = { type: null, id: null };
+  // Refresh admin product page + underlying frontend data structures
+  document.getElementById('productFormArea').innerHTML = productFormHtml();
+  document.getElementById('productTableBody').innerHTML = productRowsHtml();
+  buildBrandFilter(); buildColorFilter(); applyFilters();
+  return false;
+}
+function deleteProduct(id) {
+  if (!confirm('Hapus produk ini secara permanen?')) return;
+  const idx = PRODUCTS.findIndex(p => p.id === id);
+  if (idx > -1) PRODUCTS.splice(idx, 1);
+  document.getElementById('productTableBody').innerHTML = productRowsHtml();
+  buildBrandFilter(); buildColorFilter(); applyFilters();
+}
+
+/* ============ ADMIN: CATEGORIES CRUD ============ */
+function renderAdminCategories() {
+  adminEditState = { type: null, id: null };
+  return `
+    <div class="admin-header">
+      <div>
+        <h1 class="admin-page-title">Kelola <em>Kategori</em></h1>
+        <p class="admin-page-sub">Atur kategori yang tampil pada navigasi dan filter situs.</p>
+      </div>
+    </div>
+    <div class="admin-panel">
+      <div class="admin-panel-title">Tambah Kategori Baru</div>
+      <div id="categoryFormArea">${categoryFormHtml()}</div>
+    </div>
+    <div class="admin-panel">
+      <div class="admin-panel-title">Daftar Kategori (${CATEGORIES.length})</div>
+      <div class="admin-table-wrap">
+        <table class="admin-table">
+          <thead><tr><th>ID</th><th>Label</th><th>Jumlah Produk</th><th>Aksi</th></tr></thead>
+          <tbody id="categoryTableBody">${categoryRowsHtml()}</tbody>
+        </table>
+      </div>
+    </div>
+  `;
+}
+function categoryRowsHtml() {
+  if (!CATEGORIES.length) return '<tr><td colspan="4" class="admin-empty">Belum ada kategori.</td></tr>';
+  return CATEGORIES.map(c => `
+    <tr>
+      <td>${c.id}</td>
+      <td>${c.label}</td>
+      <td>${PRODUCTS.filter(p => p.cat === c.id).length}</td>
+      <td>
+        <button class="btn-icon-sm" onclick="editCategory('${c.id}')">Ubah</button>
+        <button class="btn-icon-sm danger" onclick="deleteCategory('${c.id}')">Hapus</button>
+      </td>
+    </tr>`).join('');
+}
+function categoryFormHtml(c) {
+  const editing = !!c;
+  return `
+    <form onsubmit="return saveCategoryForm(event)">
+      <div class="admin-form-grid">
+        <div class="admin-field"><label>ID Kategori (slug, huruf kecil tanpa spasi)</label><input type="text" id="cf-id" value="${editing?c.id:''}" ${editing?'readonly':''} required /></div>
+        <div class="admin-field"><label>Label Tampilan</label><input type="text" id="cf-label" value="${editing?c.label:''}" required /></div>
+      </div>
+      <div class="admin-form-grid full">
+        <div class="admin-field"><label>Header HTML (gunakan &lt;span&gt; untuk highlight emas, opsional)</label><input type="text" id="cf-header" value="${editing?c.header:''}" placeholder="Contoh: Tas <span>Mewah</span>" /></div>
+      </div>
+      <button type="submit" class="btn-admin-action gold">${editing?'Simpan Perubahan':'Tambah Kategori'}</button>
+      ${editing?`<button type="button" class="btn-admin-action" style="margin-left:8px;" onclick="cancelCategoryEdit()">Batal</button>`:''}
+    </form>
+  `;
+}
+function editCategory(id) {
+  const c = CATEGORIES.find(x => x.id === id);
+  if (!c) return;
+  adminEditState = { type: 'category', id };
+  document.getElementById('categoryFormArea').innerHTML = categoryFormHtml(c);
+  document.getElementById('categoryFormArea').scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+function cancelCategoryEdit() {
+  adminEditState = { type: null, id: null };
+  document.getElementById('categoryFormArea').innerHTML = categoryFormHtml();
+}
+function saveCategoryForm(e) {
+  e.preventDefault();
+  const id = document.getElementById('cf-id').value.trim().toLowerCase().replace(/\s+/g,'-');
+  const label = document.getElementById('cf-label').value.trim();
+  const header = document.getElementById('cf-header').value.trim() || label;
+
+  if (adminEditState.type === 'category' && adminEditState.id != null) {
+    const idx = CATEGORIES.findIndex(c => c.id === adminEditState.id);
+    if (idx > -1) CATEGORIES[idx] = { ...CATEGORIES[idx], label, header };
+  } else {
+    if (CATEGORIES.some(c => c.id === id)) { alert('ID kategori sudah digunakan. Gunakan ID lain.'); return false; }
+    CATEGORIES.push({ id, label, header });
+  }
+  adminEditState = { type: null, id: null };
+  document.getElementById('categoryFormArea').innerHTML = categoryFormHtml();
+  document.getElementById('categoryTableBody').innerHTML = categoryRowsHtml();
+  buildCategoryNav(); buildSections(); applyFilters();
+  // Re-render category nav requires clearing old nodes since buildCategoryNav appends
+  document.getElementById('catBar').querySelectorAll('.cat-link:not([data-cat="all"])').forEach(n=>n.remove());
+  document.getElementById('sidebarCatContainer').innerHTML = '';
+  document.getElementById('sectionsContainer').innerHTML = '';
+  buildCategoryNav(); buildSections(); applyFilters();
+  return false;
+}
+function deleteCategory(id) {
+  const productsInCat = PRODUCTS.filter(p => p.cat === id).length;
+  if (productsInCat > 0) {
+    if (!confirm(`Kategori ini masih punya ${productsInCat} produk. Menghapusnya juga akan menghapus produk-produk tersebut. Lanjutkan?`)) return;
+    for (let i = PRODUCTS.length - 1; i >= 0; i--) if (PRODUCTS[i].cat === id) PRODUCTS.splice(i, 1);
+  } else if (!confirm('Hapus kategori ini?')) return;
+  const idx = CATEGORIES.findIndex(c => c.id === id);
+  if (idx > -1) CATEGORIES.splice(idx, 1);
+  document.getElementById('categoryTableBody').innerHTML = categoryRowsHtml();
+  document.getElementById('catBar').querySelectorAll('.cat-link:not([data-cat="all"])').forEach(n=>n.remove());
+  document.getElementById('sidebarCatContainer').innerHTML = '';
+  document.getElementById('sectionsContainer').innerHTML = '';
+  buildCategoryNav(); buildSections(); buildBrandFilter(); buildColorFilter(); applyFilters();
+}
+
+/* ============ ADMIN: STORES CRUD ============ */
+function renderAdminStores() {
+  adminEditState = { type: null, id: null };
+  return `
+    <div class="admin-header">
+      <div>
+        <h1 class="admin-page-title">Kelola <em>Cabang</em></h1>
+        <p class="admin-page-sub">Atur daftar cabang/toko HarmoniFashion yang tampil di halaman utama.</p>
+      </div>
+    </div>
+    <div class="admin-panel">
+      <div class="admin-panel-title">Tambah Cabang Baru</div>
+      <div id="storeFormArea">${storeFormHtml()}</div>
+    </div>
+    <div class="admin-panel">
+      <div class="admin-panel-title">Daftar Cabang (${STORES.length})</div>
+      <div class="admin-table-wrap">
+        <table class="admin-table">
+          <thead><tr><th>Nama Cabang</th><th>Alamat</th><th>Telepon</th><th>Rating</th><th>Aksi</th></tr></thead>
+          <tbody id="storeTableBody">${storeRowsHtml()}</tbody>
+        </table>
+      </div>
+    </div>
+  `;
+}
+function storeRowsHtml() {
+  if (!STORES.length) return '<tr><td colspan="5" class="admin-empty">Belum ada cabang.</td></tr>';
+  return STORES.map(s => {
+    const r = storeRatings[s.id] || { total: 0, count: 0 };
+    const avg = r.count ? (r.total / r.count).toFixed(1) : '—';
+    return `
+    <tr>
+      <td>${s.name}</td>
+      <td>${s.address}</td>
+      <td>${s.phone}</td>
+      <td>${avg}${r.count ? ' / 5 ('+r.count+')' : ''}</td>
+      <td>
+        <button class="btn-icon-sm" onclick="editStore('${s.id}')">Ubah</button>
+        <button class="btn-icon-sm danger" onclick="deleteStore('${s.id}')">Hapus</button>
+      </td>
+    </tr>`;
+  }).join('');
+}
+function storeFormHtml(s) {
+  const editing = !!s;
+  return `
+    <form onsubmit="return saveStoreForm(event)">
+      <div class="admin-form-grid">
+        <div class="admin-field"><label>ID Cabang (slug)</label><input type="text" id="sf-id" value="${editing?s.id:''}" ${editing?'readonly':''} required /></div>
+        <div class="admin-field"><label>Nama Cabang</label><input type="text" id="sf-name" value="${editing?s.name:''}" required /></div>
+        <div class="admin-field"><label>Telepon</label><input type="text" id="sf-phone" value="${editing?s.phone:''}" /></div>
+        <div class="admin-field"><label>Jam Operasional</label><input type="text" id="sf-hours" value="${editing?s.hours:''}" /></div>
+      </div>
+      <div class="admin-form-grid full">
+        <div class="admin-field"><label>Alamat Lengkap</label><textarea id="sf-address" rows="2">${editing?s.address:''}</textarea></div>
+        <div class="admin-field"><label>Query Lokasi untuk Peta (cth: nama jalan + kota)</label><input type="text" id="sf-query" value="${editing?s.query:''}" /></div>
+      </div>
+      <button type="submit" class="btn-admin-action gold">${editing?'Simpan Perubahan':'Tambah Cabang'}</button>
+      ${editing?`<button type="button" class="btn-admin-action" style="margin-left:8px;" onclick="cancelStoreEdit()">Batal</button>`:''}
+    </form>
+  `;
+}
+function editStore(id) {
+  const s = STORES.find(x => x.id === id);
+  if (!s) return;
+  adminEditState = { type: 'store', id };
+  document.getElementById('storeFormArea').innerHTML = storeFormHtml(s);
+  document.getElementById('storeFormArea').scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+function cancelStoreEdit() {
+  adminEditState = { type: null, id: null };
+  document.getElementById('storeFormArea').innerHTML = storeFormHtml();
+}
+function saveStoreForm(e) {
+  e.preventDefault();
+  const id = document.getElementById('sf-id').value.trim().toLowerCase().replace(/\s+/g,'-');
+  const name = document.getElementById('sf-name').value.trim();
+  const phone = document.getElementById('sf-phone').value.trim();
+  const hours = document.getElementById('sf-hours').value.trim();
+  const address = document.getElementById('sf-address').value.trim();
+  const query = document.getElementById('sf-query').value.trim() || address;
+
+  if (adminEditState.type === 'store' && adminEditState.id != null) {
+    const idx = STORES.findIndex(s => s.id === adminEditState.id);
+    if (idx > -1) STORES[idx] = { ...STORES[idx], name, phone, hours, address, query };
+  } else {
+    if (STORES.some(s => s.id === id)) { alert('ID cabang sudah digunakan. Gunakan ID lain.'); return false; }
+    const newStore = { id, name, phone, hours, address, query, social: { ig: '#', fb: '#', wa: '#', tt: '#' } };
+    STORES.push(newStore);
+    storeRatings[id] = { total: 0, count: 0, userRating: 0 };
+    storeComments[id] = [];
+    pendingPhotos[id] = [];
+  }
+  adminEditState = { type: null, id: null };
+  document.getElementById('storeFormArea').innerHTML = storeFormHtml();
+  document.getElementById('storeTableBody').innerHTML = storeRowsHtml();
+  buildStores(); updateOverallRating();
+  return false;
+}
+function deleteStore(id) {
+  if (!confirm('Hapus cabang ini beserta seluruh ulasan dan rating-nya?')) return;
+  const idx = STORES.findIndex(s => s.id === id);
+  if (idx > -1) STORES.splice(idx, 1);
+  delete storeRatings[id]; delete storeComments[id]; delete pendingPhotos[id];
+  if (activeStoreId === id && STORES.length) activeStoreId = STORES[0].id;
+  document.getElementById('storeTableBody').innerHTML = storeRowsHtml();
+  buildStores(); updateOverallRating();
+}
+
+/* ============ ADMIN: REVIEWS (READ + MODERATE) ============ */
+function renderAdminReviews() {
+  const rows = [];
+  STORES.forEach(s => {
+    (storeComments[s.id] || []).forEach((c, idx) => {
+      rows.push({ storeId: s.id, storeName: s.name, idx, ...c });
+    });
+  });
+  return `
+    <div class="admin-header">
+      <div>
+        <h1 class="admin-page-title">Ulasan <em>Pelanggan</em></h1>
+        <p class="admin-page-sub">Pantau dan moderasi komentar/ulasan yang dikirim pelanggan dari semua cabang.</p>
+      </div>
+    </div>
+    <div class="admin-panel">
+      <div class="admin-panel-title">Seluruh Ulasan (${rows.length})</div>
+      <div class="admin-table-wrap">
+        <table class="admin-table">
+          <thead><tr><th>Cabang</th><th>Nama</th><th>Rating</th><th>Komentar</th><th>Tanggal</th><th>Aksi</th></tr></thead>
+          <tbody>
+            ${rows.length ? rows.map(r => `
+              <tr>
+                <td>${r.storeName}</td>
+                <td>${r.author || 'Anonim'}</td>
+                <td>${'★'.repeat(r.rating||0)}${'☆'.repeat(5-(r.rating||0))}</td>
+                <td style="max-width:280px;">${r.text || '<em>(tanpa teks)</em>'}</td>
+                <td>${r.date || '-'}</td>
+                <td><button class="btn-icon-sm danger" onclick="deleteReview('${r.storeId}',${r.idx})">Hapus</button></td>
+              </tr>`).join('') : '<tr><td colspan="6" class="admin-empty">Belum ada ulasan dari pelanggan.</td></tr>'}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  `;
+}
+function deleteReview(storeId, idx) {
+  if (!confirm('Hapus ulasan ini?')) return;
+  if (storeComments[storeId]) storeComments[storeId].splice(idx, 1);
+  setAdminPage('reviews');
+  // keep frontend list in sync if user later returns to storefront
+  const listEl = document.getElementById('comment-list-' + storeId);
+  if (listEl) renderComments(storeId);
+}
+
 init();
 </script>
-
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
-
-<script>
-const supabase = window.supabase.createClient(
- 'https://abehrtwxtfcoadlkoxrj.supabase.co/rest/v1/',
- 'sb_publishable_tsNffliLsn2gBB_E_B-_vg_Kcjpr7hm'
-);
-</script>
-
 </body>
 </html>
