@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>HarmoniFashion | Katalog Fashion Luxury Brand</title>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
   <style>
     :root {
       --gold: #C9A84C;
@@ -439,9 +440,57 @@
       .theme-btns { display: none; }
       .user-pill-name { display: none; }
     }
+
+    /* ── SUPABASE: LOADING / CONFIG BANNER ── */
+    .app-loading-overlay { position: fixed; inset: 0; z-index: 9999; background: var(--off-white); display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 14px; transition: opacity 0.3s ease; }
+    .app-loading-overlay.hidden { opacity: 0; pointer-events: none; }
+    .app-loading-spinner { width: 38px; height: 38px; border: 3px solid var(--gold-pale); border-top-color: var(--gold); border-radius: 50%; animation: spin 0.8s linear infinite; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .app-loading-text { font-family: 'Jost', sans-serif; font-size: 12px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--mid); }
+    .config-banner { background: #c62828; color: #fff; font-family: 'Jost', sans-serif; font-size: 12.5px; letter-spacing: 0.03em; padding: 12px 24px; text-align: center; line-height: 1.6; }
+    .config-banner code { background: rgba(255,255,255,0.18); padding: 1px 6px; border-radius: 3px; }
+    .toast-area { position: fixed; bottom: 20px; right: 20px; z-index: 9998; display: flex; flex-direction: column; gap: 8px; }
+    .toast { background: var(--black); color: var(--gold-pale); font-family: 'Jost', sans-serif; font-size: 12.5px; letter-spacing: 0.03em; padding: 12px 18px; border-radius: 3px; box-shadow: 0 8px 24px rgba(0,0,0,0.25); border-left: 3px solid var(--gold); max-width: 320px; animation: toastIn 0.25s ease; }
+    .toast.error { border-left-color: #e05757; }
+    @keyframes toastIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+    /* ── WISHLIST HEART ── */
+    .wish-btn { position: absolute; top: 10px; right: 10px; width: 30px; height: 30px; border-radius: 50%; background: rgba(255,255,255,0.92); border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 15px; color: #b0a999; transition: transform 0.15s, color 0.15s; z-index: 2; }
+    .wish-btn:hover { transform: scale(1.1); }
+    .wish-btn.active { color: #c62828; }
+    body.dark .wish-btn { background: rgba(36,36,36,0.92); color: #777; }
+    .wish-btn-modal { display: inline-flex; align-items: center; gap: 7px; background: none; border: 1px solid var(--black); color: var(--black); padding: 12px 18px; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; cursor: pointer; font-family: 'Jost', sans-serif; transition: all 0.2s; }
+    .wish-btn-modal.active { border-color: #c62828; color: #c62828; }
+    body.dark .wish-btn-modal { border-color: #555; color: #ddd; }
+    .btn-wishlist-nav { background: none; border: 1px solid #3a3a3a; color: #ccc; padding: 7px 14px; font-size: 11px; letter-spacing: 0.08em; cursor: pointer; font-family: 'Jost', sans-serif; transition: all 0.2s; }
+    .btn-wishlist-nav:hover { border-color: var(--gold); color: var(--gold); }
+
+    /* ── WISHLIST MODAL ── */
+    .wishlist-grid { display: grid; grid-template-columns: repeat(auto-fill,minmax(160px,1fr)); gap: 16px; padding: 26px 30px; max-height: 70vh; overflow-y: auto; }
+    .wishlist-empty { grid-column: 1/-1; text-align: center; padding: 40px 20px; color: #999; font-size: 13px; }
+    .wishlist-card { position: relative; border: 1px solid #eae5de; cursor: pointer; }
+    .wishlist-card img { width: 100%; aspect-ratio: 3/4; object-fit: cover; display: block; }
+    .wishlist-card .card-body { padding: 10px 12px; }
+    .wishlist-remove { position: absolute; top: 8px; right: 8px; background: rgba(13,13,13,0.75); color: #fff; border: none; width: 22px; height: 22px; border-radius: 50%; font-size: 11px; cursor: pointer; }
+
+    /* ── AUTH: TOGGLE DAFTAR / MASUK ── */
+    .auth-mode-toggle { text-align: center; font-size: 11.5px; color: var(--mid); margin: -10px 0 16px; letter-spacing: 0.03em; }
+    .auth-mode-toggle button { background: none; border: none; color: var(--gold); cursor: pointer; font-family: 'Jost', sans-serif; font-size: 11.5px; text-decoration: underline; letter-spacing: 0.03em; padding: 0; }
+
+    /* ── ADMIN: IMAGE UPLOAD FIELD ── */
+    .admin-img-upload-row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+    .admin-img-preview { width: 52px; height: 68px; object-fit: cover; border: 1px solid #e0dbd4; flex-shrink: 0; }
+    .admin-upload-status { font-size: 10.5px; color: var(--mid); letter-spacing: 0.03em; }
   </style>
 </head>
 <body>
+
+<div class="app-loading-overlay" id="appLoadingOverlay">
+  <div class="app-loading-spinner"></div>
+  <div class="app-loading-text">Memuat HarmoniFashion…</div>
+</div>
+<div class="toast-area" id="toastArea"></div>
+<div id="configBanner"></div>
 
 <nav>
   <a href="#" class="nav-logo" onclick="return setCategory('all')">Harmoni<span>Fashion</span></a>
@@ -634,29 +683,48 @@
   <img id="lightboxImg" src="" alt="Foto Bukti" />
 </div>
 
-<!-- AUTH (LOGIN) MODAL -->
+<!-- AUTH (LOGIN / DAFTAR) MODAL -->
 <div class="auth-overlay" id="authOverlay" onclick="if(event.target===this) closeAuthModal()">
   <div class="auth-box">
     <button class="auth-close" onclick="closeAuthModal()">✕</button>
     <p class="auth-eyebrow">HarmoniFashion</p>
-    <h2 class="auth-title">Masuk ke Akun</h2>
+    <h2 class="auth-title" id="authTitle">Masuk ke Akun</h2>
     <div class="auth-tabs">
       <button class="auth-tab active" id="tabCustomer" onclick="switchAuthTab('customer')">Customer</button>
       <button class="auth-tab" id="tabAdmin" onclick="switchAuthTab('admin')">Admin</button>
     </div>
     <p class="auth-error" id="authError"></p>
-    <form onsubmit="return handleLogin(event)">
+    <form onsubmit="return handleAuthSubmit(event)">
+      <div class="auth-field" id="authNameField" style="display:none;">
+        <label class="auth-label">Nama Lengkap</label>
+        <input class="auth-input" id="authName" type="text" autocomplete="name" placeholder="Nama Anda" />
+      </div>
       <div class="auth-field">
-        <label class="auth-label" id="authUserLabel">Username / Email</label>
-        <input class="auth-input" id="authUsername" type="text" autocomplete="username" placeholder="Masukkan username Anda" required />
+        <label class="auth-label" id="authUserLabel">Email</label>
+        <input class="auth-input" id="authUsername" type="email" autocomplete="username" placeholder="nama@email.com" required />
       </div>
       <div class="auth-field">
         <label class="auth-label">Kata Sandi</label>
-        <input class="auth-input" id="authPassword" type="password" autocomplete="current-password" placeholder="Masukkan kata sandi" required />
+        <input class="auth-input" id="authPassword" type="password" autocomplete="current-password" placeholder="Minimal 6 karakter" minlength="6" required />
       </div>
       <button type="submit" class="btn-auth-submit" id="authSubmitBtn">Masuk sebagai Customer</button>
     </form>
-    <p class="auth-hint" id="authHint">Belum punya akun? <strong>Daftar otomatis</strong> saat login pertama kali sebagai Customer.</p>
+    <p class="auth-mode-toggle" id="authModeToggleWrap">
+      Belum punya akun? <button type="button" onclick="setAuthFormMode('register')">Daftar di sini</button>
+    </p>
+    <p class="auth-hint" id="authHint">Masukkan email &amp; kata sandi akun Customer Anda.</p>
+  </div>
+</div>
+
+<!-- WISHLIST MODAL -->
+<div class="modal-overlay" id="wishlistOverlay" onclick="if(event.target===this) closeWishlistModal()">
+  <div class="modal-box" style="max-width:760px;">
+    <button class="modal-close" onclick="closeWishlistModal()">✕</button>
+    <div style="padding:26px 30px 0;">
+      <p class="auth-eyebrow">Koleksi Tersimpan</p>
+      <h2 class="modal-name" style="margin-bottom:0;">Wishlist Saya</h2>
+    </div>
+    <div class="wishlist-grid" id="wishlistGrid"></div>
   </div>
 </div>
 
@@ -677,17 +745,18 @@
 </div>
 
 <script>
-/* ============ DATA ============ */
-const CATEGORIES = [
-  { id: 'handbags', label: 'Handbags', header: 'Hand<span>bags</span>' },
-  { id: 'ready-to-wear', label: 'Ready-to-Wear', header: 'Ready-to-<span>Wear</span>' },
-  { id: 'shoes', label: 'Shoes', header: '<span>Shoes</span>' },
-  { id: 'watches', label: 'Watches & Jewellery', header: 'Watches &amp; <span>Jewellery</span>' },
-  { id: 'accessories', label: 'Accessories', header: 'Acces<span>sories</span>' },
-  { id: 'fragrances', label: 'Fragrances', header: 'Fra<span>grances</span>' },
-  { id: 'eyewear', label: 'Eyewear', header: 'Eye<span>wear</span>' }
-];
+/* ============================================================
+   SUPABASE CONFIG
+   Ganti SUPABASE_URL & SUPABASE_ANON_KEY dengan kredensial proyek
+   Supabase Anda (Project Settings > API). Lihat README.md.
+   ============================================================ */
+const SUPABASE_URL = 'https://YOUR-PROJECT-REF.supabase.co';
+const SUPABASE_ANON_KEY = 'YOUR-SUPABASE-ANON-PUBLIC-KEY';
 
+const supabaseReady = !SUPABASE_URL.includes('YOUR-PROJECT-REF') && !SUPABASE_ANON_KEY.includes('YOUR-SUPABASE');
+const sb = supabaseReady ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY) : null;
+
+/* ============ STATIC REFERENCE DATA (bukan data toko, tidak perlu di-database-kan) ============ */
 const COLOR_LABELS = {
   black: 'Hitam', white: 'Putih', brown: 'Cokelat / Tan', beige: 'Nude / Beige',
   red: 'Merah', navy: 'Navy', gold: 'Emas / Gold', silver: 'Silver'
@@ -696,142 +765,39 @@ const COLOR_HEX = {
   black: '#1a1a1a', white: '#f5f5f5', brown: '#795548', beige: '#d4b896',
   red: '#c62828', navy: '#1a237e', gold: '#C9A84C', silver: '#9e9e9e'
 };
-
-const PRODUCTS = [
-  {id:1,cat:'handbags',brand:'Chanel',name:'Classic Flap Bag Medium',desc:'Quilted Lambskin / Gold Hardware / Medium',price:95000000,img:'1548036328-c9fa89d128fa',badge:'Bestseller',color:'black',cond:'Brand New',colorVariants:{black:'1548036328-c9fa89d128fa',white:'1584917865442-de89df76afd3',brown:'1591561954555-607968c989ab',red:'1526170375885-4d8ecf77b99f'}},
-  {id:2,cat:'handbags',brand:'Louis Vuitton',name:'Neverfull MM Tote',desc:'Monogram Canvas / Tote Bag / Damier Ebene Lining',price:28500000,img:'1584917865442-de89df76afd3',color:'brown',cond:'Brand New',colorVariants:{brown:'1584917865442-de89df76afd3',black:'1548036328-c9fa89d128fa',beige:'1591561954555-607968c989ab'}},
-  {id:3,cat:'handbags',brand:'Hermès',name:'Birkin 30',desc:'Togo Leather / Gold Hardware / Noir',price:320000000,img:'1591561954555-607968c989ab',badge:'Eksklusif',color:'black',cond:'Brand New',colorVariants:{black:'1591561954555-607968c989ab',white:'1584917865442-de89df76afd3',beige:'1526170375885-4d8ecf77b99f',brown:'1548036328-c9fa89d128fa'}},
-  {id:4,cat:'handbags',brand:'Prada',name:'Re-Edition 2005 Shoulder Bag',desc:'Re-Nylon / Shoulder Bag / Black',price:18200000,img:'1548036328-c9fa89d128fa',color:'black',cond:'Like New',colorVariants:{black:'1548036328-c9fa89d128fa',white:'1526170375885-4d8ecf77b99f',navy:'1591561954555-607968c989ab'}},
-  {id:5,cat:'handbags',brand:'Gucci',name:'Jackie 1961 Small Hobo',desc:'Leather / GG Hardware / Tan',price:24500000,img:'1526170375885-4d8ecf77b99f',color:'brown',cond:'Brand New',colorVariants:{brown:'1526170375885-4d8ecf77b99f',black:'1548036328-c9fa89d128fa',white:'1584917865442-de89df76afd3'}},
-  {id:6,cat:'handbags',brand:'Saint Laurent',name:'Loulou Puffer Medium',desc:'Quilted Leather / Chain Strap',price:21800000,img:'1584917865442-de89df76afd3',color:'black',cond:'Very Good',colorVariants:{black:'1584917865442-de89df76afd3',white:'1591561954555-607968c989ab',red:'1548036328-c9fa89d128fa'}},
-  {id:7,cat:'handbags',brand:'Bottega Veneta',name:'Cassette Crossbody',desc:'Intrecciato Leather / Crossbody',price:32000000,img:'1591561954555-607968c989ab',color:'beige',cond:'Brand New',colorVariants:{beige:'1591561954555-607968c989ab',black:'1548036328-c9fa89d128fa',brown:'1526170375885-4d8ecf77b99f'}},
-  {id:8,cat:'handbags',brand:'Fendi',name:'Baguette Medium',desc:'Embroidered Canvas / FF Logo',price:26500000,img:'1526170375885-4d8ecf77b99f',color:'navy',cond:'Brand New',colorVariants:{navy:'1526170375885-4d8ecf77b99f',black:'1548036328-c9fa89d128fa',white:'1584917865442-de89df76afd3'}},
-  {id:9,cat:'handbags',brand:'Dior',name:'Lady Dior Medium',desc:'Cannage Lambskin / Silver Hardware',price:78000000,img:'1548036328-c9fa89d128fa',badge:'Ikonik',color:'red',cond:'Like New',colorVariants:{red:'1548036328-c9fa89d128fa',black:'1591561954555-607968c989ab',white:'1584917865442-de89df76afd3'}},
-  {id:10,cat:'handbags',brand:'Balenciaga',name:'Hourglass Top Handle Small',desc:'Leather / Gold-tone Hardware',price:29800000,img:'1584917865442-de89df76afd3',color:'black',cond:'Good',colorVariants:{black:'1584917865442-de89df76afd3',white:'1526170375885-4d8ecf77b99f',beige:'1591561954555-607968c989ab'}},
-  {id:11,cat:'ready-to-wear',brand:'Chanel',name:'Tweed Bouclé Jacket',desc:'Iconic CC Button / Bouclé Wool',price:42000000,img:'1490481702701-2a2be1926c0f',badge:'Bestseller',color:'beige',cond:'Brand New',colorVariants:{beige:'1490481702701-2a2be1926c0f',black:'1509631179256-f30d090da1f3',white:'1551488831-ac6ea22a41f6'}},
-  {id:12,cat:'ready-to-wear',brand:'Dior',name:'Bar Jacket',desc:'Wool / Silk / Iconic Silhouette',price:68000000,img:'1509631179256-f30d090da1f3',badge:'Eksklusif',color:'black',cond:'Brand New',colorVariants:{black:'1509631179256-f30d090da1f3',white:'1551488831-ac6ea22a41f6',beige:'1490481702701-2a2be1926c0f'}},
-  {id:13,cat:'ready-to-wear',brand:'Saint Laurent',name:'Le Smoking Blazer',desc:'Tuxedo Style / Peak Lapels',price:35000000,img:'1551488831-ac6ea22a41f6',color:'black',cond:'Brand New',colorVariants:{black:'1551488831-ac6ea22a41f6',white:'1490481702701-2a2be1926c0f',navy:'1509631179256-f30d090da1f3'}},
-  {id:14,cat:'ready-to-wear',brand:'Gucci',name:'GG Logo Wool Coat',desc:'Double Faced Wool / Belt',price:29500000,img:'1490481702701-2a2be1926c0f',color:'beige',cond:'Like New',colorVariants:{beige:'1490481702701-2a2be1926c0f',black:'1509631179256-f30d090da1f3',brown:'1551488831-ac6ea22a41f6'}},
-  {id:15,cat:'ready-to-wear',brand:'Valentino',name:'Garavani Crepe Couture Dress',desc:'Silk Crepe / Bow Detail',price:48000000,img:'1509631179256-f30d090da1f3',badge:'New Season',color:'red',cond:'Brand New',colorVariants:{red:'1509631179256-f30d090da1f3',black:'1551488831-ac6ea22a41f6',white:'1490481702701-2a2be1926c0f'}},
-  {id:16,cat:'ready-to-wear',brand:'Versace',name:'Medusa Head Silk Shirt',desc:'Silk / Medusa Print / Relaxed Fit',price:14800000,img:'1551488831-ac6ea22a41f6',color:'black',cond:'Brand New',colorVariants:{black:'1551488831-ac6ea22a41f6',white:'1490481702701-2a2be1926c0f',gold:'1509631179256-f30d090da1f3'}},
-  {id:17,cat:'ready-to-wear',brand:'Burberry',name:'Vintage Check Trench Coat',desc:'Cotton Gabardine / House Check',price:32500000,img:'1490481702701-2a2be1926c0f',color:'beige',cond:'Very Good',colorVariants:{beige:'1490481702701-2a2be1926c0f',black:'1509631179256-f30d090da1f3',navy:'1551488831-ac6ea22a41f6'}},
-  {id:18,cat:'ready-to-wear',brand:'Prada',name:'Re-Nylon Padded Jacket',desc:'Re-Nylon / Triangle Logo / Puffer',price:22000000,img:'1509631179256-f30d090da1f3',color:'black',cond:'Brand New',colorVariants:{black:'1509631179256-f30d090da1f3',white:'1490481702701-2a2be1926c0f',navy:'1551488831-ac6ea22a41f6'}},
-  {id:19,cat:'ready-to-wear',brand:'Balenciaga',name:'Logo Oversized Hoodie',desc:'Cotton Fleece / BB Logo / Drop Shoulder',price:11500000,img:'1551488831-ac6ea22a41f6',color:'black',cond:'Good',colorVariants:{black:'1551488831-ac6ea22a41f6',white:'1490481702701-2a2be1926c0f',navy:'1509631179256-f30d090da1f3'}},
-  {id:20,cat:'ready-to-wear',brand:'Fendi',name:'FF Print Silk Kaftan',desc:'Silk / FF Monogram / Kaftan Style',price:18700000,img:'1490481702701-2a2be1926c0f',color:'beige',cond:'Brand New',colorVariants:{beige:'1490481702701-2a2be1926c0f',white:'1551488831-ac6ea22a41f6',black:'1509631179256-f30d090da1f3'}},
-  {id:21,cat:'shoes',brand:'Christian Louboutin',name:'Pigalle 100 Pumps',desc:'Patent Leather / Red Sole / 100mm',price:12500000,img:'1542291026-7eec264ef638',badge:'Ikonik',color:'black',cond:'Brand New',colorVariants:{black:'1542291026-7eec264ef638',red:'1543163765179-e3606a487e2e',white:'1560343757-4f8f8fb03e93'}},
-  {id:22,cat:'shoes',brand:'Gucci',name:'Horsebit 1953 Loafers',desc:'Leather / Gold Horsebit Detail',price:9800000,img:'1543163765179-e3606a487e2e',color:'brown',cond:'Brand New',colorVariants:{brown:'1543163765179-e3606a487e2e',black:'1542291026-7eec264ef638',white:'1560343757-4f8f8fb03e93'}},
-  {id:23,cat:'shoes',brand:'Chanel',name:'Slingback Pumps',desc:'Leather / Two-tone / 85mm',price:11200000,img:'1560343757-4f8f8fb03e93',badge:'Bestseller',color:'beige',cond:'Brand New',colorVariants:{beige:'1560343757-4f8f8fb03e93',black:'1542291026-7eec264ef638',white:'1543163765179-e3606a487e2e'}},
-  {id:24,cat:'shoes',brand:'Hermès',name:'Oran Sandal',desc:'Calfskin / H Buckle / Flat',price:13500000,img:'1542291026-7eec264ef638',badge:'Eksklusif',color:'gold',cond:'Brand New',colorVariants:{gold:'1542291026-7eec264ef638',black:'1560343757-4f8f8fb03e93',white:'1543163765179-e3606a487e2e'}},
-  {id:25,cat:'shoes',brand:'Prada',name:'Monolith Boots',desc:'Brushed Leather / Lug Sole',price:18000000,img:'1543163765179-e3606a487e2e',color:'black',cond:'Brand New',colorVariants:{black:'1543163765179-e3606a487e2e',white:'1560343757-4f8f8fb03e93',brown:'1542291026-7eec264ef638'}},
-  {id:26,cat:'shoes',brand:'Balenciaga',name:'Triple S Sneaker',desc:'Mesh / Leather / Exaggerated Sole',price:14200000,img:'1560343757-4f8f8fb03e93',color:'white',cond:'Like New',colorVariants:{white:'1560343757-4f8f8fb03e93',black:'1542291026-7eec264ef638',navy:'1543163765179-e3606a487e2e'}},
-  {id:27,cat:'shoes',brand:'Saint Laurent',name:'Cassandra Mule',desc:'Leather / Square Toe / YSL Buckle',price:9500000,img:'1542291026-7eec264ef638',color:'black',cond:'Brand New',colorVariants:{black:'1542291026-7eec264ef638',beige:'1560343757-4f8f8fb03e93',red:'1543163765179-e3606a487e2e'}},
-  {id:28,cat:'shoes',brand:'Dior',name:'B23 High-top Sneaker',desc:'Oblique Canvas / Rubber Sole',price:12800000,img:'1543163765179-e3606a487e2e',badge:'New Season',color:'beige',cond:'Brand New',colorVariants:{beige:'1543163765179-e3606a487e2e',black:'1542291026-7eec264ef638',white:'1560343757-4f8f8fb03e93'}},
-  {id:29,cat:'shoes',brand:'Versace',name:'Medusa Head Heels',desc:'Leather / Gold Medusa / 95mm',price:10500000,img:'1560343757-4f8f8fb03e93',color:'gold',cond:'Brand New',colorVariants:{gold:'1560343757-4f8f8fb03e93',black:'1542291026-7eec264ef638',white:'1543163765179-e3606a487e2e'}},
-  {id:30,cat:'shoes',brand:'Bottega Veneta',name:'Stretch Ankle Boot',desc:'Intrecciato Leather / Stretch',price:16500000,img:'1542291026-7eec264ef638',badge:'Eksklusif',color:'black',cond:'Brand New',colorVariants:{black:'1542291026-7eec264ef638',brown:'1543163765179-e3606a487e2e',beige:'1560343757-4f8f8fb03e93'}},
-  {id:31,cat:'watches',brand:'Rolex',name:'Datejust 41',desc:'Oyster Steel & Gold / Jubilee Bracelet',price:245000000,img:'1523275335684-37898b6baf30',badge:'Bestseller',color:'silver',cond:'Brand New',colorVariants:{silver:'1523275335684-37898b6baf30',gold:'1515562141207-7a88fb7ce338',black:'1524592094714-0f0654e20314'}},
-  {id:32,cat:'watches',brand:'Audemars Piguet',name:'Royal Oak 15500ST',desc:'Stainless Steel / Self-winding',price:580000000,img:'1515562141207-7a88fb7ce338',badge:'Limited Edition',color:'silver',cond:'Brand New',colorVariants:{silver:'1515562141207-7a88fb7ce338',gold:'1524592094714-0f0654e20314',white:'1599643478518-a784e5dc4c8f'}},
-  {id:33,cat:'watches',brand:'Patek Philippe',name:'Calatrava Pilot',desc:'White Gold / Hand-wound / Sapphire Crystal',price:650000000,img:'1523275335684-37898b6baf30',badge:'Eksklusif',color:'silver',cond:'Brand New',colorVariants:{silver:'1523275335684-37898b6baf30',gold:'1515562141207-7a88fb7ce338',black:'1524592094714-0f0654e20314'}},
-  {id:34,cat:'watches',brand:'Tiffany & Co.',name:'HardWear Link Necklace',desc:'18K Gold / Diamond / 16 Inch',price:62000000,img:'1599643478518-a784e5dc4c8f',color:'gold',cond:'Brand New',colorVariants:{gold:'1599643478518-a784e5dc4c8f',silver:'1523275335684-37898b6baf30',white:'1515562141207-7a88fb7ce338'}},
-  {id:35,cat:'watches',brand:'Rolex',name:'Submariner Date',desc:'Oystersteel / Black Ceramic Bezel',price:175000000,img:'1524592094714-0f0654e20314',badge:'Ikonik',color:'black',cond:'Like New',colorVariants:{black:'1524592094714-0f0654e20314',silver:'1523275335684-37898b6baf30',gold:'1515562141207-7a88fb7ce338'}},
-  {id:36,cat:'watches',brand:'Cartier',name:'Tank Must Watch',desc:'Steel / Leather Strap / Roman Numeral',price:28500000,img:'1515562141207-7a88fb7ce338',color:'brown',cond:'Brand New',colorVariants:{brown:'1515562141207-7a88fb7ce338',silver:'1524592094714-0f0654e20314',gold:'1599643478518-a784e5dc4c8f'}},
-  {id:37,cat:'watches',brand:'Bulgari',name:'Serpenti Viper Bracelet',desc:'18K Gold / Pavé Diamond',price:95000000,img:'1523275335684-37898b6baf30',color:'gold',cond:'Very Good',colorVariants:{gold:'1523275335684-37898b6baf30',white:'1599643478518-a784e5dc4c8f',silver:'1524592094714-0f0654e20314'}},
-  {id:38,cat:'watches',brand:'Van Cleef & Arpels',name:'Alhambra Necklace',desc:'18K Gold / Mother-of-Pearl',price:48000000,img:'1599643478518-a784e5dc4c8f',color:'white',cond:'Brand New',colorVariants:{white:'1599643478518-a784e5dc4c8f',gold:'1515562141207-7a88fb7ce338',silver:'1523275335684-37898b6baf30'}},
-  {id:39,cat:'watches',brand:'Patek Philippe',name:'Nautilus 5711',desc:'Stainless Steel / Blue Dial / Automatic',price:980000000,img:'1524592094714-0f0654e20314',badge:'Limited Edition',color:'silver',cond:'Brand New',colorVariants:{silver:'1524592094714-0f0654e20314',gold:'1515562141207-7a88fb7ce338',navy:'1599643478518-a784e5dc4c8f'}},
-  {id:40,cat:'watches',brand:'Tiffany & Co.',name:'T Wire Bracelet',desc:'18K Rose Gold / Wire Bracelet',price:32500000,img:'1515562141207-7a88fb7ce338',color:'gold',cond:'Good',colorVariants:{gold:'1515562141207-7a88fb7ce338',silver:'1523275335684-37898b6baf30',white:'1599643478518-a784e5dc4c8f'}},
-  {id:41,cat:'accessories',brand:'Hermès',name:'Carré 90 Silk Scarf',desc:'100% Silk / 90x90cm',price:8500000,img:'1601924994987-69e26d50dc26',color:'red',cond:'Brand New',colorVariants:{red:'1601924994987-69e26d50dc26',white:'1553062407-98eeb64c6a62',navy:'1585386959984-a4155224a1ad',black:'1526170375885-4d8ecf77b99f'}},
-  {id:42,cat:'accessories',brand:'Gucci',name:'GG Marmont Belt',desc:'Leather / Chevron / Double G Buckle',price:6200000,img:'1553062407-98eeb64c6a62',color:'black',cond:'Brand New',colorVariants:{black:'1553062407-98eeb64c6a62',white:'1601924994987-69e26d50dc26',brown:'1585386959984-a4155224a1ad'}},
-  {id:43,cat:'accessories',brand:'Chanel',name:'Classic Card Holder',desc:'Lambskin / Gold CC',price:14000000,img:'1585386959984-a4155224a1ad',badge:'Bestseller',color:'black',cond:'Brand New',colorVariants:{black:'1585386959984-a4155224a1ad',white:'1553062407-98eeb64c6a62',beige:'1601924994987-69e26d50dc26'}},
-  {id:44,cat:'accessories',brand:'Louis Vuitton',name:'Agenda PM',desc:'Damier Ebene / Ring Agenda',price:7800000,img:'1526170375885-4d8ecf77b99f',color:'brown',cond:'Like New',colorVariants:{brown:'1526170375885-4d8ecf77b99f',black:'1553062407-98eeb64c6a62',white:'1585386959984-a4155224a1ad'}},
-  {id:45,cat:'accessories',brand:'Burberry',name:'Vintage Check Scarf',desc:'Wool & Silk / Beige Check',price:5800000,img:'1601924994987-69e26d50dc26',color:'beige',cond:'Brand New',colorVariants:{beige:'1601924994987-69e26d50dc26',black:'1553062407-98eeb64c6a62',red:'1585386959984-a4155224a1ad'}},
-  {id:46,cat:'accessories',brand:'Fendi',name:'FF Logo Hair Clip Set',desc:'Resin / Gold-tone / Set of 3',price:3200000,img:'1553062407-98eeb64c6a62',color:'gold',cond:'Brand New',colorVariants:{gold:'1553062407-98eeb64c6a62',black:'1585386959984-a4155224a1ad',white:'1601924994987-69e26d50dc26'}},
-  {id:47,cat:'accessories',brand:'Hermès',name:'Kelly Wallet to Go',desc:'Epsom Leather / Etoupe / Card Slots',price:32000000,img:'1585386959984-a4155224a1ad',badge:'Eksklusif',color:'beige',cond:'Brand New',colorVariants:{beige:'1585386959984-a4155224a1ad',black:'1553062407-98eeb64c6a62',brown:'1526170375885-4d8ecf77b99f'}},
-  {id:48,cat:'accessories',brand:'Versace',name:'Medusa Buckle Belt',desc:'Leather / Black / Gold Buckle',price:7500000,img:'1526170375885-4d8ecf77b99f',color:'black',cond:'Very Good',colorVariants:{black:'1526170375885-4d8ecf77b99f',white:'1601924994987-69e26d50dc26',brown:'1553062407-98eeb64c6a62'}},
-  {id:49,cat:'accessories',brand:'Saint Laurent',name:'Tassel Keychain Charm',desc:'Leather / Gold Hardware',price:2800000,img:'1601924994987-69e26d50dc26',color:'black',cond:'Good',colorVariants:{black:'1601924994987-69e26d50dc26',white:'1585386959984-a4155224a1ad',red:'1553062407-98eeb64c6a62'}},
-  {id:50,cat:'accessories',brand:'Balenciaga',name:'Logo Print Silk Bandana',desc:'Silk / Multicolor Print / 70x70cm',price:4500000,img:'1553062407-98eeb64c6a62',color:'navy',cond:'Brand New',colorVariants:{navy:'1553062407-98eeb64c6a62',black:'1585386959984-a4155224a1ad',white:'1601924994987-69e26d50dc26'}},
-  {id:51,cat:'fragrances',brand:'Chanel',name:'N°5 Eau de Parfum',desc:'Floral Aldehyde / 100ml / Women',price:3800000,img:'1541643600914-78b084683702',badge:'Ikonik',color:'white',cond:'Brand New',colorVariants:{white:'1541643600914-78b084683702',black:'1588514912908-68b2cdd46af6',gold:'1547887538-e3a2f32cb1cc'}},
-  {id:52,cat:'fragrances',brand:'Dior',name:'Sauvage Elixir',desc:'Woody Spicy / 60ml / Men',price:3200000,img:'1588514912908-68b2cdd46af6',color:'black',cond:'Brand New',colorVariants:{black:'1588514912908-68b2cdd46af6',white:'1541643600914-78b084683702',silver:'1592945403244-b3fbafd7f539'}},
-  {id:53,cat:'fragrances',brand:'Tom Ford',name:'Black Orchid EDP',desc:'Oriental Floral / 100ml / Unisex',price:4500000,img:'1547887538-e3a2f32cb1cc',color:'black',cond:'Brand New',colorVariants:{black:'1547887538-e3a2f32cb1cc',white:'1541643600914-78b084683702',gold:'1588514912908-68b2cdd46af6'}},
-  {id:54,cat:'fragrances',brand:'Yves Saint Laurent',name:'Mon Paris EDP',desc:'Floral Chypre / 90ml / Women',price:2900000,img:'1592945403244-b3fbafd7f539',color:'red',cond:'Brand New',colorVariants:{red:'1592945403244-b3fbafd7f539',white:'1541643600914-78b084683702',black:'1588514912908-68b2cdd46af6'}},
-  {id:55,cat:'fragrances',brand:'Gucci',name:'Bloom EDP',desc:'White Floral / 100ml / Women',price:2600000,img:'1541643600914-78b084683702',color:'white',cond:'Brand New',colorVariants:{white:'1541643600914-78b084683702',black:'1547887538-e3a2f32cb1cc',gold:'1592945403244-b3fbafd7f539'}},
-  {id:56,cat:'fragrances',brand:'Hermès',name:"Terre d'Hermès EDT",desc:'Woody Mineral / 100ml / Men',price:2400000,img:'1588514912908-68b2cdd46af6',color:'brown',cond:'Brand New',colorVariants:{brown:'1588514912908-68b2cdd46af6',black:'1547887538-e3a2f32cb1cc',white:'1541643600914-78b084683702'}},
-  {id:57,cat:'fragrances',brand:'Bulgari',name:'Omnia Crystalline EDT',desc:'Floral Fruity / 65ml / Women',price:2100000,img:'1547887538-e3a2f32cb1cc',color:'white',cond:'Like New',colorVariants:{white:'1547887538-e3a2f32cb1cc',gold:'1541643600914-78b084683702',black:'1588514912908-68b2cdd46af6'}},
-  {id:58,cat:'fragrances',brand:'Prada',name:'Luna Rossa Carbon EDT',desc:'Aromatic Woody / 100ml / Men',price:2700000,img:'1592945403244-b3fbafd7f539',color:'navy',cond:'Brand New',colorVariants:{navy:'1592945403244-b3fbafd7f539',black:'1588514912908-68b2cdd46af6',silver:'1547887538-e3a2f32cb1cc'}},
-  {id:59,cat:'fragrances',brand:'Versace',name:'Eros EDT',desc:'Fresh Woody / 100ml / Men',price:1900000,img:'1541643600914-78b084683702',color:'navy',cond:'Good',colorVariants:{navy:'1541643600914-78b084683702',black:'1588514912908-68b2cdd46af6',white:'1547887538-e3a2f32cb1cc'}},
-  {id:60,cat:'fragrances',brand:'Burberry',name:'Her Eau de Parfum',desc:'Fruity Floral / 100ml / Women',price:2300000,img:'1588514912908-68b2cdd46af6',badge:'New Season',color:'red',cond:'Brand New',colorVariants:{red:'1588514912908-68b2cdd46af6',white:'1541643600914-78b084683702',black:'1547887538-e3a2f32cb1cc'}},
-  {id:61,cat:'eyewear',brand:'Chanel',name:'CC Pearl Square Sunglasses',desc:'Acetate / Pearl Detail',price:9500000,img:'1511499767150-a48a237f0083',color:'black',cond:'Brand New',colorVariants:{black:'1511499767150-a48a237f0083',white:'1508296695146-257a814070b4',beige:'1473496169904-658ba7574b0d'}},
-  {id:62,cat:'eyewear',brand:'Gucci',name:'GG Round Frame',desc:'Metal / Gold / Blue Lens',price:7200000,img:'1508296695146-257a814070b4',color:'gold',cond:'Brand New',colorVariants:{gold:'1508296695146-257a814070b4',black:'1511499767150-a48a237f0083',silver:'1473496169904-658ba7574b0d'}},
-  {id:63,cat:'eyewear',brand:'Dior',name:'So Real Pop Sunglasses',desc:'Metal / Mirror Lens',price:8100000,img:'1473496169904-658ba7574b0d',badge:'Ikonik',color:'gold',cond:'Brand New',colorVariants:{gold:'1473496169904-658ba7574b0d',black:'1572635196237-14b3f281503f',silver:'1511499767150-a48a237f0083'}},
-  {id:64,cat:'eyewear',brand:'Prada',name:'Symbole Sunglasses',desc:'Acetate / Cat Eye',price:6800000,img:'1572635196237-14b3f281503f',color:'black',cond:'Brand New',colorVariants:{black:'1572635196237-14b3f281503f',white:'1508296695146-257a814070b4',brown:'1473496169904-658ba7574b0d'}},
-  {id:65,cat:'eyewear',brand:'Versace',name:'Medusa Biggie Sunglasses',desc:'Acetate / Gold Medusa',price:7900000,img:'1511499767150-a48a237f0083',color:'black',cond:'Like New',colorVariants:{black:'1511499767150-a48a237f0083',gold:'1508296695146-257a814070b4',brown:'1572635196237-14b3f281503f'}},
-  {id:66,cat:'eyewear',brand:'Saint Laurent',name:'SL 1 Aviator',desc:'Metal / Green Lens',price:6500000,img:'1508296695146-257a814070b4',color:'silver',cond:'Brand New',colorVariants:{silver:'1508296695146-257a814070b4',gold:'1473496169904-658ba7574b0d',black:'1511499767150-a48a237f0083'}},
-  {id:67,cat:'eyewear',brand:'Burberry',name:'Check Detail Square Frame',desc:'Acetate / Square Frame',price:5900000,img:'1473496169904-658ba7574b0d',color:'brown',cond:'Very Good',colorVariants:{brown:'1473496169904-658ba7574b0d',black:'1511499767150-a48a237f0083',beige:'1572635196237-14b3f281503f'}},
-  {id:68,cat:'eyewear',brand:'Fendi',name:'FF Logo Cat Eye Sunglasses',desc:'Acetate / Gradient Lens',price:6200000,img:'1572635196237-14b3f281503f',color:'beige',cond:'Brand New',colorVariants:{beige:'1572635196237-14b3f281503f',black:'1511499767150-a48a237f0083',gold:'1508296695146-257a814070b4'}},
-  {id:69,cat:'eyewear',brand:'Bottega Veneta',name:'Oversized Round Sunglasses',desc:'Acetate / Oversized Round',price:7000000,img:'1511499767150-a48a237f0083',color:'black',cond:'Good',colorVariants:{black:'1511499767150-a48a237f0083',brown:'1473496169904-658ba7574b0d',white:'1508296695146-257a814070b4'}},
-  {id:70,cat:'eyewear',brand:'Balenciaga',name:'Shield Wrap Sunglasses',desc:'Acetate / Futuristic Shield',price:8400000,img:'1508296695146-257a814070b4',badge:'Limited Edition',color:'black',cond:'Brand New',colorVariants:{black:'1508296695146-257a814070b4',white:'1511499767150-a48a237f0083',silver:'1473496169904-658ba7574b0d'}}
-];
-
-const STORES = [
-  { id:'jakarta', name:'HarmoniFashion Jakarta', address:'Jl. Jenderal Sudirman Kav. 52–53, Senayan, Jakarta Pusat 10270', phone:'+62 21 5793 1888', hours:'Senin–Minggu, 10:00–21:00 WIB', query:'Jl Jenderal Sudirman Kav 52-53 Senayan Jakarta Pusat',
-    social:{ ig:'https://www.instagram.com/harmonifashion', fb:'https://www.facebook.com/harmonifashion', wa:'https://wa.me/6281234567890', tt:'https://www.tiktok.com/@harmonifashion' }},
-  { id:'bandung', name:'HarmoniFashion Bandung', address:'Jl. Ir. H. Djuanda No. 100, Dago, Coblong, Bandung, Jawa Barat 40135', phone:'+62 22 8870 2233', hours:'Senin–Minggu, 10:00–21:00 WIB', query:'Jl Ir H Djuanda No 100 Dago Bandung Jawa Barat',
-    social:{ ig:'https://www.instagram.com/harmonifashion.bdg', fb:'https://www.facebook.com/harmonifashion.bdg', wa:'https://wa.me/6282234567890', tt:'https://www.tiktok.com/@harmonifashion.bdg' }},
-  { id:'surabaya', name:'HarmoniFashion Surabaya', address:'Jl. Embong Malang No. 75, Genteng, Surabaya, Jawa Timur 60261', phone:'+62 31 5345 6677', hours:'Senin–Minggu, 10:00–21:30 WIB', query:'Jl Embong Malang No 75 Genteng Surabaya Jawa Timur',
-    social:{ ig:'https://www.instagram.com/harmonifashion.sby', fb:'https://www.facebook.com/harmonifashion.sby', wa:'https://wa.me/6283134567890', tt:'https://www.tiktok.com/@harmonifashion.sby' }}
-];
-
 const CS_WHATSAPP = '6281234567890';
+const PRODUCT_IMG_BUCKET = 'product-images';
+const REVIEW_PHOTO_BUCKET = 'review-photos';
 
-/* ============ AUTH DATA ============
-   Catatan: ini adalah simulasi front-end (in-browser).
-   Akun admin sudah ditentukan (kredensial tetap).
-   Akun customer didaftarkan otomatis saat login pertama kali
-   dan disimpan di localStorage browser pengguna. */
-const ADMIN_ACCOUNTS = [
-  { username: 'admin', password: 'admin123', name: 'Administrator' }
-];
-const LS_KEY_USERS = 'hf_customer_users';
-const LS_KEY_SESSION = 'hf_session';
+/* ============ DATA (dimuat & disinkronkan dari Supabase) ============ */
+let CATEGORIES = [];
+let PRODUCTS = [];
+let STORES = [];
 
-function loadCustomerUsers() {
-  try { return JSON.parse(localStorage.getItem(LS_KEY_USERS)) || {}; }
-  catch (e) { return {}; }
-}
-function saveCustomerUsers(users) {
-  localStorage.setItem(LS_KEY_USERS, JSON.stringify(users));
-}
-function loadSession() {
-  try { return JSON.parse(localStorage.getItem(LS_KEY_SESSION)) || null; }
-  catch (e) { return null; }
-}
-function saveSession(session) {
-  if (session) localStorage.setItem(LS_KEY_SESSION, JSON.stringify(session));
-  else localStorage.removeItem(LS_KEY_SESSION);
-}
-
-let currentUser = null; // { username, name, role: 'customer' | 'admin' }
-let authMode = 'customer'; // active tab on the login modal
+let currentUser = null;      // { id, email, name, role: 'customer' | 'admin' } -- dari Supabase Auth + tabel profiles
+let authMode = 'customer';   // tab aktif pada modal login: 'customer' | 'admin'
+let authFormMode = 'login';  // 'login' | 'register' (hanya untuk tab customer)
 let adminCurrentPage = 'dashboard';
-let adminEditState = { type: null, id: null }; // tracks which record is being edited in a form
+let adminEditState = { type: null, id: null };
 
 /* ============ STATE ============ */
 let activeCategory = 'all';
 let mapVisible = false;
-let activeStoreId = STORES[0].id;
+let activeStoreId = null;
 
-// storeRatings: { storeId: { total, count, userRating } }
+// storeRatings: { storeId: { total, count, userRating } } — dihitung dari tabel reviews
 const storeRatings = {};
-STORES.forEach(s => { storeRatings[s.id] = { total: 0, count: 0, userRating: 0 }; });
-
-// storeComments: { storeId: [ { author, rating, text, photos: [dataUrl], date } ] }
+// storeComments: { storeId: [ { id, author, rating, text, photos:[url], date } ] } — dari tabel reviews
 const storeComments = {};
-STORES.forEach(s => { storeComments[s.id] = []; });
-
-// pendingPhotos for each store: { storeId: [dataUrl] }
+// pendingPhotos: { storeId: [ { file, dataUrl } ] } — foto yang sedang disiapkan sebelum dikirim
 const pendingPhotos = {};
-STORES.forEach(s => { pendingPhotos[s.id] = []; });
+// pendingRating: { storeId: number } — rating bintang yang sedang dipilih, belum dikirim
+const pendingRating = {};
+// wishlistIds: Set<product_id> milik customer yang sedang login
+let wishlistIds = new Set();
 
 /* ============ HELPERS ============ */
-function formatRupiah(n) { return 'Rp ' + n.toLocaleString('id-ID'); }
+function formatRupiah(n) { return 'Rp ' + Number(n || 0).toLocaleString('id-ID'); }
 function priceBucket(price) {
   if (price < 5000000) return 'under5';
   if (price < 20000000) return 'r5_20';
@@ -844,19 +810,108 @@ function getSelectedValues(selector) {
   return Array.from(document.querySelectorAll(selector + ':checked')).map(cb => cb.value);
 }
 function formatDate(d) {
-  return d.toLocaleDateString('id-ID', { day:'2-digit', month:'short', year:'numeric' });
+  const date = (d instanceof Date) ? d : new Date(d);
+  return date.toLocaleDateString('id-ID', { day: '2-digit', month: 'short', year: 'numeric' });
+}
+function escHtml(str) {
+  return String(str || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+function showToast(msg, type) {
+  const area = document.getElementById('toastArea');
+  if (!area) return;
+  const el = document.createElement('div');
+  el.className = 'toast' + (type === 'error' ? ' error' : '');
+  el.textContent = msg;
+  area.appendChild(el);
+  setTimeout(() => el.remove(), 4500);
+}
+
+/* ============ SUPABASE: DATA LOADERS ============ */
+async function loadCategories() {
+  const { data, error } = await sb.from('categories').select('*').order('sort_order', { ascending: true });
+  if (error) { console.error(error); showToast('Gagal memuat kategori dari Supabase.', 'error'); return; }
+  CATEGORIES = data || [];
+}
+async function loadProducts() {
+  const { data, error } = await sb.from('products').select('*').order('id', { ascending: false });
+  if (error) { console.error(error); showToast('Gagal memuat produk dari Supabase.', 'error'); return; }
+  PRODUCTS = (data || []).map(p => ({
+    id: p.id, cat: p.cat, brand: p.brand, name: p.name, desc: p.description,
+    price: Number(p.price), img: p.img, badge: p.badge || undefined, color: p.color, cond: p.cond,
+    colorVariants: p.color_variants || {}
+  }));
+}
+async function loadStores() {
+  const { data, error } = await sb.from('stores').select('*').order('name', { ascending: true });
+  if (error) { console.error(error); showToast('Gagal memuat data cabang dari Supabase.', 'error'); return; }
+  STORES = data || [];
+  STORES.forEach(s => {
+    storeRatings[s.id] = storeRatings[s.id] || { total: 0, count: 0, userRating: 0 };
+    storeComments[s.id] = storeComments[s.id] || [];
+    pendingPhotos[s.id] = pendingPhotos[s.id] || [];
+    pendingRating[s.id] = pendingRating[s.id] || 0;
+  });
+  if (STORES.length && !activeStoreId) activeStoreId = STORES[0].id;
+}
+async function loadReviews() {
+  const { data, error } = await sb.from('reviews').select('*').order('created_at', { ascending: false });
+  if (error) { console.error(error); showToast('Gagal memuat ulasan dari Supabase.', 'error'); return; }
+  STORES.forEach(s => { storeComments[s.id] = []; storeRatings[s.id] = { total: 0, count: 0, userRating: 0 }; });
+  (data || []).forEach(r => {
+    if (!storeComments[r.store_id]) return;
+    storeComments[r.store_id].push({
+      id: r.id, author: r.author || 'Pelanggan Anonim', rating: r.rating || 0,
+      text: r.text || '', photos: r.photos || [], date: r.created_at
+    });
+    if (r.rating > 0) {
+      storeRatings[r.store_id].total += r.rating;
+      storeRatings[r.store_id].count += 1;
+    }
+  });
+}
+async function loadWishlist() {
+  wishlistIds = new Set();
+  if (!currentUser) return;
+  const { data, error } = await sb.from('wishlists').select('product_id').eq('user_id', currentUser.id);
+  if (error) { console.error(error); return; }
+  (data || []).forEach(w => wishlistIds.add(w.product_id));
+}
+async function fetchProfile(userId) {
+  const { data, error } = await sb.from('profiles').select('*').eq('id', userId).single();
+  if (error) { console.error(error); return null; }
+  return data;
 }
 
 /* ============ INIT ============ */
-function init() {
-  buildCategoryNav();
-  buildSections();
-  buildBrandFilter();
-  buildColorFilter();
-  buildStores();
-  applyFilters();
-  updateOverallRating();
-  restoreSession();
+async function init() {
+  if (!supabaseReady) {
+    document.getElementById('configBanner').innerHTML = `
+      <div class="config-banner">
+        ⚠️ Supabase belum dikonfigurasi. Buka file <code>index.html</code>, cari <code>SUPABASE_URL</code> dan
+        <code>SUPABASE_ANON_KEY</code> di bagian atas tag &lt;script&gt;, lalu isi dengan kredensial proyek
+        Supabase Anda. Lihat <code>README.md</code> untuk panduan lengkap.
+      </div>`;
+    document.getElementById('appLoadingOverlay').classList.add('hidden');
+    return;
+  }
+  try {
+    await restoreSession();
+    await Promise.all([loadCategories(), loadStores()]);
+    await Promise.all([loadProducts(), loadReviews(), loadWishlist()]);
+    buildCategoryNav();
+    buildSections();
+    buildBrandFilter();
+    buildColorFilter();
+    buildStores();
+    applyFilters();
+    updateOverallRating();
+    renderNavAuthArea();
+  } catch (err) {
+    console.error(err);
+    showToast('Terjadi kesalahan saat memuat data dari Supabase.', 'error');
+  } finally {
+    document.getElementById('appLoadingOverlay').classList.add('hidden');
+  }
 }
 
 /* ============ AUTH: MODAL ============ */
@@ -872,23 +927,48 @@ function closeAuthModal() {
   document.getElementById('authError').classList.remove('show');
   document.getElementById('authUsername').value = '';
   document.getElementById('authPassword').value = '';
+  document.getElementById('authName').value = '';
 }
 function switchAuthTab(mode) {
   authMode = mode;
   document.getElementById('tabCustomer').classList.toggle('active', mode === 'customer');
   document.getElementById('tabAdmin').classList.toggle('active', mode === 'admin');
-  document.getElementById('authError').classList.remove('show');
+  setAuthFormMode('login');
+}
+function setAuthFormMode(mode) {
+  authFormMode = mode;
   const submitBtn = document.getElementById('authSubmitBtn');
   const hint = document.getElementById('authHint');
   const userLabel = document.getElementById('authUserLabel');
-  if (mode === 'admin') {
+  const title = document.getElementById('authTitle');
+  const nameField = document.getElementById('authNameField');
+  const toggleWrap = document.getElementById('authModeToggleWrap');
+  document.getElementById('authError').classList.remove('show');
+
+  if (authMode === 'admin') {
+    title.textContent = 'Masuk sebagai Admin';
     submitBtn.textContent = 'Masuk sebagai Admin';
-    userLabel.textContent = 'Username Admin';
-    hint.innerHTML = 'Akses ini khusus untuk pengelola toko HarmoniFashion.';
+    userLabel.textContent = 'Email Admin';
+    nameField.style.display = 'none';
+    toggleWrap.style.display = 'none';
+    hint.innerHTML = 'Akses ini khusus pengelola toko HarmoniFashion. Akun admin diatur lewat Supabase Dashboard.';
+    return;
+  }
+  toggleWrap.style.display = '';
+  if (mode === 'register') {
+    title.textContent = 'Daftar Akun Customer';
+    submitBtn.textContent = 'Daftar Akun';
+    userLabel.textContent = 'Email';
+    nameField.style.display = '';
+    hint.innerHTML = 'Tergantung pengaturan proyek Supabase, Anda mungkin perlu konfirmasi email sebelum bisa masuk.';
+    toggleWrap.innerHTML = 'Sudah punya akun? <button type="button" onclick="setAuthFormMode(\'login\')">Masuk di sini</button>';
   } else {
+    title.textContent = 'Masuk ke Akun';
     submitBtn.textContent = 'Masuk sebagai Customer';
-    userLabel.textContent = 'Username / Email';
-    hint.innerHTML = 'Belum punya akun? <strong>Daftar otomatis</strong> saat login pertama kali sebagai Customer.';
+    userLabel.textContent = 'Email';
+    nameField.style.display = 'none';
+    hint.innerHTML = 'Masukkan email & kata sandi akun Customer Anda.';
+    toggleWrap.innerHTML = 'Belum punya akun? <button type="button" onclick="setAuthFormMode(\'register\')">Daftar di sini</button>';
   }
 }
 function showAuthError(msg) {
@@ -897,53 +977,89 @@ function showAuthError(msg) {
   el.classList.add('show');
 }
 
-/* ============ AUTH: LOGIN / LOGOUT ============ */
-function handleLogin(e) {
+/* ============ AUTH: LOGIN / DAFTAR / LOGOUT (Supabase Auth) ============ */
+async function handleAuthSubmit(e) {
   e.preventDefault();
-  const username = document.getElementById('authUsername').value.trim();
+  const email = document.getElementById('authUsername').value.trim();
   const password = document.getElementById('authPassword').value;
-  if (!username || !password) { showAuthError('Username dan kata sandi wajib diisi.'); return false; }
+  const name = document.getElementById('authName').value.trim();
+  const submitBtn = document.getElementById('authSubmitBtn');
+  if (!email || !password) { showAuthError('Email dan kata sandi wajib diisi.'); return false; }
 
-  if (authMode === 'admin') {
-    const admin = ADMIN_ACCOUNTS.find(a => a.username.toLowerCase() === username.toLowerCase() && a.password === password);
-    if (!admin) { showAuthError('Username atau kata sandi Admin salah.'); return false; }
-    currentUser = { username: admin.username, name: admin.name, role: 'admin' };
-    saveSession(currentUser);
+  submitBtn.disabled = true;
+  const originalLabel = submitBtn.textContent;
+  submitBtn.textContent = 'Memproses…';
+
+  try {
+    if (authMode === 'admin') {
+      const { data, error } = await sb.auth.signInWithPassword({ email, password });
+      if (error) { showAuthError('Email atau kata sandi Admin salah.'); return false; }
+      const profile = await fetchProfile(data.user.id);
+      if (!profile || profile.role !== 'admin') {
+        await sb.auth.signOut();
+        showAuthError('Akun ini tidak memiliki akses Admin.');
+        return false;
+      }
+      currentUser = { id: data.user.id, email: data.user.email, name: profile.name, role: 'admin' };
+      closeAuthModal();
+      renderNavAuthArea();
+      enterAdminPanel();
+      return false;
+    }
+
+    if (authFormMode === 'register') {
+      const { data, error } = await sb.auth.signUp({
+        email, password, options: { data: { name: name || email.split('@')[0] } }
+      });
+      if (error) { showAuthError(error.message || 'Gagal mendaftar. Coba lagi.'); return false; }
+      if (!data.session) {
+        closeAuthModal();
+        showToast('Pendaftaran berhasil! Periksa email Anda untuk konfirmasi sebelum masuk.');
+        return false;
+      }
+      const profile = await fetchProfile(data.user.id);
+      currentUser = { id: data.user.id, email: data.user.email, name: profile ? profile.name : name, role: 'customer' };
+      await loadWishlist();
+      closeAuthModal();
+      renderNavAuthArea();
+      applyFilters();
+      buildStores();
+      return false;
+    }
+
+    const { data, error } = await sb.auth.signInWithPassword({ email, password });
+    if (error) { showAuthError('Email atau kata sandi salah.'); return false; }
+    const profile = await fetchProfile(data.user.id);
+    currentUser = { id: data.user.id, email: data.user.email, name: profile ? profile.name : email, role: profile ? profile.role : 'customer' };
+    await loadWishlist();
     closeAuthModal();
     renderNavAuthArea();
-    enterAdminPanel();
+    applyFilters();
+    buildStores();
+    if (currentUser.role === 'admin') enterAdminPanel();
     return false;
+  } finally {
+    submitBtn.disabled = false;
+    submitBtn.textContent = originalLabel;
   }
-
-  // Customer login: auto-register on first login, otherwise verify password
-  const users = loadCustomerUsers();
-  const key = username.toLowerCase();
-  if (users[key]) {
-    if (users[key].password !== password) { showAuthError('Kata sandi salah. Silakan coba lagi.'); return false; }
-  } else {
-    users[key] = { username, password, name: username };
-    saveCustomerUsers(users);
-  }
-  currentUser = { username: users[key].username, name: users[key].name, role: 'customer' };
-  saveSession(currentUser);
-  closeAuthModal();
-  renderNavAuthArea();
-  return false;
 }
 
-function handleLogout() {
+async function handleLogout() {
+  await sb.auth.signOut();
   currentUser = null;
-  saveSession(null);
+  wishlistIds = new Set();
   exitAdminPanel();
   renderNavAuthArea();
+  applyFilters();
+  buildStores();
 }
 
-function restoreSession() {
-  const session = loadSession();
-  if (!session) { renderNavAuthArea(); return; }
-  currentUser = session;
-  renderNavAuthArea();
-  if (currentUser.role === 'admin') enterAdminPanel();
+async function restoreSession() {
+  const { data } = await sb.auth.getSession();
+  const session = data && data.session;
+  if (!session) { currentUser = null; return; }
+  const profile = await fetchProfile(session.user.id);
+  currentUser = { id: session.user.id, email: session.user.email, name: profile ? profile.name : session.user.email, role: profile ? profile.role : 'customer' };
 }
 
 function renderNavAuthArea() {
@@ -955,19 +1071,73 @@ function renderNavAuthArea() {
   if (currentUser.role === 'admin') {
     area.innerHTML = `
       <div class="user-pill">
-        <span class="user-pill-name">Halo, <strong>${currentUser.name}</strong> (Admin)</span>
+        <span class="user-pill-name">Halo, <strong>${escHtml(currentUser.name)}</strong> (Admin)</span>
         <button class="btn-admin-panel" onclick="enterAdminPanel()">Dashboard</button>
         <button class="btn-logout" onclick="handleLogout()">Keluar</button>
       </div>`;
   } else {
     area.innerHTML = `
       <div class="user-pill">
-        <span class="user-pill-name">Halo, <strong>${currentUser.name}</strong></span>
+        <span class="user-pill-name">Halo, <strong>${escHtml(currentUser.name)}</strong></span>
+        <button class="btn-wishlist-nav" onclick="openWishlistModal()">♥ Wishlist (${wishlistIds.size})</button>
         <button class="btn-logout" onclick="handleLogout()">Keluar</button>
       </div>`;
   }
 }
 
+/* ============ WISHLIST ============ */
+function isWished(productId) { return wishlistIds.has(productId); }
+
+async function toggleWishlist(productId, evt) {
+  if (evt) evt.stopPropagation();
+  if (!currentUser) { openAuthModal(); return; }
+  if (currentUser.role !== 'customer') { showToast('Fitur wishlist khusus untuk akun Customer.', 'error'); return; }
+
+  if (wishlistIds.has(productId)) {
+    const { error } = await sb.from('wishlists').delete().eq('user_id', currentUser.id).eq('product_id', productId);
+    if (error) { console.error(error); showToast('Gagal menghapus dari wishlist.', 'error'); return; }
+    wishlistIds.delete(productId);
+  } else {
+    const { error } = await sb.from('wishlists').insert({ user_id: currentUser.id, product_id: productId });
+    if (error) { console.error(error); showToast('Gagal menambahkan ke wishlist.', 'error'); return; }
+    wishlistIds.add(productId);
+  }
+  renderNavAuthArea();
+  applyFilters();
+  if (currentModalProductId === productId) updateModalWishlistBtn();
+  if (document.getElementById('wishlistOverlay').classList.contains('open')) renderWishlistGrid();
+}
+
+function openWishlistModal() {
+  renderWishlistGrid();
+  document.getElementById('wishlistOverlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeWishlistModal() {
+  document.getElementById('wishlistOverlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+function renderWishlistGrid() {
+  const grid = document.getElementById('wishlistGrid');
+  const items = PRODUCTS.filter(p => wishlistIds.has(p.id));
+  if (!items.length) {
+    grid.innerHTML = '<div class="wishlist-empty">Belum ada produk di wishlist Anda. Klik ikon ♡ pada produk untuk menyimpannya.</div>';
+    return;
+  }
+  grid.innerHTML = items.map(p => `
+    <div class="wishlist-card" onclick="closeWishlistModal();openModal(${p.id})">
+      <button class="wishlist-remove" onclick="toggleWishlist(${p.id}, event)">✕</button>
+      <img src="${p.img}" alt="${escHtml(p.name)}" loading="lazy" />
+      <div class="card-body">
+        <div class="card-brand">${escHtml(p.brand)}</div>
+        <div class="card-name">${escHtml(p.name)}</div>
+        <div class="card-price">${formatRupiah(p.price)}</div>
+      </div>
+    </div>
+  `).join('');
+}
+
+/* ============ CATEGORY NAV / SECTIONS / FILTERS BUILD ============ */
 function buildCategoryNav() {
   const catBar = document.getElementById('catBar');
   const sidebarCat = document.getElementById('sidebarCatContainer');
@@ -1025,9 +1195,9 @@ function buildStores() {
   const listEl = document.getElementById('storeList');
   listEl.innerHTML = STORES.map((s,i) => `
     <div class="store-item${i===0?' active':''}" data-store="${s.id}" onclick="selectStore('${s.id}')">
-      <div class="store-item-name">${s.name}</div>
-      <div class="store-item-addr"><strong>Alamat:</strong> ${s.address}</div>
-      <div class="store-item-meta">📞 ${s.phone}<br>⏰ ${s.hours}</div>
+      <div class="store-item-name">${escHtml(s.name)}</div>
+      <div class="store-item-addr"><strong>Alamat:</strong> ${escHtml(s.address)}</div>
+      <div class="store-item-meta">📞 ${escHtml(s.phone)}<br>⏰ ${escHtml(s.hours)}</div>
 
       <div class="store-social">
         <a class="store-social-btn ssb-ig" href="${s.social.ig}" onclick="event.stopPropagation()" target="_blank" rel="noopener">${socialIcon('ig')} Instagram</a>
@@ -1045,16 +1215,22 @@ function buildStores() {
       </div>
 
       <div class="comment-form-wrap" onclick="event.stopPropagation()">
-        <div class="comment-form-label">💬 Tinggalkan Komentar &amp; Foto Bukti</div>
-        <input class="comment-name-input" id="cname-${s.id}" type="text" placeholder="Nama Anda (opsional)" maxlength="60" />
-        <textarea class="comment-textarea" id="ctext-${s.id}" placeholder="Ceritakan pengalaman belanja Anda di cabang ini..." maxlength="500"></textarea>
-        <div class="photo-upload-row">
-          <button class="photo-upload-btn" onclick="triggerPhotoUpload('${s.id}')">📷 Upload Foto Bukti</button>
-          <span style="font-size:10px;color:#bbb;letter-spacing:0.05em;">Maks. 4 foto (jpg/png)</span>
-        </div>
-        <input class="photo-upload-input" type="file" id="photo-input-${s.id}" accept="image/jpeg,image/png,image/webp" multiple onchange="handlePhotoUpload(event,'${s.id}')" />
-        <div class="photo-preview-list" id="photo-preview-${s.id}"></div>
-        <button class="btn-submit-comment" onclick="submitComment('${s.id}')">Kirim Komentar</button>
+        ${currentUser ? `
+          <div class="comment-form-label">💬 Tinggalkan Komentar &amp; Foto Bukti</div>
+          <input class="comment-name-input" id="cname-${s.id}" type="text" value="${escHtml(currentUser.name)}" placeholder="Nama Anda" maxlength="60" />
+          <textarea class="comment-textarea" id="ctext-${s.id}" placeholder="Ceritakan pengalaman belanja Anda di cabang ini..." maxlength="500"></textarea>
+          <div class="photo-upload-row">
+            <button class="photo-upload-btn" onclick="triggerPhotoUpload('${s.id}')">📷 Upload Foto Bukti</button>
+            <span style="font-size:10px;color:#bbb;letter-spacing:0.05em;">Maks. 4 foto (jpg/png)</span>
+          </div>
+          <input class="photo-upload-input" type="file" id="photo-input-${s.id}" accept="image/jpeg,image/png,image/webp" multiple onchange="handlePhotoUpload(event,'${s.id}')" />
+          <div class="photo-preview-list" id="photo-preview-${s.id}"></div>
+          <button class="btn-submit-comment" id="submit-comment-${s.id}" onclick="submitComment('${s.id}')">Kirim Komentar</button>
+        ` : `
+          <div class="comment-form-label">💬 Ulasan &amp; Rating</div>
+          <p style="font-size:12px;color:var(--mid);margin-bottom:8px;">Silakan masuk untuk memberi rating, komentar, dan foto bukti kunjungan.</p>
+          <button class="btn-submit-comment" onclick="openAuthModal();event.stopPropagation()">Masuk untuk Memberi Ulasan</button>
+        `}
       </div>
 
       <div class="comment-list" id="comment-list-${s.id}">
@@ -1062,10 +1238,13 @@ function buildStores() {
       </div>
     </div>
   `).join('');
-  selectStore(STORES[0].id);
+  if (STORES.length) {
+    selectStore(STORES[0].id);
+    STORES.forEach(s => { renderStars(s.id); updateRatingSummary(s.id); renderComments(s.id); });
+  }
 }
 
-/* ============ PHOTO UPLOAD ============ */
+/* ============ PHOTO UPLOAD (review) ============ */
 function triggerPhotoUpload(storeId) {
   document.getElementById('photo-input-' + storeId).click();
 }
@@ -1079,7 +1258,7 @@ function handlePhotoUpload(event, storeId) {
   toAdd.forEach(file => {
     const reader = new FileReader();
     reader.onload = e => {
-      pendingPhotos[storeId].push(e.target.result);
+      pendingPhotos[storeId].push({ file, dataUrl: e.target.result });
       renderPhotoPreview(storeId);
     };
     reader.readAsDataURL(file);
@@ -1089,10 +1268,11 @@ function handlePhotoUpload(event, storeId) {
 
 function renderPhotoPreview(storeId) {
   const container = document.getElementById('photo-preview-' + storeId);
+  if (!container) return;
   const photos = pendingPhotos[storeId];
-  container.innerHTML = photos.map((src, i) => `
+  container.innerHTML = photos.map((p, i) => `
     <div class="photo-preview-item">
-      <img src="${src}" alt="Preview ${i+1}" />
+      <img src="${p.dataUrl}" alt="Preview ${i+1}" />
       <button class="photo-remove-btn" onclick="removePhoto('${storeId}',${i})">✕</button>
     </div>
   `).join('');
@@ -1103,40 +1283,75 @@ function removePhoto(storeId, idx) {
   renderPhotoPreview(storeId);
 }
 
-/* ============ COMMENTS ============ */
-function submitComment(storeId) {
-  const r = storeRatings[storeId];
+/* ============ COMMENTS / REVIEWS (Supabase) ============ */
+async function uploadReviewPhotos(storeId) {
+  const photos = pendingPhotos[storeId];
+  const urls = [];
+  for (const p of photos) {
+    const ext = (p.file.name.split('.').pop() || 'jpg').toLowerCase();
+    const path = `${storeId}/${Date.now()}-${Math.random().toString(36).slice(2,8)}.${ext}`;
+    const { error: upErr } = await sb.storage.from(REVIEW_PHOTO_BUCKET).upload(path, p.file);
+    if (upErr) { console.error(upErr); continue; }
+    const { data } = sb.storage.from(REVIEW_PHOTO_BUCKET).getPublicUrl(path);
+    if (data && data.publicUrl) urls.push(data.publicUrl);
+  }
+  return urls;
+}
+
+async function submitComment(storeId) {
+  if (!currentUser) { openAuthModal(); return; }
   const nameEl = document.getElementById('cname-' + storeId);
   const textEl = document.getElementById('ctext-' + storeId);
+  const btn = document.getElementById('submit-comment-' + storeId);
   const text = textEl.value.trim();
-  const photos = [...pendingPhotos[storeId]];
+  const rating = pendingRating[storeId] || 0;
 
-  if (!text && photos.length === 0) {
+  if (!text && !rating && pendingPhotos[storeId].length === 0) {
     textEl.style.borderColor = 'var(--gold)';
-    textEl.placeholder = 'Tulis komentar atau upload foto terlebih dahulu';
-    setTimeout(() => { textEl.style.borderColor = ''; textEl.placeholder = 'Ceritakan pengalaman belanja Anda di cabang ini...'; }, 2000);
+    textEl.placeholder = 'Tulis komentar, beri rating, atau upload foto terlebih dahulu';
+    setTimeout(() => { textEl.style.borderColor = ''; textEl.placeholder = 'Ceritakan pengalaman belanja Anda di cabang ini...'; }, 2200);
     return;
   }
 
-  const comment = {
-    author: nameEl.value.trim() || 'Pelanggan Anonim',
-    rating: r.userRating,
-    text,
-    photos,
-    date: new Date()
-  };
+  btn.disabled = true;
+  const originalLabel = btn.textContent;
+  btn.textContent = 'Mengirim…';
 
-  storeComments[storeId].unshift(comment);
-  nameEl.value = '';
-  textEl.value = '';
-  pendingPhotos[storeId] = [];
-  renderPhotoPreview(storeId);
-  renderComments(storeId);
+  try {
+    const photoUrls = await uploadReviewPhotos(storeId);
+    const author = (nameEl.value.trim() || currentUser.name);
+    const { data, error } = await sb.from('reviews').insert({
+      store_id: storeId, user_id: currentUser.id, author, rating, text, photos: photoUrls
+    }).select().single();
+    if (error) { console.error(error); showToast('Gagal mengirim ulasan. Coba lagi.', 'error'); return; }
+
+    storeComments[storeId].unshift({
+      id: data.id, author: data.author, rating: data.rating, text: data.text,
+      photos: data.photos || [], date: data.created_at
+    });
+    if (rating > 0) {
+      storeRatings[storeId].total += rating;
+      storeRatings[storeId].count += 1;
+    }
+    pendingRating[storeId] = 0;
+    pendingPhotos[storeId] = [];
+    textEl.value = '';
+    renderPhotoPreview(storeId);
+    renderStars(storeId);
+    renderComments(storeId);
+    updateRatingSummary(storeId);
+    updateOverallRating();
+    showToast('Ulasan Anda berhasil dikirim. Terima kasih!');
+  } finally {
+    btn.disabled = false;
+    btn.textContent = originalLabel;
+  }
 }
 
 function renderComments(storeId) {
   const listEl = document.getElementById('comment-list-' + storeId);
-  const comments = storeComments[storeId];
+  if (!listEl) return;
+  const comments = storeComments[storeId] || [];
   if (!comments.length) {
     listEl.innerHTML = '<div class="no-comments">Belum ada komentar. Jadilah yang pertama!</div>';
     return;
@@ -1154,10 +1369,6 @@ function renderComments(storeId) {
   `).join('');
 }
 
-function escHtml(str) {
-  return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-}
-
 /* ============ LIGHTBOX ============ */
 function openLightbox(storeId, commentIdx, photoIdx) {
   const src = storeComments[storeId][commentIdx].photos[photoIdx];
@@ -1168,15 +1379,11 @@ function closeLightbox() {
   document.getElementById('lightbox').classList.remove('open');
 }
 
-/* ============ RATING ============ */
+/* ============ RATING (pilih bintang, dikirim bersama komentar) ============ */
 function rateStore(storeId, val) {
-  const r = storeRatings[storeId];
-  if (r.userRating > 0) { r.total = r.total - r.userRating + val; }
-  else { r.total += val; r.count += 1; }
-  r.userRating = val;
+  if (!currentUser) { openAuthModal(); return; }
+  pendingRating[storeId] = (pendingRating[storeId] === val) ? 0 : val;
   renderStars(storeId);
-  updateRatingSummary(storeId);
-  updateOverallRating();
 }
 
 function hoverStars(storeId, val) {
@@ -1185,24 +1392,25 @@ function hoverStars(storeId, val) {
 }
 function resetStarHover(storeId) { renderStars(storeId); }
 function renderStars(storeId) {
-  const r = storeRatings[storeId];
+  const val = pendingRating[storeId] || 0;
   const stars = document.querySelectorAll(`#stars-${storeId} .star-btn`);
-  stars.forEach((s, i) => { s.classList.toggle('filled', i < r.userRating); s.style.color = ''; });
+  stars.forEach((s, i) => { s.classList.toggle('filled', i < val); s.style.color = ''; });
 }
 function updateRatingSummary(storeId) {
   const r = storeRatings[storeId];
   const el = document.getElementById('rating-summary-' + storeId);
-  if (!el) return;
+  if (!el || !r) return;
   if (r.count === 0) { el.innerHTML = 'Belum ada rating'; return; }
   const avg = (r.total / r.count).toFixed(1);
   const stars = '★'.repeat(Math.round(r.total/r.count)) + '☆'.repeat(5-Math.round(r.total/r.count));
   el.innerHTML = `<strong>${avg}</strong> / 5 &nbsp;${stars}&nbsp; (${r.count} ulasan)`;
 }
 function updateOverallRating() {
-  const rated = STORES.filter(s => storeRatings[s.id].count > 0);
+  const rated = STORES.filter(s => storeRatings[s.id] && storeRatings[s.id].count > 0);
   const scoreEl = document.getElementById('overallScore');
   const starsEl = document.getElementById('overallStars');
   const metaEl = document.getElementById('overallMeta');
+  if (!scoreEl) return;
   if (!rated.length) { scoreEl.textContent = '—'; starsEl.innerHTML = ''; metaEl.textContent = 'Belum ada rating dari cabang manapun'; return; }
   const totalVotes = rated.reduce((a,s) => a + storeRatings[s.id].count, 0);
   const totalScore = rated.reduce((a,s) => a + storeRatings[s.id].total, 0);
@@ -1295,17 +1503,18 @@ function sortProducts(list, mode) {
 }
 
 function renderCard(p) {
-  const imgUrl = 'https://images.unsplash.com/photo-' + p.img + '?w=440&q=80';
+  const wished = isWished(p.id);
   return `
     <div class="card" onclick="openModal(${p.id})">
       <div class="card-img-wrap">
-        <img src="${imgUrl}" alt="${p.name}" loading="lazy" />
-        ${p.badge ? `<span class="card-badge">${p.badge}</span>` : ''}
+        <img src="${p.img}" alt="${escHtml(p.name)}" loading="lazy" />
+        <button class="wish-btn${wished?' active':''}" onclick="toggleWishlist(${p.id}, event)" title="${wished?'Hapus dari Wishlist':'Simpan ke Wishlist'}">${wished?'♥':'♡'}</button>
+        ${p.badge ? `<span class="card-badge">${escHtml(p.badge)}</span>` : ''}
       </div>
       <div class="card-body">
-        <div class="card-brand">${p.brand}</div>
-        <div class="card-name">${p.name}</div>
-        <div class="card-desc">${p.desc}</div>
+        <div class="card-brand">${escHtml(p.brand)}</div>
+        <div class="card-name">${escHtml(p.name)}</div>
+        <div class="card-desc">${escHtml(p.desc)}</div>
         <div class="card-price">Mulai <strong>${formatRupiah(p.price)}</strong></div>
       </div>
       <a href="#" class="btn-detail" onclick="event.preventDefault();event.stopPropagation();openModal(${p.id})">Lihat Detail</a>
@@ -1337,9 +1546,9 @@ function renderModal(p, selectedColor) {
   const cat = CATEGORIES.find(c => c.id === p.cat);
   const variants = p.colorVariants || {};
   const availableColors = Object.keys(variants);
-  const imgKey = variants[selectedColor] || p.img;
-  const imgUrl = 'https://images.unsplash.com/photo-' + imgKey + '?w=700&q=85';
+  const imgUrl = variants[selectedColor] || p.img;
   const waText = encodeURIComponent('Halo HarmoniFashion, saya ingin tanya tentang produk "' + p.name + '" (' + p.brand + ') warna ' + (COLOR_LABELS[selectedColor] || selectedColor) + '.');
+  const wished = isWished(p.id);
   const colorOptionsHtml = availableColors.length > 1 ? `
     <div class="modal-color-section">
       <div class="modal-color-label">Pilih Warna</div>
@@ -1355,27 +1564,35 @@ function renderModal(p, selectedColor) {
     </div>` : '';
   document.getElementById('modalContent').innerHTML = `
     <div class="modal-img-wrap">
-      <img id="modalMainImg" src="${imgUrl}" alt="${p.name}" />
-      ${p.badge ? `<span class="modal-badge">${p.badge}</span>` : ''}
+      <img id="modalMainImg" src="${imgUrl}" alt="${escHtml(p.name)}" />
+      ${p.badge ? `<span class="modal-badge">${escHtml(p.badge)}</span>` : ''}
     </div>
     <div class="modal-info">
-      <div class="modal-brand">${p.brand}</div>
-      <div class="modal-name">${p.name}</div>
+      <div class="modal-brand">${escHtml(p.brand)}</div>
+      <div class="modal-name">${escHtml(p.name)}</div>
       <div class="modal-meta-row">
-        <span class="modal-tag">${cat ? cat.label : ''}</span>
+        <span class="modal-tag">${cat ? escHtml(cat.label) : ''}</span>
         <span class="modal-tag" id="modalColorTag">${COLOR_LABELS[selectedColor]||selectedColor}</span>
-        <span class="modal-tag">${p.cond}</span>
+        <span class="modal-tag">${escHtml(p.cond)}</span>
       </div>
       <div class="modal-price">Harga Mulai<strong>${formatRupiah(p.price)}</strong></div>
       ${colorOptionsHtml}
       <div class="modal-desc-label">Deskripsi Produk</div>
-      <p class="modal-desc">${p.desc}. Tersedia di seluruh cabang HarmoniFashion dengan jaminan keaslian produk dan layanan konsultasi personal.</p>
+      <p class="modal-desc">${escHtml(p.desc)}. Tersedia di seluruh cabang HarmoniFashion dengan jaminan keaslian produk dan layanan konsultasi personal.</p>
       <div class="modal-actions">
         <a class="btn-primary" href="https://wa.me/${CS_WHATSAPP}?text=${waText}" target="_blank" rel="noopener">Hubungi via WhatsApp</a>
+        <button class="wish-btn-modal${wished?' active':''}" id="modalWishBtn" onclick="toggleWishlist(${p.id})">${wished?'♥ Tersimpan di Wishlist':'♡ Simpan ke Wishlist'}</button>
         <button class="btn-outline" onclick="closeModal()">Tutup</button>
       </div>
     </div>
   `;
+}
+function updateModalWishlistBtn() {
+  const btn = document.getElementById('modalWishBtn');
+  if (!btn || currentModalProductId == null) return;
+  const wished = isWished(currentModalProductId);
+  btn.classList.toggle('active', wished);
+  btn.textContent = wished ? '♥ Tersimpan di Wishlist' : '♡ Simpan ke Wishlist';
 }
 
 function switchColor(productId, color) {
