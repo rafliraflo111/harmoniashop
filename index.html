@@ -766,6 +766,260 @@ function escHtml(str) {
   return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
 
+async function seed() {
+
+  // ── 1. CATEGORIES ──────────────────────────────────────────────
+  console.log('📂 Inserting categories...');
+  const categories = [
+    { id:'handbags',     label:'Handbags',           header:'Hand<span>bags</span>',              sort_order:1 },
+    { id:'ready-to-wear',label:'Ready-to-Wear',      header:'Ready-to-<span>Wear</span>',         sort_order:2 },
+    { id:'shoes',        label:'Shoes',              header:'<span>Shoes</span>',                 sort_order:3 },
+    { id:'watches',      label:'Watches & Jewellery',header:'Watches &amp; <span>Jewellery</span>',sort_order:4 },
+    { id:'accessories',  label:'Accessories',        header:'Acces<span>sories</span>',           sort_order:5 },
+    { id:'fragrances',   label:'Fragrances',         header:'Fra<span>grances</span>',            sort_order:6 },
+    { id:'eyewear',      label:'Eyewear',            header:'Eye<span>wear</span>',               sort_order:7 },
+  ];
+  const { error: catErr } = await sb.from('categories').upsert(categories, { onConflict: 'id' });
+  if (catErr) { console.error('Category error:', catErr.message); } else { console.log('✅ Categories done'); }
+
+  // ── 2. PRODUCTS ────────────────────────────────────────────────
+  console.log('🛍️ Inserting products...');
+  const products = [
+    // HANDBAGS
+    {cat:'handbags',brand:'Chanel',name:'Classic Flap Bag Medium',description:'Quilted Lambskin / Gold Hardware / Medium',price:95000000,img:'1548036328-c9fa89d128fa',badge:'Bestseller',color:'black',condition:'Brand New',color_variants:{black:'1548036328-c9fa89d128fa',white:'1584917865442-de89df76afd3',brown:'1591561954555-607968c989ab',red:'1526170375885-4d8ecf77b99f'}},
+    {cat:'handbags',brand:'Louis Vuitton',name:'Neverfull MM Tote',description:'Monogram Canvas / Tote Bag / Damier Ebene Lining',price:28500000,img:'1584917865442-de89df76afd3',badge:null,color:'brown',condition:'Brand New',color_variants:{brown:'1584917865442-de89df76afd3',black:'1548036328-c9fa89d128fa',beige:'1591561954555-607968c989ab'}},
+    {cat:'handbags',brand:'Hermès',name:'Birkin 30',description:'Togo Leather / Gold Hardware / Noir',price:320000000,img:'1591561954555-607968c989ab',badge:'Eksklusif',color:'black',condition:'Brand New',color_variants:{black:'1591561954555-607968c989ab',white:'1584917865442-de89df76afd3',beige:'1526170375885-4d8ecf77b99f',brown:'1548036328-c9fa89d128fa'}},
+    {cat:'handbags',brand:'Prada',name:'Re-Edition 2005 Shoulder Bag',description:'Re-Nylon / Shoulder Bag / Black',price:18200000,img:'1548036328-c9fa89d128fa',badge:null,color:'black',condition:'Like New',color_variants:{black:'1548036328-c9fa89d128fa',white:'1526170375885-4d8ecf77b99f',navy:'1591561954555-607968c989ab'}},
+    {cat:'handbags',brand:'Gucci',name:'Jackie 1961 Small Hobo',description:'Leather / GG Hardware / Tan',price:24500000,img:'1526170375885-4d8ecf77b99f',badge:null,color:'brown',condition:'Brand New',color_variants:{brown:'1526170375885-4d8ecf77b99f',black:'1548036328-c9fa89d128fa',white:'1584917865442-de89df76afd3'}},
+    {cat:'handbags',brand:'Saint Laurent',name:'Loulou Puffer Medium',description:'Quilted Leather / Chain Strap',price:21800000,img:'1584917865442-de89df76afd3',badge:null,color:'black',condition:'Very Good',color_variants:{black:'1584917865442-de89df76afd3',white:'1591561954555-607968c989ab',red:'1548036328-c9fa89d128fa'}},
+    {cat:'handbags',brand:'Bottega Veneta',name:'Cassette Crossbody',description:'Intrecciato Leather / Crossbody',price:32000000,img:'1591561954555-607968c989ab',badge:null,color:'beige',condition:'Brand New',color_variants:{beige:'1591561954555-607968c989ab',black:'1548036328-c9fa89d128fa',brown:'1526170375885-4d8ecf77b99f'}},
+    {cat:'handbags',brand:'Fendi',name:'Baguette Medium',description:'Embroidered Canvas / FF Logo',price:26500000,img:'1526170375885-4d8ecf77b99f',badge:null,color:'navy',condition:'Brand New',color_variants:{navy:'1526170375885-4d8ecf77b99f',black:'1548036328-c9fa89d128fa',white:'1584917865442-de89df76afd3'}},
+    {cat:'handbags',brand:'Dior',name:'Lady Dior Medium',description:'Cannage Lambskin / Silver Hardware',price:78000000,img:'1548036328-c9fa89d128fa',badge:'Ikonik',color:'red',condition:'Like New',color_variants:{red:'1548036328-c9fa89d128fa',black:'1591561954555-607968c989ab',white:'1584917865442-de89df76afd3'}},
+    {cat:'handbags',brand:'Balenciaga',name:'Hourglass Top Handle Small',description:'Leather / Gold-tone Hardware',price:29800000,img:'1584917865442-de89df76afd3',badge:null,color:'black',condition:'Good',color_variants:{black:'1584917865442-de89df76afd3',white:'1526170375885-4d8ecf77b99f',beige:'1591561954555-607968c989ab'}},
+    // READY-TO-WEAR
+    {cat:'ready-to-wear',brand:'Chanel',name:'Tweed Bouclé Jacket',description:'Iconic CC Button / Bouclé Wool',price:42000000,img:'1490481702701-2a2be1926c0f',badge:'Bestseller',color:'beige',condition:'Brand New',color_variants:{beige:'1490481702701-2a2be1926c0f',black:'1509631179256-f30d090da1f3',white:'1551488831-ac6ea22a41f6'}},
+    {cat:'ready-to-wear',brand:'Dior',name:'Bar Jacket',description:'Wool / Silk / Iconic Silhouette',price:68000000,img:'1509631179256-f30d090da1f3',badge:'Eksklusif',color:'black',condition:'Brand New',color_variants:{black:'1509631179256-f30d090da1f3',white:'1551488831-ac6ea22a41f6',beige:'1490481702701-2a2be1926c0f'}},
+    {cat:'ready-to-wear',brand:'Saint Laurent',name:'Le Smoking Blazer',description:'Tuxedo Style / Peak Lapels',price:35000000,img:'1551488831-ac6ea22a41f6',badge:null,color:'black',condition:'Brand New',color_variants:{black:'1551488831-ac6ea22a41f6',white:'1490481702701-2a2be1926c0f',navy:'1509631179256-f30d090da1f3'}},
+    {cat:'ready-to-wear',brand:'Gucci',name:'GG Logo Wool Coat',description:'Double Faced Wool / Belt',price:29500000,img:'1490481702701-2a2be1926c0f',badge:null,color:'beige',condition:'Like New',color_variants:{beige:'1490481702701-2a2be1926c0f',black:'1509631179256-f30d090da1f3',brown:'1551488831-ac6ea22a41f6'}},
+    {cat:'ready-to-wear',brand:'Valentino',name:'Garavani Crepe Couture Dress',description:'Silk Crepe / Bow Detail',price:48000000,img:'1509631179256-f30d090da1f3',badge:'New Season',color:'red',condition:'Brand New',color_variants:{red:'1509631179256-f30d090da1f3',black:'1551488831-ac6ea22a41f6',white:'1490481702701-2a2be1926c0f'}},
+    {cat:'ready-to-wear',brand:'Versace',name:'Medusa Head Silk Shirt',description:'Silk / Medusa Print / Relaxed Fit',price:14800000,img:'1551488831-ac6ea22a41f6',badge:null,color:'black',condition:'Brand New',color_variants:{black:'1551488831-ac6ea22a41f6',white:'1490481702701-2a2be1926c0f',gold:'1509631179256-f30d090da1f3'}},
+    {cat:'ready-to-wear',brand:'Burberry',name:'Vintage Check Trench Coat',description:'Cotton Gabardine / House Check',price:32500000,img:'1490481702701-2a2be1926c0f',badge:null,color:'beige',condition:'Very Good',color_variants:{beige:'1490481702701-2a2be1926c0f',black:'1509631179256-f30d090da1f3',navy:'1551488831-ac6ea22a41f6'}},
+    {cat:'ready-to-wear',brand:'Prada',name:'Re-Nylon Padded Jacket',description:'Re-Nylon / Triangle Logo / Puffer',price:22000000,img:'1509631179256-f30d090da1f3',badge:null,color:'black',condition:'Brand New',color_variants:{black:'1509631179256-f30d090da1f3',white:'1490481702701-2a2be1926c0f',navy:'1551488831-ac6ea22a41f6'}},
+    {cat:'ready-to-wear',brand:'Balenciaga',name:'Logo Oversized Hoodie',description:'Cotton Fleece / BB Logo / Drop Shoulder',price:11500000,img:'1551488831-ac6ea22a41f6',badge:null,color:'black',condition:'Good',color_variants:{black:'1551488831-ac6ea22a41f6',white:'1490481702701-2a2be1926c0f',navy:'1509631179256-f30d090da1f3'}},
+    {cat:'ready-to-wear',brand:'Fendi',name:'FF Print Silk Kaftan',description:'Silk / FF Monogram / Kaftan Style',price:18700000,img:'1490481702701-2a2be1926c0f',badge:null,color:'beige',condition:'Brand New',color_variants:{beige:'1490481702701-2a2be1926c0f',white:'1551488831-ac6ea22a41f6',black:'1509631179256-f30d090da1f3'}},
+    // SHOES
+    {cat:'shoes',brand:'Christian Louboutin',name:'Pigalle 100 Pumps',description:'Patent Leather / Red Sole / 100mm',price:12500000,img:'1542291026-7eec264ef638',badge:'Ikonik',color:'black',condition:'Brand New',color_variants:{black:'1542291026-7eec264ef638',red:'1543163765179-e3606a487e2e',white:'1560343757-4f8f8fb03e93'}},
+    {cat:'shoes',brand:'Gucci',name:'Horsebit 1953 Loafers',description:'Leather / Gold Horsebit Detail',price:9800000,img:'1543163765179-e3606a487e2e',badge:null,color:'brown',condition:'Brand New',color_variants:{brown:'1543163765179-e3606a487e2e',black:'1542291026-7eec264ef638',white:'1560343757-4f8f8fb03e93'}},
+    {cat:'shoes',brand:'Chanel',name:'Slingback Pumps',description:'Leather / Two-tone / 85mm',price:11200000,img:'1560343757-4f8f8fb03e93',badge:'Bestseller',color:'beige',condition:'Brand New',color_variants:{beige:'1560343757-4f8f8fb03e93',black:'1542291026-7eec264ef638',white:'1543163765179-e3606a487e2e'}},
+    {cat:'shoes',brand:'Hermès',name:'Oran Sandal',description:'Calfskin / H Buckle / Flat',price:13500000,img:'1542291026-7eec264ef638',badge:'Eksklusif',color:'gold',condition:'Brand New',color_variants:{gold:'1542291026-7eec264ef638',black:'1560343757-4f8f8fb03e93',white:'1543163765179-e3606a487e2e'}},
+    {cat:'shoes',brand:'Louis Vuitton',name:'Archlight 2.0 Sneaker',description:'Technical Fabric / LV Outsole',price:8900000,img:'1543163765179-e3606a487e2e',badge:'New Season',color:'white',condition:'Brand New',color_variants:{white:'1543163765179-e3606a487e2e',black:'1542291026-7eec264ef638',navy:'1560343757-4f8f8fb03e93'}},
+    {cat:'shoes',brand:'Balenciaga',name:'Triple S Sneaker',description:'Leather / Mesh / Exaggerated Sole',price:14200000,img:'1560343757-4f8f8fb03e93',badge:null,color:'white',condition:'Brand New',color_variants:{white:'1560343757-4f8f8fb03e93',black:'1542291026-7eec264ef638',navy:'1543163765179-e3606a487e2e'}},
+    {cat:'shoes',brand:'Dior',name:'B23 High-Top Sneaker',description:'Oblique Canvas / Dior Oblique',price:11800000,img:'1542291026-7eec264ef638',badge:null,color:'navy',condition:'Brand New',color_variants:{navy:'1542291026-7eec264ef638',black:'1560343757-4f8f8fb03e93',white:'1543163765179-e3606a487e2e'}},
+    {cat:'shoes',brand:'Prada',name:'Monolith Loafer Platform',description:'Brushed Leather / Lug Sole',price:10500000,img:'1543163765179-e3606a487e2e',badge:null,color:'black',condition:'Brand New',color_variants:{black:'1543163765179-e3606a487e2e',white:'1560343757-4f8f8fb03e93',beige:'1542291026-7eec264ef638'}},
+    {cat:'shoes',brand:'Saint Laurent',name:'Tribute 105 Sandal',description:'Suede / Open Toe / 105mm',price:9200000,img:'1560343757-4f8f8fb03e93',badge:null,color:'beige',condition:'Like New',color_variants:{beige:'1560343757-4f8f8fb03e93',black:'1542291026-7eec264ef638',red:'1543163765179-e3606a487e2e'}},
+    {cat:'shoes',brand:'Valentino',name:'Garavani Rockstud Pump',description:'Leather / Rockstud Trim / 100mm',price:12000000,img:'1542291026-7eec264ef638',badge:null,color:'black',condition:'Brand New',color_variants:{black:'1542291026-7eec264ef638',beige:'1543163765179-e3606a487e2e',red:'1560343757-4f8f8fb03e93'}},
+    // WATCHES & JEWELLERY
+    {cat:'watches',brand:'Rolex',name:'Datejust 36',description:'Oystersteel / Jubilee Bracelet / Fluted Bezel',price:185000000,img:'1523170335258-f7278330a058',badge:'Ikonik',color:'silver',condition:'Brand New',color_variants:{silver:'1523170335258-f7278330a058',gold:'1547037947185-a35bfea3a9b0',black:'1548169272-27f3bc19048a'}},
+    {cat:'watches',brand:'Cartier',name:'Santos de Cartier Medium',description:'Steel / Blue Sword-Shaped Hands',price:135000000,img:'1547037947185-a35bfea3a9b0',badge:null,color:'silver',condition:'Brand New',color_variants:{silver:'1547037947185-a35bfea3a9b0',gold:'1523170335258-f7278330a058',black:'1548169272-27f3bc19048a'}},
+    {cat:'watches',brand:'Patek Philippe',name:'Calatrava 5196',description:'White Gold / Sapphire Crystal',price:850000000,img:'1548169272-27f3bc19048a',badge:'Eksklusif',color:'gold',condition:'Brand New',color_variants:{gold:'1548169272-27f3bc19048a',silver:'1523170335258-f7278330a058'}},
+    {cat:'watches',brand:'Audemars Piguet',name:'Royal Oak 41mm',description:'Stainless Steel / Blue Dial / Integrated Bracelet',price:520000000,img:'1523170335258-f7278330a058',badge:'Limited Edition',color:'silver',condition:'Brand New',color_variants:{silver:'1523170335258-f7278330a058',gold:'1547037947185-a35bfea3a9b0',black:'1548169272-27f3bc19048a'}},
+    {cat:'watches',brand:'Van Cleef & Arpels',name:'Alhambra Necklace',description:'18K Yellow Gold / Malachite / Long',price:280000000,img:'1547037947185-a35bfea3a9b0',badge:null,color:'gold',condition:'Brand New',color_variants:{gold:'1547037947185-a35bfea3a9b0',silver:'1523170335258-f7278330a058'}},
+    {cat:'watches',brand:'Bulgari',name:'Serpenti Viper Ring',description:'18K White Gold / Diamonds',price:95000000,img:'1548169272-27f3bc19048a',badge:null,color:'silver',condition:'Brand New',color_variants:{silver:'1548169272-27f3bc19048a',gold:'1547037947185-a35bfea3a9b0'}},
+    {cat:'watches',brand:'Chopard',name:'Happy Diamonds Icons Bracelet',description:'18K White Gold / 7 Dancing Diamonds',price:185000000,img:'1523170335258-f7278330a058',badge:null,color:'silver',condition:'Brand New',color_variants:{silver:'1523170335258-f7278330a058',gold:'1548169272-27f3bc19048a'}},
+    {cat:'watches',brand:'IWC',name:'Portugieser Chronograph',description:'Stainless Steel / Panda Dial',price:145000000,img:'1547037947185-a35bfea3a9b0',badge:null,color:'silver',condition:'Brand New',color_variants:{silver:'1547037947185-a35bfea3a9b0',black:'1548169272-27f3bc19048a'}},
+    {cat:'watches',brand:'Omega',name:'Speedmaster Moonwatch',description:'Steel / Black Dial / Hesalite',price:95000000,img:'1548169272-27f3bc19048a',badge:'Ikonik',color:'black',condition:'Brand New',color_variants:{black:'1548169272-27f3bc19048a',silver:'1523170335258-f7278330a058'}},
+    {cat:'watches',brand:'Tag Heuer',name:'Carrera Chronograph 44',description:'Steel / Black Dial / Rubber Strap',price:68000000,img:'1523170335258-f7278330a058',badge:null,color:'black',condition:'Brand New',color_variants:{black:'1523170335258-f7278330a058',silver:'1547037947185-a35bfea3a9b0'}},
+    // ACCESSORIES
+    {cat:'accessories',brand:'Hermès',name:'Carrée 90 Silk Scarf',description:'100% Silk Twill / 90x90cm / Print Art',price:8500000,img:'1558618666-fcd25c85cd64',badge:null,color:'red',condition:'Brand New',color_variants:{red:'1558618666-fcd25c85cd64',navy:'1584917865442-de89df76afd3',beige:'1526170375885-4d8ecf77b99f'}},
+    {cat:'accessories',brand:'Louis Vuitton',name:'Monogram Belt 35mm',description:'Monogram Canvas / Gold LV Buckle',price:5800000,img:'1547036867-a9b070a405e8',badge:null,color:'brown',condition:'Brand New',color_variants:{brown:'1547036867-a9b070a405e8',black:'1558618666-fcd25c85cd64'}},
+    {cat:'accessories',brand:'Chanel',name:'CC Logo Hair Clip Set',description:'Gold Metal / CC Logo / Set of 2',price:3200000,img:'1558618666-fcd25c85cd64',badge:null,color:'gold',condition:'Brand New',color_variants:{gold:'1558618666-fcd25c85cd64',silver:'1547036867-a9b070a405e8'}},
+    {cat:'accessories',brand:'Gucci',name:'GG Marmont Wallet',description:'Matelassé Leather / Double G',price:6900000,img:'1547036867-a9b070a405e8',badge:null,color:'black',condition:'Brand New',color_variants:{black:'1547036867-a9b070a405e8',beige:'1558618666-fcd25c85cd64',red:'1526170375885-4d8ecf77b99f'}},
+    {cat:'accessories',brand:'Dior',name:'Oblique Saddle Wallet',description:'Dior Oblique Canvas / Zip',price:7200000,img:'1558618666-fcd25c85cd64',badge:'New Season',color:'navy',condition:'Brand New',color_variants:{navy:'1558618666-fcd25c85cd64',black:'1547036867-a9b070a405e8'}},
+    {cat:'accessories',brand:'Prada',name:'Saffiano Card Holder',description:'Saffiano Leather / 6 Card Slots',price:3800000,img:'1547036867-a9b070a405e8',badge:null,color:'black',condition:'Brand New',color_variants:{black:'1547036867-a9b070a405e8',red:'1558618666-fcd25c85cd64',beige:'1526170375885-4d8ecf77b99f'}},
+    {cat:'accessories',brand:'Bottega Veneta',name:'Intrecciato Key Pouch',description:'Woven Calf Leather / Zip Closure',price:4500000,img:'1558618666-fcd25c85cd64',badge:null,color:'beige',condition:'Brand New',color_variants:{beige:'1558618666-fcd25c85cd64',black:'1547036867-a9b070a405e8',brown:'1526170375885-4d8ecf77b99f'}},
+    {cat:'accessories',brand:'Fendi',name:'FF Logo Sunglasses Case',description:'Canvas / FF Logo / Hard Shell',price:2900000,img:'1547036867-a9b070a405e8',badge:null,color:'brown',condition:'Brand New',color_variants:{brown:'1547036867-a9b070a405e8',black:'1558618666-fcd25c85cd64'}},
+    {cat:'accessories',brand:'Burberry',name:'Check Cashmere Scarf',description:'100% Cashmere / House Check / 190x30cm',price:7500000,img:'1558618666-fcd25c85cd64',badge:null,color:'beige',condition:'Brand New',color_variants:{beige:'1558618666-fcd25c85cd64',red:'1547036867-a9b070a405e8',navy:'1526170375885-4d8ecf77b99f'}},
+    {cat:'accessories',brand:'Saint Laurent',name:'Cassandre Chain Wallet',description:'Grained Leather / YSL Buckle',price:8100000,img:'1547036867-a9b070a405e8',badge:null,color:'black',condition:'Brand New',color_variants:{black:'1547036867-a9b070a405e8',beige:'1558618666-fcd25c85cd64'}},
+    // FRAGRANCES
+    {cat:'fragrances',brand:'Chanel',name:'No. 5 Eau de Parfum',description:'Floral Aldehyde / 100ml / Women',price:3500000,img:'1547887538-e3a2f32cb1cc',badge:'Ikonik',color:'gold',condition:'Brand New',color_variants:{gold:'1547887538-e3a2f32cb1cc'}},
+    {cat:'fragrances',brand:'Dior',name:'Sauvage Eau de Parfum',description:'Fresh Spicy / 100ml / Men',price:2800000,img:'1541643600914-78b084683702',badge:'Bestseller',color:'navy',condition:'Brand New',color_variants:{navy:'1541643600914-78b084683702'}},
+    {cat:'fragrances',brand:'Tom Ford',name:'Black Orchid EDP',description:'Dark Floral / 100ml / Unisex',price:4200000,img:'1588514912908-68b2cdd46af6',badge:null,color:'black',condition:'Brand New',color_variants:{black:'1588514912908-68b2cdd46af6'}},
+    {cat:'fragrances',brand:'Hermès',name:"Twilly d'Hermès EDP",description:'Floral / 85ml / Women',price:3100000,img:'1547887538-e3a2f32cb1cc',badge:null,color:'red',condition:'Brand New',color_variants:{red:'1547887538-e3a2f32cb1cc'}},
+    {cat:'fragrances',brand:'Creed',name:'Aventus EDP',description:'Fruity Chypre / 100ml / Men',price:6500000,img:'1541643600914-78b084683702',badge:'Eksklusif',color:'silver',condition:'Brand New',color_variants:{silver:'1541643600914-78b084683702'}},
+    {cat:'fragrances',brand:'Jo Malone',name:'Peony & Blush Suede Cologne',description:'Floral / 100ml / Women',price:2200000,img:'1588514912908-68b2cdd46af6',badge:null,color:'beige',condition:'Brand New',color_variants:{beige:'1588514912908-68b2cdd46af6'}},
+    {cat:'fragrances',brand:'Maison Margiela',name:'Replica Jazz Club EDT',description:'Woody Aromatic / 100ml / Men',price:2600000,img:'1547887538-e3a2f32cb1cc',badge:'New Season',color:'brown',condition:'Brand New',color_variants:{brown:'1547887538-e3a2f32cb1cc'}},
+    {cat:'fragrances',brand:'Versace',name:'Bright Crystal EDT',description:'Floral Fruity / 90ml / Women',price:1800000,img:'1541643600914-78b084683702',badge:null,color:'white',condition:'Brand New',color_variants:{white:'1541643600914-78b084683702'}},
+    {cat:'fragrances',brand:'Givenchy',name:"L'Interdit EDP",description:'Floral Woody / 80ml / Women',price:2400000,img:'1588514912908-68b2cdd46af6',badge:null,color:'white',condition:'Brand New',color_variants:{white:'1588514912908-68b2cdd46af6'}},
+    {cat:'fragrances',brand:'Burberry',name:'Her Eau de Parfum',description:'Fruity Floral / 100ml / Women',price:2300000,img:'1588514912908-68b2cdd46af6',badge:'New Season',color:'red',condition:'Brand New',color_variants:{red:'1588514912908-68b2cdd46af6',white:'1541643600914-78b084683702'}},
+    // EYEWEAR
+    {cat:'eyewear',brand:'Chanel',name:'CC Pearl Square Sunglasses',description:'Acetate / Pearl Detail',price:9500000,img:'1511499767150-a48a237f0083',badge:null,color:'black',condition:'Brand New',color_variants:{black:'1511499767150-a48a237f0083',white:'1508296695146-257a814070b4',beige:'1473496169904-658ba7574b0d'}},
+    {cat:'eyewear',brand:'Gucci',name:'GG Round Frame',description:'Metal / Gold / Blue Lens',price:7200000,img:'1508296695146-257a814070b4',badge:null,color:'gold',condition:'Brand New',color_variants:{gold:'1508296695146-257a814070b4',black:'1511499767150-a48a237f0083',silver:'1473496169904-658ba7574b0d'}},
+    {cat:'eyewear',brand:'Dior',name:'So Real Pop Sunglasses',description:'Metal / Mirror Lens',price:8100000,img:'1473496169904-658ba7574b0d',badge:'Ikonik',color:'gold',condition:'Brand New',color_variants:{gold:'1473496169904-658ba7574b0d',black:'1572635196237-14b3f281503f',silver:'1511499767150-a48a237f0083'}},
+    {cat:'eyewear',brand:'Prada',name:'Symbole Sunglasses',description:'Acetate / Cat Eye',price:6800000,img:'1572635196237-14b3f281503f',badge:null,color:'black',condition:'Brand New',color_variants:{black:'1572635196237-14b3f281503f',white:'1508296695146-257a814070b4',brown:'1473496169904-658ba7574b0d'}},
+    {cat:'eyewear',brand:'Versace',name:'Medusa Biggie Sunglasses',description:'Acetate / Gold Medusa',price:7900000,img:'1511499767150-a48a237f0083',badge:null,color:'black',condition:'Like New',color_variants:{black:'1511499767150-a48a237f0083',gold:'1508296695146-257a814070b4',brown:'1572635196237-14b3f281503f'}},
+    {cat:'eyewear',brand:'Saint Laurent',name:'SL 1 Aviator',description:'Metal / Green Lens',price:6500000,img:'1508296695146-257a814070b4',badge:null,color:'silver',condition:'Brand New',color_variants:{silver:'1508296695146-257a814070b4',gold:'1473496169904-658ba7574b0d',black:'1511499767150-a48a237f0083'}},
+    {cat:'eyewear',brand:'Burberry',name:'Check Detail Square Frame',description:'Acetate / Square Frame',price:5900000,img:'1473496169904-658ba7574b0d',badge:null,color:'brown',condition:'Very Good',color_variants:{brown:'1473496169904-658ba7574b0d',black:'1511499767150-a48a237f0083',beige:'1572635196237-14b3f281503f'}},
+    {cat:'eyewear',brand:'Fendi',name:'FF Logo Cat Eye Sunglasses',description:'Acetate / Gradient Lens',price:6200000,img:'1572635196237-14b3f281503f',badge:null,color:'beige',condition:'Brand New',color_variants:{beige:'1572635196237-14b3f281503f',black:'1511499767150-a48a237f0083',gold:'1508296695146-257a814070b4'}},
+    {cat:'eyewear',brand:'Bottega Veneta',name:'Oversized Round Sunglasses',description:'Acetate / Oversized Round',price:7000000,img:'1511499767150-a48a237f0083',badge:null,color:'black',condition:'Good',color_variants:{black:'1511499767150-a48a237f0083',brown:'1473496169904-658ba7574b0d',white:'1508296695146-257a814070b4'}},
+    {cat:'eyewear',brand:'Balenciaga',name:'Shield Wrap Sunglasses',description:'Acetate / Futuristic Shield',price:8400000,img:'1508296695146-257a814070b4',badge:'Limited Edition',color:'black',condition:'Brand New',color_variants:{black:'1508296695146-257a814070b4',white:'1511499767150-a48a237f0083',silver:'1473496169904-658ba7574b0d'}},
+  ];
+
+  // Insert products in batches of 20
+  for (let i = 0; i < products.length; i += 20) {
+    const batch = products.slice(i, i + 20);
+    const { error } = await sb.from('products').insert(batch);
+    if (error) console.error(`Product batch ${i} error:`, error.message);
+    else console.log(`✅ Products batch ${i}–${i+batch.length} done`);
+  }
+
+  // ── 3. STORES ──────────────────────────────────────────────────
+  console.log('📍 Inserting stores...');
+  const stores = [
+    { id:'jakarta', name:'HarmoniFashion Jakarta', address:'Jl. Jenderal Sudirman Kav. 52–53, Senayan, Jakarta Pusat 10270', phone:'+62 21 5793 1888', hours:'Senin–Minggu, 10:00–21:00 WIB', query:'Jl Jenderal Sudirman Kav 52-53 Senayan Jakarta Pusat', social:{ ig:'https://www.instagram.com/harmonifashion', fb:'https://www.facebook.com/harmonifashion', wa:'https://wa.me/6281234567890', tt:'https://www.tiktok.com/@harmonifashion' }},
+    { id:'bandung',  name:'HarmoniFashion Bandung',  address:'Jl. Ir. H. Djuanda No. 100, Dago, Coblong, Bandung, Jawa Barat 40135', phone:'+62 22 8870 2233', hours:'Senin–Minggu, 10:00–21:00 WIB', query:'Jl Ir H Djuanda No 100 Dago Bandung Jawa Barat', social:{ ig:'https://www.instagram.com/harmonifashion.bdg', fb:'https://www.facebook.com/harmonifashion.bdg', wa:'https://wa.me/6282234567890', tt:'https://www.tiktok.com/@harmonifashion.bdg' }},
+    { id:'surabaya', name:'HarmoniFashion Surabaya', address:'Jl. Embong Malang No. 75, Genteng, Surabaya, Jawa Timur 60261', phone:'+62 31 5345 6677', hours:'Senin–Minggu, 10:00–21:30 WIB', query:'Jl Embong Malang No 75 Genteng Surabaya Jawa Timur', social:{ ig:'https://www.instagram.com/harmonifashion.sby', fb:'https://www.facebook.com/harmonifashion.sby', wa:'https://wa.me/6283134567890', tt:'https://www.tiktok.com/@harmonifashion.sby' }},
+    { id:'bali',     name:'HarmoniFashion Bali',     address:'Jl. Sunset Road No. 88, Kuta, Badung, Bali 80361', phone:'+62 361 8987 5544', hours:'Senin–Minggu, 09:00–22:00 WITA', query:'Jl Sunset Road No 88 Kuta Badung Bali', social:{ ig:'https://www.instagram.com/harmonifashion.bali', fb:'https://www.facebook.com/harmonifashion.bali', wa:'https://wa.me/6281234000088', tt:'https://www.tiktok.com/@harmonifashion.bali' }},
+    { id:'medan',    name:'HarmoniFashion Medan',    address:'Jl. S. Parman No. 217, Petisah Tengah, Medan 20112', phone:'+62 61 8877 2211', hours:'Senin–Minggu, 10:00–21:00 WIB', query:'Jl S Parman No 217 Petisah Tengah Medan', social:{ ig:'https://www.instagram.com/harmonifashion.mdn', fb:'https://www.facebook.com/harmonifashion.mdn', wa:'https://wa.me/6281122334455', tt:'https://www.tiktok.com/@harmonifashion.mdn' }},
+  ];
+  const { error: storeErr } = await sb.from('stores').upsert(stores, { onConflict: 'id' });
+  if (storeErr) console.error('Store error:', storeErr.message);
+  else console.log('✅ Stores done (5 cabang)');
+
+  // ── 4. RATINGS ─────────────────────────────────────────────────
+  console.log('⭐ Inserting ratings...');
+  const ratings = [
+    // Jakarta
+    {store_id:'jakarta',user_identifier:'user_001',rating:5},
+    {store_id:'jakarta',user_identifier:'user_002',rating:5},
+    {store_id:'jakarta',user_identifier:'user_003',rating:4},
+    {store_id:'jakarta',user_identifier:'user_004',rating:5},
+    {store_id:'jakarta',user_identifier:'user_005',rating:4},
+    {store_id:'jakarta',user_identifier:'user_006',rating:5},
+    {store_id:'jakarta',user_identifier:'user_007',rating:3},
+    {store_id:'jakarta',user_identifier:'user_008',rating:5},
+    // Bandung
+    {store_id:'bandung',user_identifier:'user_011',rating:4},
+    {store_id:'bandung',user_identifier:'user_012',rating:5},
+    {store_id:'bandung',user_identifier:'user_013',rating:4},
+    {store_id:'bandung',user_identifier:'user_014',rating:4},
+    {store_id:'bandung',user_identifier:'user_015',rating:5},
+    {store_id:'bandung',user_identifier:'user_016',rating:3},
+    // Surabaya
+    {store_id:'surabaya',user_identifier:'user_021',rating:5},
+    {store_id:'surabaya',user_identifier:'user_022',rating:4},
+    {store_id:'surabaya',user_identifier:'user_023',rating:5},
+    {store_id:'surabaya',user_identifier:'user_024',rating:4},
+    {store_id:'surabaya',user_identifier:'user_025',rating:5},
+    // Bali
+    {store_id:'bali',user_identifier:'user_031',rating:5},
+    {store_id:'bali',user_identifier:'user_032',rating:5},
+    {store_id:'bali',user_identifier:'user_033',rating:4},
+    {store_id:'bali',user_identifier:'user_034',rating:5},
+    {store_id:'bali',user_identifier:'user_035',rating:5},
+    {store_id:'bali',user_identifier:'user_036',rating:4},
+    // Medan
+    {store_id:'medan',user_identifier:'user_041',rating:4},
+    {store_id:'medan',user_identifier:'user_042',rating:3},
+    {store_id:'medan',user_identifier:'user_043',rating:4},
+    {store_id:'medan',user_identifier:'user_044',rating:5},
+  ];
+  const { error: ratingErr } = await sb.from('ratings').upsert(ratings, { onConflict: 'store_id,user_identifier' });
+  if (ratingErr) console.error('Rating error:', ratingErr.message);
+  else console.log('✅ Ratings done (29 ratings, 5 cabang)');
+
+  // ── 5. REVIEWS ─────────────────────────────────────────────────
+  console.log('💬 Inserting reviews...');
+  const reviews = [
+    // Jakarta
+    {store_id:'jakarta',author:'Sari Dewi',rating:5,text:'Pelayanan sangat luar biasa! Staff sangat membantu dan ramah. Chanel Flap Bag yang saya beli 100% original dengan sertifikat lengkap. Pasti akan balik lagi!',photos:[],created_at:'2026-06-01T10:30:00Z'},
+    {store_id:'jakarta',author:'Budi Santoso',rating:4,text:'Toko sangat lengkap dan koleksinya banyak banget. Suasana mewah dan eksklusif. Parkir agak susah tapi secara keseluruhan sangat memuaskan.',photos:[],created_at:'2026-06-03T14:15:00Z'},
+    {store_id:'jakarta',author:'Melissa Huang',rating:5,text:'Akhirnya menemukan Hermès Birkin disini setelah hunting berbulan-bulan! Tim konsultan sangat profesional dan membantu. Worth every penny!',photos:[],created_at:'2026-06-05T16:00:00Z'},
+    {store_id:'jakarta',author:'Ahmad Fauzi',rating:4,text:'Koleksi watches-nya luar biasa. Rolex Datejust yang saya beli dengan kelengkapan box dan papersnya masih sempurna. Harga sesuai kondisi barang.',photos:[],created_at:'2026-06-08T11:20:00Z'},
+    {store_id:'jakarta',author:'Rina Permata',rating:5,text:'Best luxury store di Jakarta! Setiap kunjungan selalu ada item baru yang menarik. Personal shopper disini sangat helpful dan tidak pushy.',photos:[],created_at:'2026-06-10T09:45:00Z'},
+    {store_id:'jakarta',author:'Denny Wijaya',rating:5,text:'Beli Louis Vuitton Neverfull disini, kondisi brand new dengan dust bag dan box original. Proses transaksi cepat dan aman. Sangat recommended!',photos:[],created_at:'2026-06-12T13:30:00Z'},
+    {store_id:'jakarta',author:'Putri Handayani',rating:3,text:'Koleksinya bagus tapi harga lebih tinggi dari toko serupa. Pelayanan oke tapi waiting time lumayan lama. Mungkin perlu tambah staff.',photos:[],created_at:'2026-06-14T15:00:00Z'},
+    {store_id:'jakarta',author:'Kevin Hartanto',rating:5,text:'Tempat paling terpercaya untuk beli luxury goods di Indonesia! Setiap pembelian disertai authenticity guarantee. Staff bisa bahasa Inggris dan Mandarin juga.',photos:[],created_at:'2026-06-16T10:00:00Z'},
+    // Bandung
+    {store_id:'bandung',author:'Citra Lestari',rating:5,text:'Kaget ada toko luxury sebagus ini di Bandung! Koleksinya tidak kalah dengan Jakarta. Beli Gucci Jackie bag disini, pelayanan top!',photos:[],created_at:'2026-06-02T11:00:00Z'},
+    {store_id:'bandung',author:'Fajar Nugroho',rating:4,text:'Interior toko sangat elegan dan nyaman. Staff sangat knowledgeable tentang produk-produknya. Beli Chanel slingback pumps disini, puas sekali.',photos:[],created_at:'2026-06-04T14:30:00Z'},
+    {store_id:'bandung',author:'Yunita Sari',rating:4,text:'Lokasi strategis di Dago, mudah dijangkau. Koleksi ready-to-wear cukup lengkap. Harga kompetitif untuk kondisi barang yang bagus.',photos:[],created_at:'2026-06-07T10:15:00Z'},
+    {store_id:'bandung',author:'Reza Mahendra',rating:5,text:'Pelayanan premium! Beli Burberry trench coat dan Cartier Santos disini. Kedua item verified authentic. Tim sangat sabar menjelaskan detail produk.',photos:[],created_at:'2026-06-09T15:45:00Z'},
+    {store_id:'bandung',author:'Stefani Chen',rating:4,text:'Toko nyaman dengan koleksi yang terus diupdate. Packaging sangat rapi dan mewah. Akan kembali lagi untuk hunting item berikutnya!',photos:[],created_at:'2026-06-11T12:00:00Z'},
+    {store_id:'bandung',author:'Hendra Kusuma',rating:3,text:'Koleksi eyewear kurang banyak pilihan. Tapi untuk handbags dan shoes pilihan lumayan oke. Semoga stock bisa lebih bervariasi kedepannya.',photos:[],created_at:'2026-06-13T16:30:00Z'},
+    // Surabaya
+    {store_id:'surabaya',author:'Olivia Tan',rating:5,text:'HarmoniFashion Surabaya adalah hidden gem! Pelayanan sangat personal dan Tim sangat passionate tentang fashion. Beli Dior Lady bag dan langsung jatuh cinta!',photos:[],created_at:'2026-06-02T09:30:00Z'},
+    {store_id:'surabaya',author:'Gunawan Pratama',rating:4,text:'Koleksi watches sangat impress! Ada Patek Philippe dan Audemars Piguet yang sulit ditemukan di tempat lain. Harga fair untuk kondisi brand new.',photos:[],created_at:'2026-06-05T13:00:00Z'},
+    {store_id:'surabaya',author:'Nadia Rahayu',rating:5,text:'Beli Valentine Garavani Rockstud pumps dan Hermès scarf di sini. Keduanya 100% authentic. Staff sangat helpful membantu memilih ukuran yang tepat!',photos:[],created_at:'2026-06-08T11:30:00Z'},
+    {store_id:'surabaya',author:'Irwan Setiawan',rating:4,text:'Toko yang sangat terpercaya di Surabaya. Proses verifikasi keaslian dilakukan secara transparan di depan customer. Top!',photos:[],created_at:'2026-06-10T14:00:00Z'},
+    {store_id:'surabaya',author:'Monica Liandra',rating:5,text:'Pengalaman belanja yang mewah dari awal hingga akhir. Dari sambutan, konsultasi, hingga packaging semuanya first-class. Highly recommended!',photos:[],created_at:'2026-06-15T10:30:00Z'},
+    // Bali
+    {store_id:'bali',author:'Sophie Laurent',rating:5,text:'Amazing store in Bali! Found rare pieces here that I couldnt find elsewhere in Indonesia. Perfect for tourists wanting authentic luxury fashion.',photos:[],created_at:'2026-06-03T10:00:00Z'},
+    {store_id:'bali',author:'Agus Dermawan',rating:5,text:'Lokasi yang sangat strategis di Kuta. Perfect buat turis dan locals. Koleksi fragrances-nya paling lengkap yang pernah saya lihat!',photos:[],created_at:'2026-06-06T14:00:00Z'},
+    {store_id:'bali',author:'Kadek Sukmawati',rating:4,text:'Sebagai orang Bali, bangga ada toko luxury sekelas ini di sini. Interior-nya sangat instagrammable dan produknya terjamin keasliannya.',photos:[],created_at:'2026-06-09T11:15:00Z'},
+    {store_id:'bali',author:'James Morrison',rating:5,text:'Best luxury boutique experience in Bali! Staff speaks excellent English and the collection is curated perfectly. Bought a Bottega Veneta bag and couldnt be happier.',photos:[],created_at:'2026-06-12T16:00:00Z'},
+    {store_id:'bali',author:'Wayan Artini',rating:5,text:'Sudah 3x belanja disini dan selalu puas! Koleksi selalu diupdate, staff ramah dan profesional. HarmoniFashion Bali the best!',photos:[],created_at:'2026-06-14T09:30:00Z'},
+    {store_id:'bali',author:'Diana Susanto',rating:4,text:'Toko sangat bagus dan produk authentic. Sedikit kesan bahwa stok terbatas untuk size tertentu tapi pelayanan sangat memuaskan.',photos:[],created_at:'2026-06-17T13:45:00Z'},
+    // Medan
+    {store_id:'medan',author:'Silvia Lubis',rating:4,text:'Akhirnya ada toko luxury terpercaya di Medan! Beli Chanel No.5 dan Prada card holder disini. Packaging sangat mewah dan produk original.',photos:[],created_at:'2026-06-04T10:30:00Z'},
+    {store_id:'medan',author:'Bahar Nasution',rating:3,text:'Pelayanan oke, produk terjamin keasliannya. Koleksinya belum selengkap cabang Jakarta tapi untuk Medan sudah sangat bagus. Semoga terus berkembang!',photos:[],created_at:'2026-06-07T15:00:00Z'},
+    {store_id:'medan',author:'Theresia Sirait',rating:4,text:'Sangat senang ada HarmoniFashion di Medan. Tidak perlu jauh-jauh ke Jakarta untuk shopping luxury. Staff sangat helpful dan informatif.',photos:[],created_at:'2026-06-11T11:00:00Z'},
+    {store_id:'medan',author:'Ronald Sinaga',rating:5,text:'Beli Omega Speedmaster Moonwatch disini. Verifikasi keaslian dilakukan langsung dan diberikan certificate. Harga sangat reasonable untuk kondisi brand new!',photos:[],created_at:'2026-06-16T14:30:00Z'},
+  ];
+
+  // Insert reviews in batches
+  for (let i = 0; i < reviews.length; i += 15) {
+    const batch = reviews.slice(i, i + 15);
+    const { error } = await sb.from('reviews').insert(batch);
+    if (error) console.error(`Review batch ${i} error:`, error.message);
+    else console.log(`✅ Reviews batch ${i}–${i+batch.length} done`);
+  }
+
+  // ── 6. CUSTOMER USERS ──────────────────────────────────────────
+  console.log('👤 Inserting customer accounts...');
+  function simpleHash(str) {
+    let hash = 0;
+    for (let i = 0; i < str.length; i++) {
+      const chr = str.charCodeAt(i);
+      hash = ((hash << 5) - hash) + chr;
+      hash |= 0;
+    }
+    return 'hf_' + Math.abs(hash).toString(36);
+  }
+
+  const customers = [
+    {username:'sari.dewi',      password_hash: simpleHash('sari123'),    display_name:'Sari Dewi'},
+    {username:'budi.santoso',   password_hash: simpleHash('budi123'),    display_name:'Budi Santoso'},
+    {username:'melissa.huang',  password_hash: simpleHash('melissa123'), display_name:'Melissa Huang'},
+    {username:'ahmad.fauzi',    password_hash: simpleHash('ahmad123'),   display_name:'Ahmad Fauzi'},
+    {username:'rina.permata',   password_hash: simpleHash('rina123'),    display_name:'Rina Permata'},
+    {username:'denny.wijaya',   password_hash: simpleHash('denny123'),   display_name:'Denny Wijaya'},
+    {username:'citra.lestari',  password_hash: simpleHash('citra123'),   display_name:'Citra Lestari'},
+    {username:'olivia.tan',     password_hash: simpleHash('olivia123'),  display_name:'Olivia Tan'},
+    {username:'nadia.rahayu',   password_hash: simpleHash('nadia123'),   display_name:'Nadia Rahayu'},
+    {username:'diana.susanto',  password_hash: simpleHash('diana123'),   display_name:'Diana Susanto'},
+    {username:'silvia.lubis',   password_hash: simpleHash('silvia123'),  display_name:'Silvia Lubis'},
+    {username:'theresia.sirait',password_hash: simpleHash('theresia123'),display_name:'Theresia Sirait'},
+  ];
+
+  const { error: custErr } = await sb.from('customer_users').upsert(customers, { onConflict: 'username' });
+  if (custErr) console.error('Customer error:', custErr.message);
+  else console.log('✅ Customer accounts done (12 akun)');
+
+  console.log('\n🎉 SEEDING COMPLETE!');
+  console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
+  console.log('📂 Kategori  : 7');
+  console.log('🛍️  Produk    : 70');
+  console.log('📍 Cabang    : 5 (Jakarta, Bandung, Surabaya, Bali, Medan)');
+  console.log('⭐ Ratings   : 29');
+  console.log('💬 Ulasan    : 29');
+  console.log('👤 Customer  : 12 akun');
+  console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
+}
+
+seed().catch(console.error);
+EOF
+
+
 /* ============================================================
    SUPABASE: LOAD ALL DATA
    ============================================================ */
@@ -866,6 +1120,8 @@ async function loadAllReviews() {
     }
   });
 }
+
+
 
 /* ============================================================
    SUPABASE: RATING
