@@ -750,8 +750,8 @@
    Ganti SUPABASE_URL & SUPABASE_ANON_KEY dengan kredensial proyek
    Supabase Anda (Project Settings > API). Lihat README.md.
    ============================================================ */
-const SUPABASE_URL = 'https://YOUR-PROJECT-REF.supabase.co';
-const SUPABASE_ANON_KEY = 'YOUR-SUPABASE-ANON-PUBLIC-KEY';
+const SUPABASE_URL = 'https://rhhxchkecgvskyhzyjyz.supabase.co';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJoaHhjaGtlY2d2c2t5aHp5anl6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODE3NjQ2MDgsImV4cCI6MjA5NzM0MDYwOH0.7ZUEdCUmTqPffI3mBSRSJYgi5xK_w8gh7tu4gmtoTPk';
 
 const supabaseReady = !SUPABASE_URL.includes('YOUR-PROJECT-REF') && !SUPABASE_ANON_KEY.includes('YOUR-SUPABASE');
 const sb = supabaseReady ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY) : null;
